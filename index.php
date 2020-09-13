@@ -15,6 +15,8 @@ mb_internal_encoding($_ENV['APP_CHARSET']);
 
 $container = new Container();
 
+require_once __DIR__ . "/containers/filesystem.php";
+
 $app = AppFactory::createFromContainer($container);
 
 require_once __DIR__ . "/app/routes.php";
