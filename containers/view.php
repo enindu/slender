@@ -8,9 +8,12 @@ use Twig\Loader\FilesystemLoader;
 use Twig\Template;
 
 $container->set('view', function(Container $container): Environment {
-  $loader = new FilesystemLoader(__DIR__ . '/../resources/views/');
+  $filesystemLoader = new FilesystemLoader([
+    __DIR__ . '/../resources/views/',
+    __DIR__ . '/../resources/templates/'
+  ]);
 
-  $view = new Environment($loader, [
+  $environment = new Environment($filesystemLoader, [
     'debug'               => $_ENV['VIEW_DEBUG'] === 'true' ? true : false,
     'charset'             => $_ENV['VIEW_CHARSET'],
     'base_template_class' => Template::class,
@@ -21,11 +24,11 @@ $container->set('view', function(Container $container): Environment {
     'optimizations'       => -1
   ]);
 
-  $filters = new FiltersExtension($container);
-  $globals = new GlobalsExtension();
+  $filtersExtension = new FiltersExtension($container);
+  $globalsExtension = new GlobalsExtension();
 
-  $view->addExtension($filters);
-  $view->addExtension($globals);
+  $environment->addExtension($filtersExtension);
+  $environment->addExtension($globalsExtension);
 
-  return $view;
+  return $environment;
 });
