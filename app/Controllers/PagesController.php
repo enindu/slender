@@ -9,7 +9,7 @@ class PagesController extends BaseController
 {
   public function home(Request $request, Response $response, array $data): Response
   {
-    $response->getBody()->write('Slender 0.1.0-dev');
+    $response->getBody()->write($_ENV['APP_NAME']);
 
     return $response;
   }
