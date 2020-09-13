@@ -1,6 +1,7 @@
 <?php
 
 use App\Extensions\FiltersExtension;
+use App\Extensions\GlobalsExtension;
 use DI\Container;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -21,8 +22,10 @@ $container->set('view', function(Container $container): Environment {
   ]);
 
   $filters = new FiltersExtension($container);
+  $globals = new GlobalsExtension();
 
   $view->addExtension($filters);
+  $view->addExtension($globals);
 
   return $view;
 });

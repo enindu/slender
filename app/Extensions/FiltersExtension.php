@@ -5,9 +5,10 @@ namespace App\Extensions;
 use DI\Container;
 use Twig\Error\RuntimeError;
 use Twig\Extension\AbstractExtension;
+use Twig\Extension\ExtensionInterface;
 use Twig\TwigFilter;
 
-class FiltersExtension extends AbstractExtension
+class FiltersExtension extends AbstractExtension implements ExtensionInterface
 {
   private $container;
 
