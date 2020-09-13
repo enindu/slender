@@ -5,7 +5,7 @@ namespace App\Extensions;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
 
-class GlobalsExtension extends AbstractExtension implements GlobalsInterface
+class Globals extends AbstractExtension implements GlobalsInterface
 {
   public function getGlobals(): array
   {

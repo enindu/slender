@@ -6,30 +6,30 @@ use Symfony\Component\Dotenv\Dotenv;
 
 require_once __DIR__ . "/vendor/autoload.php";
 
-$dotenv = new Dotenv();
+$dotenv = (object) new Dotenv();
 
 $dotenv->load(__DIR__ . '/.config');
 
 date_default_timezone_set($_ENV['APP_TIMEZONE']);
 mb_internal_encoding($_ENV['APP_CHARSET']);
 
-$container = new Container();
+$container = (object) new Container();
 
 require_once __DIR__ . "/containers/filesystem.php";
 require_once __DIR__ . "/containers/view.php";
 require_once __DIR__ . "/containers/error.php";
 
-$app = AppFactory::createFromContainer($container);
+$app = (object) AppFactory::createFromContainer($container);
 
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 
-$displayErrorDetails = $_ENV['ERROR_DISPLAY_ERROR_DETAILS'] === "true" ? true : false;
-$logErrors = $_ENV['ERROR_LOG_ERRORS'] === "true" ? true : false;
-$logErrorDetails = $_ENV['ERROR_LOG_ERROR_DETAILS'] === "true" ? true : false;
+$displayErrorDetails = (bool) $_ENV['ERROR_DISPLAY_ERROR_DETAILS'] === "true" ? true : false;
+$logErrors = (bool) $_ENV['ERROR_LOG_ERRORS'] === "true" ? true : false;
+$logErrorDetails = (bool) $_ENV['ERROR_LOG_ERROR_DETAILS'] === "true" ? true : false;
 
-$errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, $logErrors, $logErrorDetails);
-$defaultErrorHandler = $errorMiddleware->getDefaultErrorHandler();
+$errorMiddleware = (object) $app->addErrorMiddleware($displayErrorDetails, $logErrors, $logErrorDetails);
+$defaultErrorHandler = (object) $errorMiddleware->getDefaultErrorHandler();
 
 $defaultErrorHandler->registerErrorRenderer('text/html', $container->get('renderer'));
 

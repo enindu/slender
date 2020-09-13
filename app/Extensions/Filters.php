@@ -8,13 +8,13 @@ use Twig\Extension\AbstractExtension;
 use Twig\Extension\ExtensionInterface;
 use Twig\TwigFilter;
 
-class FiltersExtension extends AbstractExtension implements ExtensionInterface
+class Filters extends AbstractExtension implements ExtensionInterface
 {
   private $container;
 
   public function __construct(Container $container)
   {
-    $this->container = $container;
+    $this->container = (object) $container;
   }
 
   public function getFilters(): array
@@ -28,9 +28,9 @@ class FiltersExtension extends AbstractExtension implements ExtensionInterface
 
   public function asset(string $file): string
   {
-    $filesystem = $this->container->get('filesystem');
+    $filesystem = (object) $this->container->get('filesystem');
 
-    $fileExists = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
+    $fileExists = (bool) $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
 
     if(!$fileExists) {
       throw new RuntimeError('Cannot find ' . $file);
@@ -41,9 +41,9 @@ class FiltersExtension extends AbstractExtension implements ExtensionInterface
 
   public function nodeAsset(string $file): string
   {
-    $filesystem = $this->container->get('filesystem');
+    $filesystem = (object) $this->container->get('filesystem');
 
-    $fileExists = $filesystem->exists(__DIR__ . '/../../node_modules' . $file);
+    $fileExists = (bool) $filesystem->exists(__DIR__ . '/../../node_modules' . $file);
 
     if(!$fileExists) {
       throw new RuntimeError('Cannot find ' . $file);

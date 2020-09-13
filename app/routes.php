@@ -1,5 +1,5 @@
 <?php
 
-use App\Controllers\PagesController;
+use App\Controllers\Pages;
 
-$app->get('/', PagesController::class . ':home');
+$app->get('/', Pages::class . ':home');

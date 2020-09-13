@@ -1,19 +1,19 @@
 <?php
 
-use App\Extensions\FiltersExtension;
-use App\Extensions\GlobalsExtension;
+use App\Extensions\Filters;
+use App\Extensions\Globals;
 use DI\Container;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\Template;
 
 $container->set('view', function(Container $container): Environment {
-  $filesystemLoader = new FilesystemLoader([
+  $filesystemLoader = (object) new FilesystemLoader([
     __DIR__ . '/../resources/views/',
     __DIR__ . '/../resources/templates/'
   ]);
 
-  $environment = new Environment($filesystemLoader, [
+  $environment = (object) new Environment($filesystemLoader, [
     'debug'               => $_ENV['VIEW_DEBUG'] === 'true' ? true : false,
     'charset'             => $_ENV['VIEW_CHARSET'],
     'base_template_class' => Template::class,
@@ -24,11 +24,11 @@ $container->set('view', function(Container $container): Environment {
     'optimizations'       => -1
   ]);
 
-  $filtersExtension = new FiltersExtension($container);
-  $globalsExtension = new GlobalsExtension();
+  $filters = (object) new Filters($container);
+  $globals = (object) new Globals();
 
-  $environment->addExtension($filtersExtension);
-  $environment->addExtension($globalsExtension);
+  $environment->addExtension($filters);
+  $environment->addExtension($globals);
 
   return $environment;
 });
