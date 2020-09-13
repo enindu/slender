@@ -1,13 +1,15 @@
 <?php
 
+use App\Extensions\FiltersExtension;
+use DI\Container;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\Template;
 
-$container->set('view', function(): Environment {
+$container->set('view', function(Container $container): Environment {
   $loader = new FilesystemLoader(__DIR__ . '/../resources/views/');
 
-  return new Environment($loader, [
+  $view = new Environment($loader, [
     'debug'               => $_ENV['VIEW_DEBUG'] === 'true' ? true : false,
     'charset'             => $_ENV['VIEW_CHARSET'],
     'base_template_class' => Template::class,
@@ -17,4 +19,10 @@ $container->set('view', function(): Environment {
     'autoescape'          => 'html',
     'optimizations'       => -1
   ]);
+
+  $filters = new FiltersExtension($container);
+
+  $view->addExtension($filters);
+
+  return $view;
 });
