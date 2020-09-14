@@ -47,4 +47,17 @@ class Base
 
     return null;
   }
+
+  public function validate(array $data, array $rules)
+  {
+    $validator = $this->container->get('validator');
+
+    $validation = $validator->validate($data, $rules);
+
+    if($validation->fails()) {
+      return $validation->errors()->all();
+    }
+
+    return null;
+  }
 }

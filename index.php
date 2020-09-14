@@ -19,6 +19,7 @@ require_once __DIR__ . "/containers/filesystem.php";
 require_once __DIR__ . "/containers/database.php";
 require_once __DIR__ . "/containers/view.php";
 require_once __DIR__ . "/containers/email.php";
+require_once __DIR__ . "/containers/validator.php";
 require_once __DIR__ . "/containers/error.php";
 
 $app = (object) AppFactory::createFromContainer($container);
