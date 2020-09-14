@@ -15,6 +15,8 @@ class Base
     $this->container = (object) $container;
 
     $this->filesystem = (object) $container->get('filesystem');
+
+    $container->get('database');
   }
 
   public function view(Response $response, string $template, array $data = []): Response

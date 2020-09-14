@@ -22,6 +22,8 @@
         "email": "enindu@gmail.com"
     },
     "require": {
+        "illuminate/database": "^8.1",
+        "illuminate/events": "^8.1",
         "php-di/php-di": "^6.2",
         "slim/psr7": "^1.2",
         "slim/slim": "^4.5",
