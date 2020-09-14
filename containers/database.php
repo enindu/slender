@@ -5,7 +5,7 @@ use Illuminate\Database\Capsule\Manager;
 use Illuminate\Events\Dispatcher;
 
 $container->set('database', function(): Manager {
-  $manager = new Manager();
+  $manager = (object) new Manager();
 
   $manager->addConnection([
     'driver'    => $_ENV['DATABASE_DRIVER'],
@@ -18,8 +18,8 @@ $container->set('database', function(): Manager {
     'prefix'    => $_ENV['DATABASE_PREFIX']
   ]);
 
-  $container = new Container();
-  $dispatcher = new Dispatcher($container);
+  $container = (object) new Container();
+  $dispatcher = (object) new Dispatcher($container);
 
   $manager->setEventDispatcher($dispatcher);
   $manager->setAsGlobal();
