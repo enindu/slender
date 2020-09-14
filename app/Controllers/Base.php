@@ -27,4 +27,24 @@ class Base
 
     return $response;
   }
+
+  public function email(string $template, array $data)
+  {
+    $message = (object) $this->container->get('message');
+    $view = (object) $this->container->get('view');
+    $mailer = (object) $this->container->get('mailer');
+
+    $message->setSubject($data['subject']);
+    $message->setFrom($data['from']);
+    $message->setTo($data['to']);
+    $message->setBody($view->render($template, $data['body']), 'text/html');
+
+    $recpients = (int) $mailer->send($message);
+
+    if($recpients === 0) {
+      return $recpients;
+    }
+
+    return null;
+  }
 }

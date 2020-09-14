@@ -74,6 +74,6 @@ class Renderer implements ErrorRendererInterface
         ];
     }
 
-    return $view->render('error.twig', $data);
+    return $view->render('error-template.twig', $data);
   }
 }
