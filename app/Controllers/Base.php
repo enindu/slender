@@ -9,6 +9,7 @@ use Slim\Psr7\Response;
 class Base
 {
   protected $filesystem;
+  protected $clock;
   protected $image;
   private $container;
 
@@ -17,6 +18,7 @@ class Base
     $this->container = (object) $container;
 
     $this->filesystem = (object) $container->get('filesystem');
+    $this->clock = (object) $container->get('clock');
     $this->image = (object) $container->get('image');
 
     $container->get('database');
