@@ -15,6 +15,7 @@ mb_internal_encoding($_ENV['APP_CHARSET']);
 
 $container = (object) new Container();
 
+require_once __DIR__ . "/containers/session.php";
 require_once __DIR__ . "/containers/filesystem.php";
 require_once __DIR__ . "/containers/clock.php";
 require_once __DIR__ . "/containers/image.php";
@@ -25,6 +26,8 @@ require_once __DIR__ . "/containers/validator.php";
 require_once __DIR__ . "/containers/error.php";
 
 $app = (object) AppFactory::createFromContainer($container);
+
+require_once __DIR__ . "/app/middleware.php";
 
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
