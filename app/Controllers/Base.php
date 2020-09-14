@@ -3,11 +3,13 @@
 namespace App\Controllers;
 
 use DI\Container;
+use Intervention\Image\ImageManager;
 use Slim\Psr7\Response;
 
 class Base
 {
   protected $filesystem;
+  protected $image;
   private $container;
 
   public function __construct(Container $container)
@@ -15,11 +17,12 @@ class Base
     $this->container = (object) $container;
 
     $this->filesystem = (object) $container->get('filesystem');
+    $this->image = (object) $container->get('image');
 
     $container->get('database');
   }
 
-  public function view(Response $response, string $template, array $data = []): Response
+  protected function view(Response $response, string $template, array $data = []): Response
   {
     $view = (object) $this->container->get('view');
 
@@ -28,7 +31,7 @@ class Base
     return $response;
   }
 
-  public function email(string $template, array $data)
+  protected function email(string $template, array $data)
   {
     $message = (object) $this->container->get('message');
     $view = (object) $this->container->get('view');
@@ -48,7 +51,7 @@ class Base
     return null;
   }
 
-  public function validate(array $data, array $rules)
+  protected function validate(array $data, array $rules)
   {
     $validator = $this->container->get('validator');
 
