@@ -32,9 +32,9 @@ require_once __DIR__ . "/app/middleware.php";
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 
-$displayErrorDetails = (bool) $_ENV['ERROR_DISPLAY_ERROR_DETAILS'] === "true" ? true : false;
-$logErrors = (bool) $_ENV['ERROR_LOG_ERRORS'] === "true" ? true : false;
-$logErrorDetails = (bool) $_ENV['ERROR_LOG_ERROR_DETAILS'] === "true" ? true : false;
+$displayErrorDetails = $_ENV['ERROR_DISPLAY_ERROR_DETAILS'] === "true" ? true : false;
+$logErrors = $_ENV['ERROR_LOG_ERRORS'] === "true" ? true : false;
+$logErrorDetails = $_ENV['ERROR_LOG_ERROR_DETAILS'] === "true" ? true : false;
 
 $errorMiddleware = (object) $app->addErrorMiddleware($displayErrorDetails, $logErrors, $logErrorDetails);
 $defaultErrorHandler = (object) $errorMiddleware->getDefaultErrorHandler();

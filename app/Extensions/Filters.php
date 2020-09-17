@@ -22,7 +22,8 @@ class Filters extends AbstractExtension implements ExtensionInterface
     return [
       new TwigFilter('asset', [$this, 'asset']),
       new TwigFilter('node_asset', [$this, 'nodeAsset']),
-      new TwigFilter('page', [$this, 'page'])
+      new TwigFilter('page', [$this, 'page']),
+      new TwigFilter('content', [$this, 'content'])
     ];
   }
 
@@ -55,5 +56,24 @@ class Filters extends AbstractExtension implements ExtensionInterface
   public function page(string $path): string
   {
     return $_ENV['APP_URL'] . $path;
+  }
+
+  public function content(string $file): string
+  {
+    $filesystem = (object) $this->container->get('filesystem');
+
+    $fileExists = (bool) $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
+
+    if(!$fileExists) {
+      throw new RuntimeError('Cannot find ' . $file);
+    }
+
+    $fileContent = file_get_contents(__DIR__ . '/../../resources/assets' . $file);
+
+    if(!$fileContent) {
+      throw new RuntimeError('Cannot get content from ' . $file);
+    }
+
+    return $fileContent;
   }
 }
