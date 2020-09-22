@@ -1,0 +1,28 @@
+{
+  "name": "slender",
+  "version": "0.1.1-dev",
+  "description": "Rapid web development environment",
+  "keywords": [
+    "php",
+    "framework"
+  ],
+  "homepage": "https://github.com/enindu/slender",
+  "bugs": {
+    "url": "https://github.com/enindu/slender/issues",
+    "email": "enindu@gmail.com"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Enindu Alahapperuma",
+    "email": "enindu@gmail.com",
+    "url": "https://github.com/enindu"
+  },
+  "main": "sources/slender.js",
+  "scripts": {
+    "slender": "echo \"Slender - Rapid web development environment\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enindu/slender.git"
+  }
+}
