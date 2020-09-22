@@ -1,6 +1,6 @@
 {
   "name": "slender",
-  "version": "0.1.1-dev",
+  "version": "0.1.1",
   "description": "Rapid web development environment",
   "keywords": [
     "php",
