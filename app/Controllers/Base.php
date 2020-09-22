@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use DI\Container;
-use Intervention\Image\ImageManager;
 use Slim\Psr7\Response;
 
 class Base
