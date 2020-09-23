@@ -1,7 +1,7 @@
 <?php
 
 $container->set('mailer', function(): Swift_Mailer {
-  $smtpTransport = (object) new Swift_SmtpTransport();
+  $smtpTransport = new Swift_SmtpTransport();
 
   $smtpTransport->setHost($_ENV['EMAIL_HOST']);
   $smtpTransport->setPort($_ENV['EMAIL_PORT']);

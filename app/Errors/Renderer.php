@@ -18,58 +18,58 @@ class Renderer implements ErrorRendererInterface
 
   public function __construct(Container $container)
   {
-    $this->container = (object) $container;
+    $this->container = $container;
   }
 
   public function __invoke(Throwable $throwable, bool $displayErrorDetails): string
   {
-    $view = (object) $this->container->get('view');
+    $view = $this->container->get('view');
 
     switch($throwable) {
       case $throwable instanceof HttpBadRequestException:
-        $data = (array) [
+        $data = [
           'message' => '400 bad request'
         ];
 
         break;
 
       case $throwable instanceof HttpUnauthorizedException:
-        $data = (array) [
+        $data = [
           'message' => '401 unauthorized'
         ];
 
         break;
 
       case $throwable instanceof HttpForbiddenException:
-        $data = (array) [
+        $data = [
           'message' => '403 forbidden'
         ];
 
         break;
 
       case $throwable instanceof HttpNotFoundException:
-        $data = (array) [
+        $data = [
           'message' => '404 not found'
         ];
 
         break;
 
       case $throwable instanceof HttpMethodNotAllowedException:
-        $data = (array) [
+        $data = [
           'message' => '405 method not allowed'
         ];
 
         break;
 
       case $throwable instanceof HttpNotImplementedException:
-        $data = (array) [
+        $data = [
           'message' => '501 not implemented'
         ];
 
         break;
 
       default:
-        $data = (array) [
+        $data = [
           'message' => '500 internal server error'
         ];
     }

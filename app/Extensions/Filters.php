@@ -14,7 +14,7 @@ class Filters extends AbstractExtension implements ExtensionInterface
 
   public function __construct(Container $container)
   {
-    $this->container = (object) $container;
+    $this->container = $container;
   }
 
   public function getFilters(): array
@@ -29,9 +29,9 @@ class Filters extends AbstractExtension implements ExtensionInterface
 
   public function asset(string $file): string
   {
-    $filesystem = (object) $this->container->get('filesystem');
+    $filesystem = $this->container->get('filesystem');
 
-    $fileExists = (bool) $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
+    $fileExists = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
 
     if(!$fileExists) {
       throw new RuntimeError('Cannot find ' . $file);
@@ -42,9 +42,9 @@ class Filters extends AbstractExtension implements ExtensionInterface
 
   public function nodeAsset(string $file): string
   {
-    $filesystem = (object) $this->container->get('filesystem');
+    $filesystem = $this->container->get('filesystem');
 
-    $fileExists = (bool) $filesystem->exists(__DIR__ . '/../../node_modules' . $file);
+    $fileExists = $filesystem->exists(__DIR__ . '/../../node_modules' . $file);
 
     if(!$fileExists) {
       throw new RuntimeError('Cannot find ' . $file);
@@ -60,9 +60,9 @@ class Filters extends AbstractExtension implements ExtensionInterface
 
   public function content(string $file): string
   {
-    $filesystem = (object) $this->container->get('filesystem');
+    $filesystem = $this->container->get('filesystem');
 
-    $fileExists = (bool) $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
+    $fileExists = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
 
     if(!$fileExists) {
       throw new RuntimeError('Cannot find ' . $file);
