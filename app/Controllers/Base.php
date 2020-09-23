@@ -58,7 +58,9 @@ class Base
 
     $validation = $validator->validate($data, $rules);
 
-    if($validation->fails()) {
+    $validationFails = $validation->fails();
+
+    if($validationFails) {
       return $validation->errors()->all();
     }
 
