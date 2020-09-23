@@ -20,7 +20,7 @@ $container->set('database', function(): Manager {
 
   $container = new Container();
   $dispatcher = new Dispatcher($container);
-
+  
   $manager->setEventDispatcher($dispatcher);
   $manager->setAsGlobal();
   $manager->bootEloquent();

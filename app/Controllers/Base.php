@@ -12,6 +12,11 @@ class Base
   protected $image;
   private $container;
 
+  /**
+   * Base constructor
+   * 
+   * @param Container $container
+   */
   public function __construct(Container $container)
   {
     $this->container = $container;
@@ -23,6 +28,15 @@ class Base
     $container->get('database');
   }
 
+  /**
+   * View function
+   * 
+   * @param Response $response
+   * @param string   $template
+   * @param array    $data
+   * 
+   * @return Response
+   */
   protected function view(Response $response, string $template, array $data = []): Response
   {
     $view = $this->container->get('view');
@@ -32,35 +46,52 @@ class Base
     return $response;
   }
 
-  protected function email(string $template, array $data)
+  /**
+   * Mail function
+   * 
+   * @param string $template
+   * @param array  $data
+   * 
+   * @return null|int
+   */
+  protected function mail(string $template, array $data)
   {
     $message = $this->container->get('message');
     $view = $this->container->get('view');
-    $mailer = $this->container->get('mailer');
 
     $message->setSubject($data['subject']);
     $message->setFrom($data['from']);
     $message->setTo($data['to']);
     $message->setBody($view->render($template, $data['body']), 'text/html');
 
-    $recpients = $mailer->send($message);
+    $mailer = $this->container->get('mailer');
 
-    if($recpients === 0) {
-      return $recpients;
+    $checkRecipents = $mailer->send($message);
+
+    if($checkRecipents === 0) {
+      return $checkRecipents;
     }
 
     return null;
   }
 
+  /**
+   * Validate function
+   * 
+   * @param array $data
+   * @param array $rules
+   * 
+   * @return null|array
+   */
   protected function validate(array $data, array $rules)
   {
     $validator = $this->container->get('validator');
 
     $validation = $validator->validate($data, $rules);
 
-    $validationFails = $validation->fails();
+    $checkValidation = $validation->fails();
 
-    if($validationFails) {
+    if($checkValidation) {
       return $validation->errors()->all();
     }
 

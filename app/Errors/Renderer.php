@@ -16,15 +16,26 @@ class Renderer implements ErrorRendererInterface
 {
   private $container;
 
+  /**
+   * Renderer constructor
+   * 
+   * @param Container $container
+   */
   public function __construct(Container $container)
   {
     $this->container = $container;
   }
 
+  /**
+   * Renderer invoker
+   * 
+   * @param Throwable $throwable
+   * @param bool      $displayErrorDetails
+   * 
+   * @return string
+   */
   public function __invoke(Throwable $throwable, bool $displayErrorDetails): string
   {
-    $view = $this->container->get('view');
-
     switch($throwable) {
       case $throwable instanceof HttpBadRequestException:
         $data = [
@@ -73,6 +84,8 @@ class Renderer implements ErrorRendererInterface
           'message' => '500 internal server error'
         ];
     }
+
+    $view = $this->container->get('view');
 
     return $view->render('error-template.twig', $data);
   }
