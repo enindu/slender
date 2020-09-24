@@ -4,7 +4,7 @@ use DI\Container;
 use Slim\Factory\AppFactory;
 use Symfony\Component\Dotenv\Dotenv;
 
-// Composer autoload
+// Autoload
 require_once __DIR__ . "/vendor/autoload.php";
 
 // Environment
