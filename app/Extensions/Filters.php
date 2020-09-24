@@ -47,14 +47,15 @@ class Filters extends AbstractExtension implements ExtensionInterface
    */
   public function asset(string $file): string
   {
+    // Get filesystem library
     $filesystem = $this->container->get('filesystem');
 
-    $checkFile = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
-
-    if(!$checkFile) {
+    // Check file
+    if(!$filesystem->exists(__DIR__ . '/../../resources/assets' . $file)) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
+    // Return asset URL
     return $_ENV['APP_URL'] . "/resources/assets" . $file;
   }
 
@@ -68,14 +69,15 @@ class Filters extends AbstractExtension implements ExtensionInterface
    */
   public function npmAsset(string $file): string
   {
+    // Get filesystem library
     $filesystem = $this->container->get('filesystem');
 
-    $checkFile = $filesystem->exists(__DIR__ . '/../../node_modules' . $file);
-
-    if(!$checkFile) {
+    // Check file
+    if(!$filesystem->exists(__DIR__ . '/../../node_modules' . $file)) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
+    // Return npm asset URL
     return $_ENV['APP_URL'] . "/node_modules" . $file;
   }
 
@@ -101,20 +103,23 @@ class Filters extends AbstractExtension implements ExtensionInterface
    */
   public function content(string $file): string
   {
+    // Get filesystem library
     $filesystem = $this->container->get('filesystem');
 
-    $checkFile = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
-
-    if(!$checkFile) {
+    // Check file
+    if(!$filesystem->exists(__DIR__ . '/../../resources/assets' . $file)) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
-    $checkContent = file_get_contents(__DIR__ . '/../../resources/assets' . $file);
+    // Get content
+    $content = file_get_contents(__DIR__ . '/../../resources/assets' . $file);
 
-    if(!$checkContent) {
+    // Check content
+    if(!$content) {
       throw new RuntimeError('Cannot get content from ' . $file);
     }
 
-    return $checkContent;
+    // Return content
+    return $content;
   }
 }

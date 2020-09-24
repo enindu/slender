@@ -36,6 +36,10 @@ class Renderer implements ErrorRendererInterface
    */
   public function __invoke(Throwable $throwable, bool $displayErrorDetails): string
   {
+    // Get view library
+    $view = $this->container->get('view');
+
+    // Check throwable
     switch($throwable) {
       case $throwable instanceof HttpBadRequestException:
         $data = [
@@ -85,8 +89,7 @@ class Renderer implements ErrorRendererInterface
         ];
     }
 
-    $view = $this->container->get('view');
-
+    // Return view
     return $view->render('error-template.twig', $data);
   }
 }

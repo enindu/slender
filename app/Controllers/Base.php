@@ -19,12 +19,15 @@ class Base
    */
   public function __construct(Container $container)
   {
+    // Get container
     $this->container = $container;
 
+    // Get libraries
     $this->filesystem = $container->get('filesystem');
     $this->clock = $container->get('clock');
     $this->image = $container->get('image');
 
+    // Run database library
     $container->get('database');
   }
 
@@ -39,39 +42,47 @@ class Base
    */
   protected function view(Response $response, string $template, array $data = []): Response
   {
+    // Get view library
     $view = $this->container->get('view');
 
+    // Return response
     $response->withHeader('content-type', 'text/html')->getBody()->write($view->render($template, $data));
 
     return $response;
   }
 
   /**
-   * Mail function
+   * Email function
    * 
    * @param string $template
    * @param array  $data
    * 
    * @return null|int
    */
-  protected function mail(string $template, array $data)
+  protected function email(string $template, array $data)
   {
+    // Get message and view libraries
     $message = $this->container->get('message');
     $view = $this->container->get('view');
 
+    // Configure email
     $message->setSubject($data['subject']);
     $message->setFrom($data['from']);
     $message->setTo($data['to']);
     $message->setBody($view->render($template, $data['body']), 'text/html');
 
+    // Get mailer library
     $mailer = $this->container->get('mailer');
 
-    $checkRecipents = $mailer->send($message);
+    // Get recipients
+    $recipients = $mailer->send($message);
 
-    if($checkRecipents === 0) {
-      return $checkRecipents;
+    // Check recipients
+    if($recipients === 0) {
+      return $recipients;
     }
 
+    // Return null
     return null;
   }
 
@@ -85,16 +96,18 @@ class Base
    */
   protected function validate(array $data, array $rules)
   {
+    // Get validator library
     $validator = $this->container->get('validator');
 
+    // Get validation
     $validation = $validator->validate($data, $rules);
 
-    $checkValidation = $validation->fails();
-
-    if($checkValidation) {
+    // Check validation
+    if($validation->fails()) {
       return $validation->errors()->all();
     }
 
+    // Return null
     return null;
   }
 }
