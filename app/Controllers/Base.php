@@ -74,12 +74,11 @@ class Base
     // Get mailer library
     $mailer = $this->container->get('mailer');
 
-    // Get recipients
-    $recipients = $mailer->send($message);
-
     // Check recipients
-    if($recipients === 0) {
-      return $recipients;
+    $checkRecipients = $mailer->send($message);
+
+    if($checkRecipients === 0) {
+      return $checkRecipients;
     }
 
     // Return null
@@ -99,12 +98,12 @@ class Base
     // Get validator library
     $validator = $this->container->get('validator');
 
-    // Get validation
-    $validation = $validator->validate($data, $rules);
-
     // Check validation
-    if($validation->fails()) {
-      return $validation->errors()->all();
+    $validation = $validator->validate($data, $rules);
+    $checkValidation = $validation->fails();
+
+    if($checkValidation) {
+      return $checkValidation->errors()->all();
     }
 
     // Return null

@@ -51,7 +51,9 @@ class Filters extends AbstractExtension implements ExtensionInterface
     $filesystem = $this->container->get('filesystem');
 
     // Check file
-    if(!$filesystem->exists(__DIR__ . '/../../resources/assets' . $file)) {
+    $checkFile = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
+
+    if(!$checkFile) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
@@ -73,7 +75,9 @@ class Filters extends AbstractExtension implements ExtensionInterface
     $filesystem = $this->container->get('filesystem');
 
     // Check file
-    if(!$filesystem->exists(__DIR__ . '/../../node_modules' . $file)) {
+    $checkFile = $filesystem->exists(__DIR__ . '/../../node_modules' . $file);
+
+    if(!$checkFile) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
@@ -107,19 +111,20 @@ class Filters extends AbstractExtension implements ExtensionInterface
     $filesystem = $this->container->get('filesystem');
 
     // Check file
-    if(!$filesystem->exists(__DIR__ . '/../../resources/assets' . $file)) {
+    $checkFile = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
+
+    if(!$checkFile) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
-    // Get content
-    $content = file_get_contents(__DIR__ . '/../../resources/assets' . $file);
-
     // Check content
-    if(!$content) {
+    $checkContent = file_get_contents(__DIR__ . '/../../resources/assets' . $file);
+
+    if(!$checkContent) {
       throw new RuntimeError('Cannot get content from ' . $file);
     }
 
     // Return content
-    return $content;
+    return $checkContent;
   }
 }
