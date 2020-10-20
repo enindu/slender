@@ -103,7 +103,7 @@ class Base
     $checkValidation = $validation->fails();
 
     if($checkValidation) {
-      return $checkValidation->errors()->all();
+      return $validation->errors()->all();
     }
 
     // Return null
