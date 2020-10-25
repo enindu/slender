@@ -12,7 +12,6 @@ Rapid web development environment
 - Manipulate date and time with [nesbot/carbon](https://carbon.nesbot.com)
 - Manage filesystem with [symfony/filesystem](https://github.com/symfony/filesystem)
 - Validate data with [rakit/validation](https://github.com/rakit/validation)
-- Manage session with [bryanjhv/slim-session](https://github.com/bryanjhv/slim-session)
 - Manipulate images with [intervention/image](https://github.com/Intervention/image)
 
 ## Install

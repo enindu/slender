@@ -22,7 +22,6 @@
         "email": "enindu@gmail.com"
     },
     "require": {
-        "bryanjhv/slim-session": "^4.1",
         "illuminate/database": "^8.1",
         "illuminate/events": "^8.1",
         "intervention/image": "^2.5",
