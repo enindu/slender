@@ -25,6 +25,8 @@
   RewriteRule ^app/.* index.php [F,L]
   RewriteRule ^cache/.* index.php [F,L]
   RewriteRule ^containers/.* index.php [F,L]
+  RewriteRule ^resources/templates/.* index.php [F,L]
+  RewriteRule ^resources/views/.* index.php [F,L]
   RewriteRule ^sources/.* index.php [F,L]
   RewriteRule ^vendor/.* index.php [F,L]
 
