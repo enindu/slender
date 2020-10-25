@@ -41,11 +41,7 @@ $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 
 // Error middleware
-$displayErrorDetails = $_ENV['ERROR_DISPLAY_ERROR_DETAILS'] === "true" ? true : false;
-$logErrors = $_ENV['ERROR_LOG_ERRORS'] === "true" ? true : false;
-$logErrorDetails = $_ENV['ERROR_LOG_ERROR_DETAILS'] === "true" ? true : false;
-
-$errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, $logErrors, $logErrorDetails);
+$errorMiddleware = $app->addErrorMiddleware(true, true, true);
 $defaultErrorHandler = (object) $errorMiddleware->getDefaultErrorHandler();
 
 $defaultErrorHandler->registerErrorRenderer('text/html', $container->get('renderer'));
