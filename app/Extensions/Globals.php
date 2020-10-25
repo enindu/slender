@@ -15,7 +15,8 @@ class Globals extends AbstractExtension implements GlobalsInterface
   public function getGlobals(): array
   {
     return [
-      'app' => [
+      'unique_id' => uniqid(),
+      'app'       => [
         'name'        => $_ENV['APP_NAME'],
         'description' => $_ENV['APP_DESCRIPTION'],
         'keywords'    => $_ENV['APP_KEYWORDS'],
