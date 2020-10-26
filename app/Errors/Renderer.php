@@ -45,42 +45,36 @@ class Renderer implements ErrorRendererInterface
         $data = [
           'message' => '400 bad request'
         ];
-
         break;
 
       case $throwable instanceof HttpUnauthorizedException:
         $data = [
           'message' => '401 unauthorized'
         ];
-
         break;
 
       case $throwable instanceof HttpForbiddenException:
         $data = [
           'message' => '403 forbidden'
         ];
-
         break;
 
       case $throwable instanceof HttpNotFoundException:
         $data = [
           'message' => '404 not found'
         ];
-
         break;
 
       case $throwable instanceof HttpMethodNotAllowedException:
         $data = [
           'message' => '405 method not allowed'
         ];
-
         break;
 
       case $throwable instanceof HttpNotImplementedException:
         $data = [
           'message' => '501 not implemented'
         ];
-
         break;
 
       default:

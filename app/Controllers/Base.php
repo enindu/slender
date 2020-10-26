@@ -47,7 +47,6 @@ class Base
 
     // Return response
     $response->withHeader('content-type', 'text/html')->getBody()->write($view->render($template, $data));
-
     return $response;
   }
 
@@ -76,12 +75,11 @@ class Base
 
     // Check recipients
     $checkRecipients = $mailer->send($message);
-
     if($checkRecipients === 0) {
       return $checkRecipients;
     }
 
-    // Return null
+    // Return
     return null;
   }
 
@@ -98,15 +96,16 @@ class Base
     // Get validator library
     $validator = $this->container->get('validator');
 
-    // Check validation
+    // Get validation
     $validation = $validator->validate($data, $rules);
-    $checkValidation = $validation->fails();
 
+    // Check validation
+    $checkValidation = $validation->fails();
     if($checkValidation) {
       return $validation->errors()->all();
     }
 
-    // Return null
+    // Return
     return null;
   }
 }

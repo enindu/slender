@@ -2,11 +2,24 @@
 
 namespace App\Extensions;
 
+use DI\Container;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
 
 class Globals extends AbstractExtension implements GlobalsInterface
 {
+  private $container;
+
+  /**
+   * Globals constructor
+   * 
+   * @param Container $container
+   */
+  public function __construct(Container $container)
+  {
+    $this->container = $container;
+  }
+
   /**
    * Get globals
    * 

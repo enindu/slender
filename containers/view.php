@@ -28,7 +28,7 @@ $container->set('view', function(Container $container): Environment {
 
   // Configure environment
   $environment->addExtension(new Filters($container));
-  $environment->addExtension(new Globals());
+  $environment->addExtension(new Globals($container));
 
   // Return environment
   return $environment;

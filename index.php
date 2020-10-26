@@ -4,12 +4,11 @@ use DI\Container;
 use Slim\Factory\AppFactory;
 use Symfony\Component\Dotenv\Dotenv;
 
-// Autoload
+// Composer autoload
 require_once __DIR__ . "/vendor/autoload.php";
 
 // Environment
 $dotenv = new Dotenv();
-
 $dotenv->load(__DIR__ . '/.config');
 
 // System configurations
@@ -18,7 +17,6 @@ mb_internal_encoding($_ENV['APP_CHARSET']);
 
 // Containers
 $container = new Container();
-
 require_once __DIR__ . "/containers/filesystem.php";
 require_once __DIR__ . "/containers/clock.php";
 require_once __DIR__ . "/containers/image.php";
@@ -43,7 +41,6 @@ $app->addRoutingMiddleware();
 // Error middleware
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 $defaultErrorHandler = (object) $errorMiddleware->getDefaultErrorHandler();
-
 $defaultErrorHandler->registerErrorRenderer('text/html', $container->get('renderer'));
 
 // Routes
