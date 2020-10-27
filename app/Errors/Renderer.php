@@ -3,12 +3,6 @@
 namespace App\Errors;
 
 use DI\Container;
-use Slim\Exception\HttpBadRequestException;
-use Slim\Exception\HttpForbiddenException;
-use Slim\Exception\HttpMethodNotAllowedException;
-use Slim\Exception\HttpNotFoundException;
-use Slim\Exception\HttpNotImplementedException;
-use Slim\Exception\HttpUnauthorizedException;
 use Slim\Interfaces\ErrorRendererInterface;
 use Throwable;
 
@@ -36,33 +30,16 @@ class Renderer implements ErrorRendererInterface
    */
   public function __invoke(Throwable $throwable, bool $displayErrorDetails): string
   {
-    // Get message
-    $message = "500 internal server error";
-    if($throwable instanceof HttpBadRequestException) {
-      $message = "400 bad request";
-    }
-    if($throwable instanceof HttpUnauthorizedException) {
-      $message = "401 unauthorized";
-    }
-    if($throwable instanceof HttpForbiddenException) {
-      $message = "403 forbidden";
-    }
-    if($throwable instanceof HttpNotFoundException) {
-      $message = "404 not found";
-    }
-    if($throwable instanceof HttpMethodNotAllowedException) {
-      $message = "405 method not allowed";
-    }
-    if($throwable instanceof HttpNotImplementedException) {
-      $message = "501 not implemented";
-    }
-
     // Get view library
     $view = $this->container->get('view');
 
     // Return view
     return $view->render('error-template.twig', [
-      'message' => $message
+      'code'    => $throwable->getCode() != 0 ? $throwable->getCode() : 500,
+      'message' => $throwable->getCode() != 0 ? $throwable->getMessage() : "Internal server error",
+      'file'    => $throwable->getFile(),
+      'line'    => $throwable->getLine(),
+      'traces'  => $throwable->getTrace()
     ]);
   }
 }
