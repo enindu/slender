@@ -4,14 +4,15 @@ use App\Extensions\Filters;
 use App\Extensions\Globals;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-use Twig\Template;
 
 $container->set('view', function() use ($container): Environment {
+  // Create filesystem loader
   $filesystemLoader = new FilesystemLoader([
     __DIR__ . '/../resources/views/',
     __DIR__ . '/../resources/templates/'
   ]);
 
+  // Create environment
   $environment = new Environment($filesystemLoader, [
     'debug'               => $_ENV['view']['debug'],
     'charset'             => $_ENV['view']['charset'],
@@ -23,8 +24,10 @@ $container->set('view', function() use ($container): Environment {
     'optimizations'       => $_ENV['view']['optimizations']
   ]);
 
+  // Configure environment
   $environment->addExtension(new Filters($container));
   $environment->addExtension(new Globals($container));
   
+  // Return environment
   return $environment;
 });

@@ -36,38 +36,33 @@ class Renderer implements ErrorRendererInterface
    */
   public function __invoke(Throwable $throwable, bool $displayErrorDetails): string
   {
-    // Get data
-    $data['message'] = "500 internal server error";
-
-    // Check throwable
+    // Get message
+    $message = "500 internal server error";
     if($throwable instanceof HttpBadRequestException) {
-      $data['message'] = "400 bad request";
+      $message = "400 bad request";
     }
-
     if($throwable instanceof HttpUnauthorizedException) {
-      $data['message'] = "401 unauthorized";
+      $message = "401 unauthorized";
     }
-
     if($throwable instanceof HttpForbiddenException) {
-      $data['message'] = "403 forbidden";
+      $message = "403 forbidden";
     }
-
     if($throwable instanceof HttpNotFoundException) {
-      $data['message'] = "404 not found";
+      $message = "404 not found";
     }
-
     if($throwable instanceof HttpMethodNotAllowedException) {
-      $data['message'] = "405 method not allowed";
+      $message = "405 method not allowed";
     }
-
     if($throwable instanceof HttpNotImplementedException) {
-      $data['message'] = "501 not implemented";
+      $message = "501 not implemented";
     }
 
     // Get view library
     $view = $this->container->get('view');
 
     // Return view
-    return $view->render('error-template.twig', $data);
+    return $view->render('error-template.twig', [
+      'message' => $message
+    ]);
   }
 }

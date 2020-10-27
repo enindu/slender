@@ -50,7 +50,7 @@ class Controller
   {
     // Get message and view libraries
     $message = $this->container->get('message');
-    $view    = $this->container->get('view');
+    $view = $this->container->get('view');
 
     // Create message
     $message->setSubject($data['subject']);

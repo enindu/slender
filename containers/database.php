@@ -5,8 +5,10 @@ use Illuminate\Database\Capsule\Manager;
 use Illuminate\Events\Dispatcher;
 
 $container->set('database', function(): Manager {
+  // Create manager
   $manager = new Manager();
 
+  // Configure manager
   $manager->addConnection([
     'driver'    => $_ENV['database']['driver'],
     'host'      => $_ENV['database']['host'],
@@ -18,12 +20,15 @@ $container->set('database', function(): Manager {
     'prefix'    => $_ENV['database']['prefix']
   ]);
 
-  $container  = new Container();
+  // Create container and dispatcher
+  $container = new Container();
   $dispatcher = new Dispatcher($container);
 
+  // Configure manager
   $manager->setEventDispatcher($dispatcher);
   $manager->setAsGlobal();
   $manager->bootEloquent();
 
+  // Return manager
   return $manager;
 });

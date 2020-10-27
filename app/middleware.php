@@ -2,14 +2,16 @@
 
 use App\Errors\Renderer;
 
-// App middleware
+// Session middleware
 $app->add($container->get('session-middleware'));
 
-// Slim middleware
+// Body parsing middleware
 $app->addBodyParsingMiddleware();
+
+// Routing middleware
 $app->addRoutingMiddleware();
 
+// Error middleware
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
-$errorHandler    = $errorMiddleware->getDefaultErrorHandler();
-
+$errorHandler = $errorMiddleware->getDefaultErrorHandler();
 $errorHandler->registerErrorRenderer('text/html', new Renderer($container));
