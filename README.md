@@ -1,6 +1,6 @@
 # Slender
 
-Rapid web development environment
+Rapid web development environment based on Slim framework (Slim skeleton)
 
 ## Features
 
