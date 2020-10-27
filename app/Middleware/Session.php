@@ -37,8 +37,8 @@ class Session
    */
   public function __invoke(Request $request, RequestHandlerInterface $requestHandler): Response
   {
-    $checkSessionCookie = isset($request->getCookieParams()[$this->settings['name']]);
-    if($checkSessionCookie) {
+    $cookieExists = isset($request->getCookieParams()[$this->settings['name']]);
+    if($cookieExists) {
       return $requestHandler->handle($request);
     }
 
@@ -49,6 +49,7 @@ class Session
       'secure'   => $this->settings['secure'],
       'httponly' => $this->settings['http-only']
     ]);
+
     session_name($this->settings['name']);
     session_id(md5(uniqid(bin2hex(random_bytes(32)))));
     session_start();

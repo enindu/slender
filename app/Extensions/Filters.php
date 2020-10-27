@@ -47,17 +47,14 @@ class Filters extends AbstractExtension implements ExtensionInterface
    */
   public function asset(string $file): string
   {
-    // Get filesystem library
     $filesystem = $this->container->get('filesystem');
 
-    // Check file
-    $checkFile = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
-    if(!$checkFile) {
+    $fileExists = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
+    if(!$fileExists) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
-    // Return asset URL
-    return $_ENV['APP_URL'] . "/resources/assets" . $file;
+    return $_ENV['app']['url'] . "/resources/assets" . $file;
   }
 
   /**
@@ -70,17 +67,14 @@ class Filters extends AbstractExtension implements ExtensionInterface
    */
   public function npmAsset(string $file): string
   {
-    // Get filesystem library
     $filesystem = $this->container->get('filesystem');
 
-    // Check file
-    $checkFile = $filesystem->exists(__DIR__ . '/../../node_modules' . $file);
-    if(!$checkFile) {
+    $fileExists = $filesystem->exists(__DIR__ . '/../../node_modules' . $file);
+    if(!$fileExists) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
-    // Return npm asset URL
-    return $_ENV['APP_URL'] . "/node_modules" . $file;
+    return $_ENV['app']['url'] . "/node_modules" . $file;
   }
 
   /**
@@ -92,7 +86,7 @@ class Filters extends AbstractExtension implements ExtensionInterface
    */
   public function page(string $path): string
   {
-    return $_ENV['APP_URL'] . $path;
+    return $_ENV['app']['url'] . $path;
   }
 
   /**
@@ -105,22 +99,18 @@ class Filters extends AbstractExtension implements ExtensionInterface
    */
   public function content(string $file): string
   {
-    // Get filesystem library
     $filesystem = $this->container->get('filesystem');
 
-    // Check file
-    $checkFile = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
-    if(!$checkFile) {
+    $fileExists = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
+    if(!$fileExists) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
-    // Check content
-    $checkContent = file_get_contents(__DIR__ . '/../../resources/assets' . $file);
-    if(!$checkContent) {
+    $fileContent = file_get_contents(__DIR__ . '/../../resources/assets' . $file);
+    if(!$fileContent) {
       throw new RuntimeError('Cannot get content from ' . $file);
     }
 
-    // Return content
-    return $checkContent;
+    return $fileContent;
   }
 }

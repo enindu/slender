@@ -2,34 +2,29 @@
 
 use App\Extensions\Filters;
 use App\Extensions\Globals;
-use DI\Container;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\Template;
 
-$container->set('view', function(Container $container): Environment {
-  // Get filesystem loader
+$container->set('view', function() use ($container): Environment {
   $filesystemLoader = new FilesystemLoader([
     __DIR__ . '/../resources/views/',
     __DIR__ . '/../resources/templates/'
   ]);
 
-  // Get environment
   $environment = new Environment($filesystemLoader, [
-    'debug'               => $_ENV['VIEW_DEBUG'] === 'true' ? true : false,
-    'charset'             => $_ENV['VIEW_CHARSET'],
-    'base_template_class' => Template::class,
-    'cache'               => __DIR__ . '/../cache',
-    'auto_reload'         => $_ENV['VIEW_AUTO_RELOAD'] === 'true' ? true : false,
-    'strict_variables'    => $_ENV['VIEW_STRICT_VARIABLES'] === 'true' ? true : false,
-    'autoescape'          => 'html',
-    'optimizations'       => -1
+    'debug'               => $_ENV['view']['debug'],
+    'charset'             => $_ENV['view']['charset'],
+    'base_template_class' => $_ENV['view']['base-template-class'],
+    'cache'               => $_ENV['view']['cache'],
+    'auto_reload'         => $_ENV['view']['auto-reload'],
+    'strict_variables'    => $_ENV['view']['strict-variables'],
+    'autoescape'          => $_ENV['view']['auto-escape'],
+    'optimizations'       => $_ENV['view']['optimizations']
   ]);
 
-  // Configure environment
   $environment->addExtension(new Filters($container));
   $environment->addExtension(new Globals($container));
-
-  // Return environment
+  
   return $environment;
 });

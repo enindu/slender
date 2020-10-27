@@ -2,110 +2,22 @@
 
 namespace App\Controllers;
 
-use DI\Container;
+use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
-class Base
+class Base extends Controller
 {
-  protected $filesystem;
-  protected $clock;
-  protected $image;
-  private $container;
-
   /**
-   * Base constructor
+   * Homepage
    * 
-   * @param Container $container
-   */
-  public function __construct(Container $container)
-  {
-    // Get container
-    $this->container = $container;
-
-    // Get libraries
-    $this->filesystem = $container->get('filesystem');
-    $this->clock = $container->get('clock');
-    $this->image = $container->get('image');
-
-    // Run database library
-    $container->get('database');
-  }
-
-  /**
-   * View function
-   * 
+   * @param Request  $request
    * @param Response $response
-   * @param string   $template
    * @param array    $data
    * 
    * @return Response
    */
-  protected function view(Response $response, string $template, array $data = []): Response
+  public function home(Request $request, Response $response, array $data): Response
   {
-    // Get view library
-    $view = $this->container->get('view');
-
-    // Return response
-    $response->withHeader('content-type', 'text/html')->getBody()->write($view->render($template, $data));
-    return $response;
-  }
-
-  /**
-   * Email function
-   * 
-   * @param string $template
-   * @param array  $data
-   * 
-   * @return null|int
-   */
-  protected function email(string $template, array $data)
-  {
-    // Get message and view libraries
-    $message = $this->container->get('message');
-    $view = $this->container->get('view');
-
-    // Configure email
-    $message->setSubject($data['subject']);
-    $message->setFrom($data['from']);
-    $message->setTo($data['to']);
-    $message->setBody($view->render($template, $data['body']), 'text/html');
-
-    // Get mailer library
-    $mailer = $this->container->get('mailer');
-
-    // Check recipients
-    $checkRecipients = $mailer->send($message);
-    if($checkRecipients === 0) {
-      return $checkRecipients;
-    }
-
-    // Return
-    return null;
-  }
-
-  /**
-   * Validate function
-   * 
-   * @param array $data
-   * @param array $rules
-   * 
-   * @return null|array
-   */
-  protected function validate(array $data, array $rules)
-  {
-    // Get validator library
-    $validator = $this->container->get('validator');
-
-    // Get validation
-    $validation = $validator->validate($data, $rules);
-
-    // Check validation
-    $checkValidation = $validation->fails();
-    if($checkValidation) {
-      return $validation->errors()->all();
-    }
-
-    // Return
-    return null;
+    return $this->view($response, 'home.twig');
   }
 }

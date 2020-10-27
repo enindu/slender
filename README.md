@@ -43,5 +43,3 @@ After installation, you need to set permissions to write.
 ```
 # chmod -R 755 cache/
 ```
-
-Read code for more information.

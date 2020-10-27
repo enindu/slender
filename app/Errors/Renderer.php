@@ -36,54 +36,34 @@ class Renderer implements ErrorRendererInterface
    */
   public function __invoke(Throwable $throwable, bool $displayErrorDetails): string
   {
-    // Get view library
-    $view = $this->container->get('view');
+    $data['message'] = "500 internal server error";
 
-    // Check throwable
-    switch($throwable) {
-      case $throwable instanceof HttpBadRequestException:
-        $data = [
-          'message' => '400 bad request'
-        ];
-        break;
-
-      case $throwable instanceof HttpUnauthorizedException:
-        $data = [
-          'message' => '401 unauthorized'
-        ];
-        break;
-
-      case $throwable instanceof HttpForbiddenException:
-        $data = [
-          'message' => '403 forbidden'
-        ];
-        break;
-
-      case $throwable instanceof HttpNotFoundException:
-        $data = [
-          'message' => '404 not found'
-        ];
-        break;
-
-      case $throwable instanceof HttpMethodNotAllowedException:
-        $data = [
-          'message' => '405 method not allowed'
-        ];
-        break;
-
-      case $throwable instanceof HttpNotImplementedException:
-        $data = [
-          'message' => '501 not implemented'
-        ];
-        break;
-
-      default:
-        $data = [
-          'message' => '500 internal server error'
-        ];
+    if($throwable instanceof HttpBadRequestException) {
+      $data['message'] = "400 bad request";
     }
 
-    // Return view
+    if($throwable instanceof HttpUnauthorizedException) {
+      $data['message'] = "401 unauthorized";
+    }
+
+    if($throwable instanceof HttpForbiddenException) {
+      $data['message'] = "403 forbidden";
+    }
+
+    if($throwable instanceof HttpNotFoundException) {
+      $data['message'] = "404 not found";
+    }
+
+    if($throwable instanceof HttpMethodNotAllowedException) {
+      $data['message'] = "405 method not allowed";
+    }
+
+    if($throwable instanceof HttpNotImplementedException) {
+      $data['message'] = "501 not implemented";
+    }
+
+    $view = $this->container->get('view');
+
     return $view->render('error-template.twig', $data);
   }
 }

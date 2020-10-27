@@ -30,11 +30,11 @@ class Globals extends AbstractExtension implements GlobalsInterface
     return [
       'unique_id' => uniqid(),
       'app'       => [
-        'name'        => $_ENV['APP_NAME'],
-        'description' => $_ENV['APP_DESCRIPTION'],
-        'keywords'    => $_ENV['APP_KEYWORDS'],
-        'author'      => $_ENV['APP_AUTHOR'],
-        'url'         => $_ENV['APP_URL']
+        'name'        => $_ENV['app']['name'],
+        'description' => $_ENV['app']['description'],
+        'keywords'    => $_ENV['app']['keywords'],
+        'author'      => $_ENV['app']['author'],
+        'url'         => $_ENV['app']['url']
       ]
     ];
   }

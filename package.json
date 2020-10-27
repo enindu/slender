@@ -1,10 +1,13 @@
 {
   "name": "slender",
   "version": "0.1.4-dev",
-  "description": "Rapid web development environment",
+  "description": "Rapid web development environment based on Slim framework (Slim skeleton)",
   "keywords": [
-    "php",
-    "framework"
+    "eloquent",
+    "php-di",
+    "slim",
+    "swift-mailer",
+    "twig"
   ],
   "homepage": "https://github.com/enindu/slender",
   "bugs": {
@@ -19,7 +22,7 @@
   },
   "main": "sources/slender.js",
   "scripts": {
-    "slender": "echo \"Slender - Rapid web development environment\""
+    "slender": "echo \"Slender - Rapid web development environment based on Slim framework (Slim skeleton)\""
   },
   "repository": {
     "type": "git",

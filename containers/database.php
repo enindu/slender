@@ -5,30 +5,25 @@ use Illuminate\Database\Capsule\Manager;
 use Illuminate\Events\Dispatcher;
 
 $container->set('database', function(): Manager {
-  // Get manager
   $manager = new Manager();
 
-  // Configure manager
   $manager->addConnection([
-    'driver'    => $_ENV['DATABASE_DRIVER'],
-    'host'      => $_ENV['DATABASE_HOST'],
-    'database'  => $_ENV['DATABASE_DATABASE'],
-    'username'  => $_ENV['DATABASE_USERNAME'],
-    'password'  => $_ENV['DATABASE_PASSWORD'],
-    'charset'   => $_ENV['DATABASE_CHARSET'],
-    'collation' => $_ENV['DATABASE_COLLATION'],
-    'prefix'    => $_ENV['DATABASE_PREFIX']
+    'driver'    => $_ENV['database']['driver'],
+    'host'      => $_ENV['database']['host'],
+    'database'  => $_ENV['database']['database'],
+    'username'  => $_ENV['database']['username'],
+    'password'  => $_ENV['database']['password'],
+    'charset'   => $_ENV['database']['charset'],
+    'collation' => $_ENV['database']['collation'],
+    'prefix'    => $_ENV['database']['prefix']
   ]);
 
-  // Get container and dispatcher
-  $container = new Container();
+  $container  = new Container();
   $dispatcher = new Dispatcher($container);
-  
-  // Configure manager
+
   $manager->setEventDispatcher($dispatcher);
   $manager->setAsGlobal();
   $manager->bootEloquent();
 
-  // Return manager
   return $manager;
 });
