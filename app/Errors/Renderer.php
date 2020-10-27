@@ -36,8 +36,10 @@ class Renderer implements ErrorRendererInterface
    */
   public function __invoke(Throwable $throwable, bool $displayErrorDetails): string
   {
+    // Get data
     $data['message'] = "500 internal server error";
 
+    // Check throwable
     if($throwable instanceof HttpBadRequestException) {
       $data['message'] = "400 bad request";
     }
@@ -62,8 +64,10 @@ class Renderer implements ErrorRendererInterface
       $data['message'] = "501 not implemented";
     }
 
+    // Get view library
     $view = $this->container->get('view');
 
+    // Return view
     return $view->render('error-template.twig', $data);
   }
 }

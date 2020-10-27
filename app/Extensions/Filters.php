@@ -47,13 +47,16 @@ class Filters extends AbstractExtension implements ExtensionInterface
    */
   public function asset(string $file): string
   {
+    // Get filesystem library
     $filesystem = $this->container->get('filesystem');
 
+    // Check file exists
     $fileExists = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
     if(!$fileExists) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
+    // Return asset URL
     return $_ENV['app']['url'] . "/resources/assets" . $file;
   }
 
@@ -67,13 +70,16 @@ class Filters extends AbstractExtension implements ExtensionInterface
    */
   public function npmAsset(string $file): string
   {
+    // Get filesystem library
     $filesystem = $this->container->get('filesystem');
 
+    // Check file exists
     $fileExists = $filesystem->exists(__DIR__ . '/../../node_modules' . $file);
     if(!$fileExists) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
+    // Return npm asset URL
     return $_ENV['app']['url'] . "/node_modules" . $file;
   }
 
@@ -99,18 +105,22 @@ class Filters extends AbstractExtension implements ExtensionInterface
    */
   public function content(string $file): string
   {
+    // Get filesystem library
     $filesystem = $this->container->get('filesystem');
 
+    // Check file exists
     $fileExists = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
     if(!$fileExists) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
+    // Check file content
     $fileContent = file_get_contents(__DIR__ . '/../../resources/assets' . $file);
     if(!$fileContent) {
       throw new RuntimeError('Cannot get content from ' . $file);
     }
 
+    // Return file content
     return $fileContent;
   }
 }

@@ -1,15 +1,19 @@
 <IfModule mod_rewrite.c>
+  # Turn on rewrite engine
   RewriteEngine On
 
+  # Rewrite URL
   #RewriteCond %{HTTP_HOST} !=""
   #RewriteCond %{HTTP_HOST} !^www\. [NC]
   #RewriteCond %{HTTPS}s ^on(s)|
   #RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
+  # Remove tailing slash
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_URI} (.+)/$
   RewriteRule ^ %1 [R,L]
 
+  # Blacklist files
   RewriteRule /?\.config$ - [F,L]
   RewriteRule /?\.gitignore$ - [F,L]
   RewriteRule /?\.htaccess$ - [F,L]
@@ -17,6 +21,7 @@
   RewriteRule /?\.lock$ - [F,L]
   RewriteRule /?\.md$ - [F,L]
 
+  # Blacklist directories
   RewriteRule ^app/.* index.php [F,L]
   RewriteRule ^cache/.* index.php [F,L]
   RewriteRule ^containers/.* index.php [F,L]
@@ -25,6 +30,7 @@
   RewriteRule ^sources/.* index.php [F,L]
   RewriteRule ^vendor/.* index.php [F,L]
 
+  # Standard route
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^ index.php [QSA,L]

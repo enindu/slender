@@ -37,11 +37,14 @@ class Session
    */
   public function __invoke(Request $request, RequestHandlerInterface $requestHandler): Response
   {
-    $cookieExists = isset($request->getCookieParams()[$this->settings['name']]);
-    if($cookieExists) {
+    // Check session cookie exists
+    $sessionCookieExists = isset($request->getCookieParams()[$this->settings['name']]);
+    if($sessionCookieExists) {
       return $requestHandler->handle($request);
     }
 
+    // Set session cookies parameters, name, ID
+    // and start session
     session_set_cookie_params([
       'lifetime' => $this->settings['lifetime'],
       'path'     => $this->settings['path'],
@@ -54,6 +57,7 @@ class Session
     session_id(md5(uniqid(bin2hex(random_bytes(32)))));
     session_start();
 
+    // Return response
     return $requestHandler->handle($request);
   }
 }

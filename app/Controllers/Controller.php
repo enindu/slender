@@ -30,8 +30,10 @@ class Controller
    */
   protected function view(Response $response, string $template, array $data = []): Response
   {
+    // Get view library
     $view = $this->container->get('view');
 
+    // Return response
     $response->withHeader('content-type', 'text/html')->getBody()->write($view->render($template, $data));
     return $response;
   }
@@ -46,21 +48,26 @@ class Controller
    */
   protected function email(string $template, array $data)
   {
+    // Get message and view libraries
     $message = $this->container->get('message');
     $view    = $this->container->get('view');
 
+    // Create message
     $message->setSubject($data['subject']);
     $message->setFrom($data['from']);
     $message->setTo($data['to']);
     $message->setBody($view->render($template, $data['body']), 'text/html');
 
+    // Get mailer library
     $mailer = $this->container->get('mailer');
 
-    $mailRecipients = $mailer->send($message);
-    if($mailRecipients == 0) {
-      return $mailRecipients;
+    // Check email recipients
+    $emailRecipients = $mailer->send($message);
+    if($emailRecipients == 0) {
+      return $emailRecipients;
     }
 
+    // Return null
     return;
   }
 
@@ -74,15 +81,19 @@ class Controller
    */
   protected function validate(array $data, array $rules)
   {
+    // Get validator library
     $validator = $this->container->get('validator');
 
+    // Validate data
     $validate = $validator->validate($data, $rules);
 
+    // Check validation fails
     $validationFails = $validate->fails();
     if($validationFails) {
       return $validate->errors()->all();
     }
     
+    // Return null
     return;
   }
 }

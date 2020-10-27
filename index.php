@@ -1,17 +1,15 @@
 <?php
 
-use App\Errors\Renderer;
 use DI\Container;
 use Slim\Factory\AppFactory;
 
+// Get Composer autoload and bootstrap
 require_once __DIR__ . "/vendor/autoload.php";
 require_once __DIR__ . "/bootstrap/bootstrap.php";
 
-date_default_timezone_set($_ENV['app']['timezone']);
-mb_internal_encoding($_ENV['app']['charset']);
-
+// Create dependncy container and library
+// containers
 $container = new Container();
-
 require_once __DIR__ . "/containers/session-middleware.php";
 require_once __DIR__ . "/containers/filesystem.php";
 require_once __DIR__ . "/containers/clock.php";
@@ -22,18 +20,16 @@ require_once __DIR__ . "/containers/mailer.php";
 require_once __DIR__ . "/containers/message.php";
 require_once __DIR__ . "/containers/validator.php";
 
+// Create app
 $app = AppFactory::createFromContainer($container);
 
+// Set router cache file
+$routeCollector = $app->getRouteCollector();
+$routeCollector->setCacheFile(__DIR__ . '/cache/routes/cache.php');
+
+// Get middleware and routes
 require_once __DIR__ . "/app/middleware.php";
-
-$app->addBodyParsingMiddleware();
-$app->addRoutingMiddleware();
-
-$errorMiddleware = $app->addErrorMiddleware(true, true, true);
-$errorHandler    = $errorMiddleware->getDefaultErrorHandler();
-
-$errorHandler->registerErrorRenderer('text/html', new Renderer($container));
-
 require_once __DIR__ . "/app/routes.php";
 
+// Run app
 $app->run();
