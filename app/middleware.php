@@ -1,9 +1,17 @@
 <?php
 
 use App\Errors\Renderer;
+use App\Middleware\Session;
 
 // Session middleware
-$app->add($container->get('session-middleware'));
+$app->add(new Session([
+  'lifetime'  => $_ENV['middleware']['session']['lifetime'],
+  'path'      => $_ENV['middleware']['session']['path'],
+  'domain'    => $_ENV['middleware']['session']['domain'],
+  'secure'    => $_ENV['middleware']['session']['secure'],
+  'http-only' => $_ENV['middleware']['session']['http-only'],
+  'name'      => $_ENV['middleware']['session']['name']
+]));
 
 // Body parsing middleware
 $app->addBodyParsingMiddleware();
