@@ -35,8 +35,8 @@ class Renderer implements ErrorRendererInterface
 
     // Return view
     return $view->render('error-template.twig', [
-      'code'    => $throwable->getCode() != 0 ? $throwable->getCode() : 500,
-      'message' => $throwable->getCode() != 0 ? $throwable->getMessage() : "Internal server error",
+      'code'    => $throwable->getCode(),
+      'message' => $throwable->getCode(),
       'file'    => $throwable->getFile(),
       'line'    => $throwable->getLine(),
       'traces'  => $throwable->getTrace()

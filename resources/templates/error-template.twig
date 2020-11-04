@@ -7,14 +7,14 @@
   <meta name="description" content="{{ app.description }}">
   <meta name="keywords" content="{{ app.keywords }}">
   <meta name="author" content="{{ app.author }}">
-  <title>Something Went Wrong</title>
+  <title>Slender Error</title>
 </head>
 <body>
-  <h1>Something Went Wrong</h1>
+  <h1>Slender Error</h1>
   <p>
     <span><strong>Message:</strong> {{ message }}</span><br>
     <span><strong>Code:</strong> {{ code }}</span><br>
-    <span><strong>Error:</strong> {{ file }} in line <strong>{{ line }}</strong></span>
+    <span><strong>File:</strong> {{ file }} in line <strong>{{ line }}</strong></span>
   </p>
   <p>
     {% for trace in traces %}
