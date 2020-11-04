@@ -36,7 +36,7 @@ class Renderer implements ErrorRendererInterface
     // Return view
     return $view->render('error-template.twig', [
       'code'    => $throwable->getCode(),
-      'message' => $throwable->getCode(),
+      'message' => $throwable->getMessage(),
       'file'    => $throwable->getFile(),
       'line'    => $throwable->getLine(),
       'traces'  => $throwable->getTrace()
