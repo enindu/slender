@@ -21,7 +21,7 @@ class Globals extends AbstractExtension implements GlobalsInterface
   }
 
   /**
-   * Get globals
+   * Get globals function
    * 
    * @return array
    */

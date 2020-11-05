@@ -23,8 +23,8 @@ require_once __DIR__ . "/containers/validator.php";
 $app = AppFactory::createFromContainer($container);
 
 // Set router cache file
-$routeCollector = $app->getRouteCollector();
-$routeCollector->setCacheFile(__DIR__ . '/cache/routes/cache.php');
+//$routeCollector = $app->getRouteCollector();
+//$routeCollector->setCacheFile(__DIR__ . '/cache/routes/cache.php');
 
 // Get middleware and routes
 require_once __DIR__ . "/app/middleware.php";

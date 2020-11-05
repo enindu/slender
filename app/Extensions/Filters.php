@@ -23,7 +23,7 @@ class Filters extends AbstractExtension implements ExtensionInterface
   }
 
   /**
-   * Get filters
+   * Get filters function
    * 
    * @return array
    */
@@ -38,7 +38,7 @@ class Filters extends AbstractExtension implements ExtensionInterface
   }
 
   /**
-   * Get asset URLs
+   * Asset function
    * 
    * @param string $file
    * 
@@ -61,7 +61,7 @@ class Filters extends AbstractExtension implements ExtensionInterface
   }
 
   /**
-   * Get npm asset URLs
+   * npm asset function
    * 
    * @param string $file
    * 
@@ -84,7 +84,7 @@ class Filters extends AbstractExtension implements ExtensionInterface
   }
 
   /**
-   * Get page URLs
+   * Page function
    * 
    * @param string $path
    * 
@@ -96,7 +96,7 @@ class Filters extends AbstractExtension implements ExtensionInterface
   }
 
   /**
-   * Get content
+   * Content function
    * 
    * @param string $file
    * 
