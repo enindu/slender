@@ -33,7 +33,8 @@ class Filters extends AbstractExtension implements ExtensionInterface
       new TwigFilter('asset', [$this, 'asset']),
       new TwigFilter('npm_asset', [$this, 'npmAsset']),
       new TwigFilter('page', [$this, 'page']),
-      new TwigFilter('content', [$this, 'content'])
+      new TwigFilter('content', [$this, 'content']),
+      new TwigFilter('limit', [$this, 'limit'])
     ];
   }
 
@@ -122,5 +123,25 @@ class Filters extends AbstractExtension implements ExtensionInterface
 
     // Return file content
     return $fileContent;
+  }
+
+  /**
+   * Limit function
+   * 
+   * @param string $text
+   * @param int    $limit
+   * 
+   * @return string
+   */
+  public function limit(string $text, int $length = 50): string
+  {
+    // Check text length
+    $textLength = strlen($text);
+    if($textLength < $length) {
+      return $text;
+    }
+
+    // Return text
+    return substr($text, 0, $length - 3) . "...";
   }
 }
