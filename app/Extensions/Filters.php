@@ -32,7 +32,7 @@ class Filters extends AbstractExtension implements ExtensionInterface
     return [
       new TwigFilter('asset', [$this, 'asset']),
       new TwigFilter('npm_asset', [$this, 'npmAsset']),
-      new TwigFilter('upload'. [$this, 'upload']),
+      new TwigFilter('file'. [$this, 'file']),
       new TwigFilter('page', [$this, 'page']),
       new TwigFilter('content', [$this, 'content']),
       new TwigFilter('limit', [$this, 'limit'])
@@ -86,14 +86,14 @@ class Filters extends AbstractExtension implements ExtensionInterface
   }
 
   /**
-   * Upload function
+   * File function
    * 
    * @param string $file
    * 
    * @throws RuntimeError
    * @return string
    */
-  public function upload(string $file, string $type): string
+  public function file(string $file, string $type): string
   {
     // Get filesystem library
     $filesystem = $this->container->get('filesystem');
