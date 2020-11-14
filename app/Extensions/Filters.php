@@ -32,6 +32,7 @@ class Filters extends AbstractExtension implements ExtensionInterface
     return [
       new TwigFilter('asset', [$this, 'asset']),
       new TwigFilter('npm_asset', [$this, 'npmAsset']),
+      new TwigFilter('upload'. [$this, 'upload']),
       new TwigFilter('page', [$this, 'page']),
       new TwigFilter('content', [$this, 'content']),
       new TwigFilter('limit', [$this, 'limit'])
@@ -82,6 +83,29 @@ class Filters extends AbstractExtension implements ExtensionInterface
 
     // Return npm asset URL
     return $_ENV['app']['url'] . "/node_modules" . $file;
+  }
+
+  /**
+   * Upload function
+   * 
+   * @param string $file
+   * 
+   * @throws RuntimeError
+   * @return string
+   */
+  public function upload(string $file, string $type): string
+  {
+    // Get filesystem library
+    $filesystem = $this->container->get('filesystem');
+
+    // Check file exists
+    $fileExists = $filesystem->exists(__DIR__ . '/../../uploads/' . $type . '/' . $file);
+    if(!$fileExists) {
+      throw new RuntimeError('Cannot find ' . $file);
+    }
+
+    // Return file URL
+    return $_ENV['app']['url'] . "/uploads/" . $type . "/" . $file;
   }
 
   /**
