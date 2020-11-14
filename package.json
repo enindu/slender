@@ -2,6 +2,7 @@
   "name": "slender",
   "version": "0.1.5-dev",
   "description": "Rapid web development environment based on Slim framework (Slim skeleton)",
+  "type": "module",
   "keywords": [
     "eloquent",
     "php-di",
