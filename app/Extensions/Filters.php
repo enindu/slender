@@ -32,7 +32,7 @@ class Filters extends AbstractExtension implements ExtensionInterface
     return [
       new TwigFilter('asset', [$this, 'asset']),
       new TwigFilter('npm_asset', [$this, 'npmAsset']),
-      new TwigFilter('file'. [$this, 'file']),
+      new TwigFilter('file', [$this, 'file']),
       new TwigFilter('page', [$this, 'page']),
       new TwigFilter('content', [$this, 'content']),
       new TwigFilter('limit', [$this, 'limit'])
