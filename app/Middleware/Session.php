@@ -37,14 +37,13 @@ class Session
    */
   public function __invoke(Request $request, RequestHandlerInterface $requestHandler): Response
   {
-    // Check session cookie exists
-    $sessionCookieExists = isset($request->getCookieParams()[$this->settings['name']]);
-    if($sessionCookieExists) {
+    // Check cookie exists
+    $cookieExists = isset($request->getCookieParams()[$this->settings['name']]);
+    if($cookieExists) {
       return $requestHandler->handle($request);
     }
 
-    // Set session cookies parameters, name, ID
-    // and start session
+    // Set session cookies parameters, name, ID and start session
     session_set_cookie_params([
       'lifetime' => $this->settings['lifetime'],
       'path'     => $this->settings['path'],

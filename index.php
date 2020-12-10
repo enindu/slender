@@ -7,8 +7,7 @@ use Slim\Factory\AppFactory;
 require_once __DIR__ . "/vendor/autoload.php";
 require_once __DIR__ . "/bootstrap/bootstrap.php";
 
-// Create dependncy container and get library
-// containers
+// Create dependncy container and get library containers
 $container = new Container();
 require_once __DIR__ . "/containers/filesystem.php";
 require_once __DIR__ . "/containers/clock.php";

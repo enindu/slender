@@ -35,7 +35,8 @@ class Filters extends AbstractExtension implements ExtensionInterface
       new TwigFilter('file', [$this, 'file']),
       new TwigFilter('page', [$this, 'page']),
       new TwigFilter('content', [$this, 'content']),
-      new TwigFilter('limit', [$this, 'limit'])
+      new TwigFilter('limit', [$this, 'limit']),
+      new TwigFilter('human_date', [$this, 'humanDate'])
     ];
   }
 
@@ -167,5 +168,21 @@ class Filters extends AbstractExtension implements ExtensionInterface
 
     // Return text
     return substr($text, 0, $length - 3) . "...";
+  }
+
+  /**
+   * Human date function
+   * 
+   * @param string $date
+   * 
+   * @return string
+   */
+  public function humanDate(string $date): string
+  {
+    // Get clock library
+    $clock = $this->container->get('clock');
+
+    // Return human date
+    return $clock::parse($date)->diffForHumans($clock::now());
   }
 }
