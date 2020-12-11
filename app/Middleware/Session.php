@@ -43,7 +43,7 @@ class Session
       return $requestHandler->handle($request);
     }
 
-    // Set session cookies parameters, name, ID and start session
+    // Set cookie parameters and start session
     session_set_cookie_params([
       'lifetime' => $this->settings['lifetime'],
       'path'     => $this->settings['path'],
