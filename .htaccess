@@ -25,7 +25,6 @@
   RewriteRule ^bootstrap/.* index.php [F,L]
   RewriteRule ^cache/.* index.php [F,L]
   RewriteRule ^containers/.* index.php [F,L]
-  RewriteRule ^node_modules/.* index.php [F,L]
   RewriteRule ^resources/admin/views/.* index.php [F,L]
   RewriteRule ^resources/templates/.* index.php [F,L]
   RewriteRule ^resources/user/views/.* index.php [F,L]
