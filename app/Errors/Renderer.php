@@ -34,7 +34,7 @@ class Renderer implements ErrorRendererInterface
     $view = $this->container->get('view');
 
     // Return view
-    return $view->render('error-template.twig', [
+    return $view->render('@template/error.twig', [
       'code'    => $throwable->getCode(),
       'message' => $throwable->getMessage(),
       'file'    => $throwable->getFile(),

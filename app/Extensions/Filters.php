@@ -30,14 +30,26 @@ class Filters extends AbstractExtension implements ExtensionInterface
   public function getFilters(): array
   {
     return [
+      new TwigFilter('page', [$this, 'page']),
       new TwigFilter('asset', [$this, 'asset']),
       new TwigFilter('npm_asset', [$this, 'npmAsset']),
       new TwigFilter('file', [$this, 'file']),
-      new TwigFilter('page', [$this, 'page']),
       new TwigFilter('content', [$this, 'content']),
       new TwigFilter('limit', [$this, 'limit']),
       new TwigFilter('human_date', [$this, 'humanDate'])
     ];
+  }
+
+  /**
+   * Page function
+   * 
+   * @param string $path
+   * 
+   * @return string
+   */
+  public function page(string $path): string
+  {
+    return $_ENV['app']['url'] . $path;
   }
 
   /**
@@ -54,13 +66,14 @@ class Filters extends AbstractExtension implements ExtensionInterface
     $filesystem = $this->container->get('filesystem');
 
     // Check file exists
-    $fileExists = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
-    if(!$fileExists) {
+    $adminFileExists = $filesystem->exists(__DIR__ . '/../../resources/admin/assets' . $file);
+    $userFileExists = $filesystem->exists(__DIR__ . '/../../resources/user/assets' . $file);
+    if(!$adminFileExists && !$userFileExists) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
     // Return asset URL
-    return $_ENV['app']['url'] . "/resources/assets" . $file;
+    return $_ENV['app']['url'] . "/resources" . $adminFileExists ? "/admin" : "/user" . "/assets" . $file;
   }
 
   /**
@@ -90,6 +103,7 @@ class Filters extends AbstractExtension implements ExtensionInterface
    * File function
    * 
    * @param string $file
+   * @param string $type
    * 
    * @throws RuntimeError
    * @return string
@@ -110,38 +124,27 @@ class Filters extends AbstractExtension implements ExtensionInterface
   }
 
   /**
-   * Page function
-   * 
-   * @param string $path
-   * 
-   * @return string
-   */
-  public function page(string $path): string
-  {
-    return $_ENV['app']['url'] . $path;
-  }
-
-  /**
    * Content function
    * 
    * @param string $file
+   * @param string $type
    * 
    * @throws RuntimeError
    * @return string
    */
-  public function content(string $file): string
+  public function content(string $file, string $type): string
   {
     // Get filesystem library
     $filesystem = $this->container->get('filesystem');
 
     // Check file exists
-    $fileExists = $filesystem->exists(__DIR__ . '/../../resources/assets' . $file);
+    $fileExists = $filesystem->exists(__DIR__ . '/../../uploads/' . $type . '/' . $file);
     if(!$fileExists) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
     // Check file content
-    $fileContent = file_get_contents(__DIR__ . '/../../resources/assets' . $file);
+    $fileContent = file_get_contents(__DIR__ . '/../../uploads/' . $type . '/' . $file);
     if(!$fileContent) {
       throw new RuntimeError('Cannot get content from ' . $file);
     }

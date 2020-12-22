@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\User;
 
+use App\Controllers\Controller;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
@@ -18,6 +19,6 @@ class Base extends Controller
    */
   public function home(Request $request, Response $response, array $data): Response
   {
-    return $this->view($response, 'home.twig');
+    return $this->view($response, '@user/home.twig');
   }
 }

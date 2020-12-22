@@ -1,5 +1,5 @@
 <?php
 
-use App\Controllers\Base;
+use App\Controllers\User\Base;
 
 $app->get('/', Base::class . ':home');

@@ -7,10 +7,10 @@ use Twig\Loader\FilesystemLoader;
 
 $container->set('view', function() use ($container): Environment {
   // Create filesystem loader
-  $filesystemLoader = new FilesystemLoader([
-    __DIR__ . '/../resources/views/',
-    __DIR__ . '/../resources/templates/'
-  ]);
+  $filesystemLoader = new FilesystemLoader();
+  $filesystemLoader->addPath(__DIR__ . '/../resources/admin/views', 'admin');
+  $filesystemLoader->addPath(__DIR__ . '/../resources/user/views', 'user');
+  $filesystemLoader->addPath(__DIR__ . '/../resources/templates', 'template');
 
   // Create environment
   $environment = new Environment($filesystemLoader, [
@@ -23,8 +23,6 @@ $container->set('view', function() use ($container): Environment {
     'autoescape'          => $_ENV['view']['auto-escape'],
     'optimizations'       => $_ENV['view']['optimizations']
   ]);
-
-  // Configure environment
   $environment->addExtension(new Filters($container));
   $environment->addExtension(new Globals($container));
   

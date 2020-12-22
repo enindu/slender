@@ -25,8 +25,10 @@
   RewriteRule ^bootstrap/.* index.php [F,L]
   RewriteRule ^cache/.* index.php [F,L]
   RewriteRule ^containers/.* index.php [F,L]
+  RewriteRule ^node_modules/.* index.php [F,L]
+  RewriteRule ^resources/admin/views/.* index.php [F,L]
   RewriteRule ^resources/templates/.* index.php [F,L]
-  RewriteRule ^resources/views/.* index.php [F,L]
+  RewriteRule ^resources/user/views/.* index.php [F,L]
   RewriteRule ^sources/.* index.php [F,L]
   RewriteRule ^vendor/.* index.php [F,L]
 
@@ -36,6 +38,6 @@
   RewriteRule ^ index.php [QSA,L]
 </IfModule>
 
-<FilesMatch "\.(ico|pdf|jpg|jpeg|png|gif|js|css|webp|svg|ttf|woff|woff2)$">
-  Header set Cache-Control "public, max-age=31536000"
-</FilesMatch>
+#<FilesMatch "\.(ico|pdf|jpg|jpeg|png|gif|js|css|webp|svg|ttf|woff|woff2)$">
+#  Header set Cache-Control "public, max-age=31536000"
+#</FilesMatch>
