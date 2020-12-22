@@ -11,7 +11,11 @@ $_ENV = [
     'url'         => 'http://localhost',
     'timezone'    => 'Asia/Colombo',
     'charset'     => 'UTF-8',
-    'key'         => ''
+    'key'         => '',
+    'cookie'      => [
+      'admin' => '',
+      'user'  => ''
+    ]
   ],
   'image' => [
     'driver' => 'gd'
