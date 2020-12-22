@@ -38,7 +38,7 @@ class Controller
     $view = $this->container->get('view');
 
     // Return response
-    $response->withHeader('content-type', 'text/html')->getBody()->write($view->render($template, $data));
+    $response->withHeader('Content-Type', 'text/html')->getBody()->write($view->render($template, $data));
     return $response;
   }
 
@@ -88,10 +88,8 @@ class Controller
     // Get validator library
     $validator = $this->container->get('validator');
 
-    // Validate data
-    $validate = $validator->validate($data, $rules);
-
     // Check validation fails
+    $validate = $validator->validate($data, $rules);
     $validationFails = $validate->fails();
     if($validationFails) {
       return $validate->errors()->all();
@@ -99,5 +97,25 @@ class Controller
     
     // Return null
     return;
+  }
+
+  /**
+   * Auth function
+   * 
+   * @param string $key
+   * @param string $type
+   * 
+   * @return string|null
+   */
+  protected function auth(string $key, string $type)
+  {
+    // Check session exists
+    $sessionExists = isset($_SESSION['auth'][$type][$key]);
+    if(!$sessionExists) {
+      return;
+    }
+
+    // Return session value
+    return $_SESSION['auth'][$type][$key];
   }
 }

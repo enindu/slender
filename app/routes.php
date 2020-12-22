@@ -1,5 +1,9 @@
 <?php
 
-use App\Controllers\User\Base;
+use App\Controllers\User\Base as UserBase;
+use Slim\Routing\RouteCollectorProxy;
 
-$app->get('/', Base::class . ':home');
+// User routes
+$app->group('/', function(RouteCollectorProxy $user) {
+  $user->get('', UserBase::class . ':home');
+});

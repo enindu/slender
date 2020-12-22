@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 22, 2020 at 11:29 PM
+-- Generation Time: Dec 23, 2020 at 12:43 AM
 -- Server version: 10.5.8-MariaDB
 -- PHP Version: 7.4.13
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin_accounts` (
   `id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
+  `unique_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `username` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -57,6 +58,24 @@ INSERT INTO `admin_roles` (`id`, `title`, `created_at`, `updated_at`) VALUES
 (1, 'Administrator', '1995-07-21 06:29:00', '1995-07-21 06:29:00'),
 (2, 'Moderator', '1995-07-21 06:29:00', '1995-07-21 06:29:00');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_accounts`
+--
+
+CREATE TABLE `user_accounts` (
+  `id` int(11) NOT NULL,
+  `unique_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -66,13 +85,23 @@ INSERT INTO `admin_roles` (`id`, `title`, `created_at`, `updated_at`) VALUES
 --
 ALTER TABLE `admin_accounts`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `unique_id` (`unique_id`);
 
 --
 -- Indexes for table `admin_roles`
 --
 ALTER TABLE `admin_roles`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_accounts`
+--
+ALTER TABLE `user_accounts`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_id` (`unique_id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `phone` (`phone`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -89,6 +118,12 @@ ALTER TABLE `admin_accounts`
 --
 ALTER TABLE `admin_roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `user_accounts`
+--
+ALTER TABLE `user_accounts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
