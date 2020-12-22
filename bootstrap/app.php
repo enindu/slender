@@ -4,7 +4,7 @@ use Twig\Template;
 
 $_ENV = [
   'app' => [
-    'name'        => 'Slender 0.1.5',
+    'name'        => 'Slender 0.2.0-dev',
     'description' => 'Rapid web development environment based on Slim framework (Slim skeleton)',
     'keywords'    => 'eloquent, php-di, slim, swift-mailer, twig',
     'author'      => 'Enindu Alahapperuma (enindu@gmail.com)',
