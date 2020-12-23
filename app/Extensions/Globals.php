@@ -32,6 +32,7 @@ class Globals extends AbstractExtension implements GlobalsInterface
       'app'       => [
         'name'        => $_ENV['app']['name'],
         'description' => $_ENV['app']['description'],
+        'version'     => $_ENV['app']['version'],
         'keywords'    => $_ENV['app']['keywords'],
         'author'      => $_ENV['app']['author'],
         'url'         => $_ENV['app']['url']
