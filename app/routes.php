@@ -10,6 +10,7 @@ use Slim\Routing\RouteCollectorProxy;
 $app->group('/admin', function(RouteCollectorProxy $admin) {
   $admin->get('', AdminBase::class . ':home');
   $admin->group('/accounts', function(RouteCollectorProxy $accounts) {
+    $accounts->map(['GET', 'POST'], '/login', AdminAccounts::class . ':login');
     $accounts->map(['GET', 'POST'], '/register', AdminAccounts::class . ':register');
   });
 })->add(new AdminAuth($container));

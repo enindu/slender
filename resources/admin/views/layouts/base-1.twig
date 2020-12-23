@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{{ "/spectre.css/dist/spectre.min.css"|npm_asset }}">
+  <link rel="stylesheet" href="{{ "/spectre.css/dist/spectre-exp.min.css"|npm_asset }}">
+  <link rel="stylesheet" href="{{ "/spectre.css/dist/spectre-icons.min.css"|npm_asset }}">
+  <link rel="stylesheet" href="{{ "/css/style.css"|asset("admin") }}">
+  <title>{{ title }} | Admin Panel | {{ app.name }}</title>
+</head>
+<body>
+  <div class="container h-full">
+    <div class="columns justify-content-center align-items-center h-full">
+      <div class="column col-sm-12 col-md-8 col-xl-4 col-2">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>

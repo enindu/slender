@@ -12,12 +12,65 @@ use Slim\Psr7\Response;
 class Accounts extends Controller
 {
   /**
+   * Login page and function
+   * 
+   * @param Request  $request
+   * @param Response $response
+   * @param array    $data
+   * 
+   * @throws HttpBadRequestException
+   * @return Response
+   */
+  public function login(Request $request, Response $response, array $data): Response
+  {
+    // Check request method
+    $requestMethod = $request->getMethod();
+    if($requestMethod == 'GET') {
+      return $this->view($response, '@admin/accounts.login.twig');
+    }
+    if($requestMethod == 'POST') {
+      // Check validation
+      $inputs = $request->getParsedBody();
+      $validation = $this->validate($inputs, [
+        'username' => 'required|max:6',
+        'password' => 'required|min:6|max:32'
+      ]);
+      if($validation != null) {
+        throw new HttpBadRequestException($request, reset($validation));
+      }
+
+      // Get inputs
+      $username = trim($inputs['username']);
+      $password = trim($inputs['password']) . $_ENV['app']['key'];
+
+      // Check account
+      $account = AdminAccount::where('username', $username)->first();
+      if($account == null) {
+        throw new HttpBadRequestException($request, 'There is no account found');
+      }
+
+      // Check password matches
+      $passwordMatches = password_verify($password, $account->password);
+      if(!$passwordMatches) {
+        throw new HttpBadRequestException($request, 'Password is invalid');
+      }
+
+      // Set cookie
+      setcookie($_ENV['app']['cookie']['admin'], $account->unique_id, strtotime('1 week'), '/');
+
+      // Return response
+      return $response->withHeader('location', '/admin');
+    }
+  }
+
+  /**
    * Register page and function
    * 
    * @param Request  $request
    * @param Response $response
    * @param array    $data
    * 
+   * @throws HttpBadRequestException
    * @return Response
    */
   public function register(Request $request, Response $response, array $data): Response
@@ -51,6 +104,12 @@ class Accounts extends Controller
       $role = AdminRole::where('id', $roleId)->first();
       if($role == null) {
         throw new HttpBadRequestException($request, 'There is no role found');
+      }
+
+      // Check account
+      $account = AdminAccount::where('username', $username)->first();
+      if($account != null) {
+        throw new HttpBadRequestException($request, 'There is an account already using that username');
       }
 
       // Get clock library
