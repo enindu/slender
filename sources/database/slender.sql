@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 23, 2020 at 12:43 AM
+-- Generation Time: Dec 23, 2020 at 09:02 PM
 -- Server version: 10.5.8-MariaDB
 -- PHP Version: 7.4.13
 
@@ -31,7 +31,7 @@ CREATE TABLE `admin_accounts` (
   `id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   `unique_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL

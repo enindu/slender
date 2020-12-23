@@ -42,7 +42,7 @@ class UserAuth
       }
 
       // Check request path
-      if($requestPath != '/accounts/login') {
+      if($requestPath != '/accounts/login' && $requestPath != '/accounts/register') {
         $response = new Response();
         return $response->withHeader('location', '/accounts/login');
       }
@@ -66,7 +66,7 @@ class UserAuth
       setcookie($_ENV['app']['cookie']['user'], 'expired', strtotime('now') - 1, '/');
 
       // Check request path
-      if($requestPath != '/accounts/login') {
+      if($requestPath != '/accounts/login' && $requestPath != '/accounts/register') {
         $response = new Response();
         return $response->withHeader('location', '/accounts/login');
       }
@@ -76,7 +76,7 @@ class UserAuth
     }
 
     // Check request path
-    if($requestPath == '/accounts/login') {
+    if($requestPath == '/accounts/login' || $requestPath == '/accounts/register') {
       $response = new Response();
       return $response->withHeader('location', '/');
     }

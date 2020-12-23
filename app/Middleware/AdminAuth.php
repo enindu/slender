@@ -42,7 +42,7 @@ class AdminAuth
       }
 
       // Check request path
-      if($requestPath != '/admin/accounts/login') {
+      if($requestPath != '/admin/accounts/login' && $requestPath != '/admin/accounts/register') {
         $response = new Response();
         return $response->withHeader('location', '/admin/accounts/login');
       }
@@ -66,7 +66,7 @@ class AdminAuth
       setcookie($_ENV['app']['cookie']['admin'], 'expired', strtotime('now') - 1, '/');
 
       // Check request path
-      if($requestPath != '/admin/accounts/login') {
+      if($requestPath != '/admin/accounts/login' && $requestPath != '/admin/accounts/register') {
         $response = new Response();
         return $response->withHeader('location', '/admin/accounts/login');
       }
@@ -76,7 +76,7 @@ class AdminAuth
     }
 
     // Check request path
-    if($requestPath == '/admin/accounts/login') {
+    if($requestPath == '/admin/accounts/login' || $requestPath == '/admin/accounts/register') {
       $response = new Response();
       return $response->withHeader('location', '/admin');
     }

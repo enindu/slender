@@ -56,24 +56,24 @@ class Filters extends AbstractExtension implements ExtensionInterface
    * Asset function
    * 
    * @param string $file
+   * @param string $type
    * 
    * @throws RuntimeError
    * @return string
    */
-  public function asset(string $file): string
+  public function asset(string $file, string $type): string
   {
     // Get filesystem library
     $filesystem = $this->container->get('filesystem');
 
     // Check file exists
-    $adminFileExists = $filesystem->exists(__DIR__ . '/../../resources/admin/assets' . $file);
-    $userFileExists = $filesystem->exists(__DIR__ . '/../../resources/user/assets' . $file);
-    if(!$adminFileExists && !$userFileExists) {
+    $fileExists = $filesystem->exists(__DIR__ . '/../../resources/' . $type . '/assets' . $file);
+    if(!$fileExists) {
       throw new RuntimeError('Cannot find ' . $file);
     }
 
     // Return asset URL
-    return $_ENV['app']['url'] . "/resources" . $adminFileExists ? "/admin" : "/user" . "/assets" . $file;
+    return $_ENV['app']['url'] . "/resources/" . $type . "/assets" . $file;
   }
 
   /**
