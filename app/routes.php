@@ -12,6 +12,7 @@ $app->group('/admin', function(RouteCollectorProxy $admin) {
   $admin->group('/accounts', function(RouteCollectorProxy $accounts) {
     $accounts->map(['GET', 'POST'], '/login', AdminAccounts::class . ':login');
     $accounts->map(['GET', 'POST'], '/register', AdminAccounts::class . ':register');
+    $accounts->map(['GET', 'POST'], '/logout', AdminAccounts::class . ':logout');
   });
 })->add(new AdminAuth($container));
 
