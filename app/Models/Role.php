@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AdminRole extends Model
+class Role extends Model
 {
   public $timestamps = true;
-  protected $table = "admin_roles";
+  protected $table = "roles";
 }

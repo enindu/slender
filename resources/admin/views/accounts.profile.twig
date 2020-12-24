@@ -1,0 +1,72 @@
+{% extends "@admin/layouts/base-2.twig" %}
+
+{% set id = "accounts.profile" %}
+{% set title = "Profile | Accounts" %}
+
+{% block content %}
+<div class="container">
+  <div class="columns mt-20">
+    <div class="column col-12">
+      <h3>Profile</h3>
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column col-sm-12 col-md-8 col-xl-4 col-3 mb-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title h4">Information</div>
+          <div class="card-subtitle text-gray">Change account information</div>
+        </div>
+        <div class="card-body">
+          <form action="{{ "/admin/accounts/change-information"|page }}" method="post">
+            <div class="form-group">
+              <label for="username" class="form-label">Enter username</label>
+              <input type="text" name="username" id="username" class="form-input" placeholder="Username" maxlength="6" value="{{ account.username }}" required>
+            </div>
+            <div class="form-group">
+              <label for="role-id" class="form-label">Choose role</label>
+              <select name="role-id" id="role-id" class="form-select" disabled required>
+                <option value="{{ account.role_id }}" selected>{{ account.role.title }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="current-password" class="form-label">Enter current password</label>
+              <input type="password" name="current-password" id="current-password" class="form-input" placeholder="Current Password" minlength="6" maxlength="32" required>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary">Change</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="column col-sm-12 col-md-8 col-xl-4 col-3">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title h4">Password</div>
+          <div class="card-subtitle text-gray">Change account password</div>
+        </div>
+        <div class="card-body">
+          <form action="{{ "/admin/accounts/change-password"|page }}" method="post">
+            <div class="form-group">
+              <label for="current-password" class="form-label">Enter current password</label>
+              <input type="password" name="current-password" id="current-password" class="form-input" placeholder="Current Password" minlength="6" maxlength="32" required>
+            </div>
+            <div class="form-group">
+              <label for="new-password" class="form-label">Enter new password</label>
+              <input type="password" name="new-password" id="new-password" class="form-input" placeholder="New Password" minlength="6" maxlength="32" required>
+            </div>
+            <div class="form-group">
+              <label for="confirm-new-password" class="form-label">Confirm new password</label>
+              <input type="password" name="confirm-new-password" id="confirm-new-password" class="form-input" placeholder="Confirm New Password" minlength="6" maxlength="32" required>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary">Change</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

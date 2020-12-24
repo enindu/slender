@@ -4,7 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\Controller;
 use App\Models\AdminAccount;
-use App\Models\AdminRole;
+use App\Models\Role;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -79,7 +79,7 @@ class Accounts extends Controller
     $requestMethod = $request->getMethod();
     if($requestMethod == 'GET') {
       return $this->view($response, '@admin/accounts.register.twig', [
-        'roles' => AdminRole::get()
+        'roles' => Role::get()
       ]);
     }
     if($requestMethod == 'POST') {
@@ -101,7 +101,7 @@ class Accounts extends Controller
       $password = trim($inputs['password']) . $_ENV['app']['key'];
 
       // Check role
-      $role = AdminRole::where('id', $roleId)->first();
+      $role = Role::where('id', $roleId)->first();
       if($role == null) {
         throw new HttpBadRequestException($request, 'There is no role found');
       }
@@ -153,5 +153,108 @@ class Accounts extends Controller
       // Return response
       return $response->withHeader('location', '/admin/accounts/login');
     }
+  }
+
+  /**
+   * Profile page
+   * 
+   * @param Request  $request
+   * @param Response $response
+   * @param array    $data
+   * 
+   * @return Response
+   */
+  public function profile(Request $request, Response $response, array $data): Response
+  {
+    return $this->view($response, '@admin/accounts.profile.twig', [
+      'account' => AdminAccount::where('id', $this->auth('id', 'admin'))->first()
+    ]);
+  }
+
+  /**
+   * Change information function
+   * 
+   * @param Request  $request
+   * @param Response $response
+   * @param array    $data
+   * 
+   * @throws HttpBadRequestException
+   * @return Response
+   */
+  public function changeInformation(Request $request, Response $response, array $data): Response
+  {
+    // Check validation
+    $inputs = $request->getParsedBody();
+    $validation = $this->validate($inputs, [
+      'username'         => 'required|max:6',
+      'current-password' => 'required|min:6|max:32'
+    ]);
+    if($validation != null) {
+      throw new HttpBadRequestException($request, reset($validation));
+    }
+
+    // Get inputs
+    $username = trim($inputs['username']);
+    $currentPassword = trim($inputs['current-password']) . $_ENV['app']['key'];
+
+    // Check current password matches
+    $account = AdminAccount::where('id', $this->auth('id', 'admin'))->first();
+    $currentPasswordMatches = password_verify($currentPassword, $account->password);
+    if(!$currentPasswordMatches) {
+      throw new HttpBadRequestException($request, 'Current password is invalid');
+    }
+
+    // Update database
+    $account->username = $username;
+    $account->save();
+
+    // Return response
+    return $response->withHeader('location', '/admin/accounts/profile');
+  }
+
+  /**
+   * Change password function
+   * 
+   * @param Request  $request
+   * @param Response $response
+   * @param array    $data
+   * 
+   * @throws HttpBadRequestException
+   * @return Response
+   */
+  public function changePassword(Request $request, Response $response, array $data): Response
+  {
+    // Check validation
+    $inputs = $request->getParsedBody();
+    $validation = $this->validate($inputs, [
+      'current-password'     => 'required|min:6|max:32',
+      'new-password'         => 'required|different:current-password|min:6|max:32',
+      'confirm-new-password' => 'required|same:new-password'
+    ]);
+    if($validation != null) {
+      throw new HttpBadRequestException($request, reset($validation));
+    }
+
+    // Get inputs
+    $currentPassword = trim($inputs['current-password']) . $_ENV['app']['key'];
+    $newPassword = trim($inputs['new-password']) . $_ENV['app']['key'];
+
+    // Check current password matches
+    $account = AdminAccount::where('id', $this->auth('id', 'admin'))->first();
+    $currentPasswordMatches = password_verify($currentPassword, $account->password);
+    if(!$currentPasswordMatches) {
+      throw new HttpBadRequestException($request, 'Current password is invalid');
+    }
+
+    // Remove cookie
+    setcookie($_ENV['app']['cookie']['admin'], 'expired', strtotime('now') - 1, '/');
+
+    // Update database
+    $account->unique_id = md5(uniqid(bin2hex(random_bytes(32))));
+    $account->password = password_hash($newPassword, PASSWORD_BCRYPT);
+    $account->save();
+
+    // Return response
+    return $response->withHeader('location', '/admin/accounts/login');
   }
 }
