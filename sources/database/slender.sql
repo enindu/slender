@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 23, 2020 at 09:02 PM
+-- Generation Time: Dec 25, 2020 at 12:05 AM
 -- Server version: 10.5.8-MariaDB
 -- PHP Version: 7.4.13
 
@@ -40,10 +40,10 @@ CREATE TABLE `admin_accounts` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin_roles`
+-- Table structure for table `roles`
 --
 
-CREATE TABLE `admin_roles` (
+CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -51,10 +51,10 @@ CREATE TABLE `admin_roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `admin_roles`
+-- Dumping data for table `roles`
 --
 
-INSERT INTO `admin_roles` (`id`, `title`, `created_at`, `updated_at`) VALUES
+INSERT INTO `roles` (`id`, `title`, `created_at`, `updated_at`) VALUES
 (1, 'Administrator', '1995-07-21 06:29:00', '1995-07-21 06:29:00'),
 (2, 'Moderator', '1995-07-21 06:29:00', '1995-07-21 06:29:00');
 
@@ -89,9 +89,9 @@ ALTER TABLE `admin_accounts`
   ADD UNIQUE KEY `unique_id` (`unique_id`);
 
 --
--- Indexes for table `admin_roles`
+-- Indexes for table `roles`
 --
-ALTER TABLE `admin_roles`
+ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -114,9 +114,9 @@ ALTER TABLE `admin_accounts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `admin_roles`
+-- AUTO_INCREMENT for table `roles`
 --
-ALTER TABLE `admin_roles`
+ALTER TABLE `roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --

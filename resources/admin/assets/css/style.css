@@ -4,30 +4,7 @@ html, body {
   font-family: 'Rubik', sans-serif;
 }
 
-.w-240 {
-  width: 240px;
-}
-
-.h-full {
-  height: 100vh;
-}
-
-.min-h-full {
-  min-height: 100vh;
-}
-
-.mt-20 {
-  margin-top: 20px;
-}
-
-.line-height-1 {
-  line-height: 1;
-}
-
-.justify-content-center {
-  justify-content: center;
-}
-
-.align-items-center {
-  align-items: center;
+.navbar-brand img {
+  height: 30px;
+  width: 30px;
 }

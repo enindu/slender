@@ -9,18 +9,13 @@
   <meta name="author" content="{{ app.author }}">
   <title>{{ title }} | Admin Panel | {{ app.name|title }}</title>
   <link rel="icon" href="{{ "/images/favicon.png"|asset("admin") }}" type="image/png">
-  <link rel="stylesheet" href="{{ "/spectre.css/dist/spectre.min.css"|npm_asset }}">
-  <link rel="stylesheet" href="{{ "/spectre.css/dist/spectre-exp.min.css"|npm_asset }}">
-  <link rel="stylesheet" href="{{ "/spectre.css/dist/spectre-icons.min.css"|npm_asset }}">
+  <link rel="stylesheet" href="{{ "/@fortawesome/fontawesome-free/css/all.min.css"|npm_asset }}">
+  <link rel="stylesheet" href="{{ "/halfmoon/css/halfmoon.min.css"|npm_asset }}">
   <link rel="stylesheet" href="{{ "/css/style.css"|asset("admin") }}">
 </head>
-<body>
-  <div class="container h-full">
-    <div class="columns justify-content-center align-items-center h-full">
-      <div class="column col-sm-12 col-md-8 col-xl-4 col-2">
-        {% block content %}{% endblock %}
-      </div>
-    </div>
-  </div>
+<body class="dark-mode">
+  {% block base_content %}{% endblock %}
+  <script src="{{ "/halfmoon/js/halfmoon.min.js"|npm_asset }}"></script>
+  <script src="{{ "/js/script.js"|asset("admin") }}"></script>
 </body>
 </html>
