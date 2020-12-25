@@ -10,7 +10,7 @@ $container->set('view', function() use ($container): Environment {
   $filesystemLoader = new FilesystemLoader();
   $filesystemLoader->addPath(__DIR__ . '/../resources/admin/views', 'admin');
   $filesystemLoader->addPath(__DIR__ . '/../resources/user/views', 'user');
-  $filesystemLoader->addPath(__DIR__ . '/../resources/templates/views', 'template');
+  $filesystemLoader->addPath(__DIR__ . '/../resources/template/views', 'template');
 
   // Create environment
   $environment = new Environment($filesystemLoader, [

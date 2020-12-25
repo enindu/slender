@@ -1,0 +1,11 @@
+{% extends "@template/layouts/sub-2.twig" %}
+
+{% set id = "message" %}
+{% set title = "Message" %}
+
+{% block base_content %}
+<div class="font-size-100">
+  <i class="fa fa-exclamation-circle"></i>
+</div>
+<div>{{ message }}</div>
+{% endblock %}
