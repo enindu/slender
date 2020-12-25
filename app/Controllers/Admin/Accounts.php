@@ -36,7 +36,7 @@ class Accounts extends Controller
         'password' => 'required|min:6|max:32'
       ]);
       if($validation != null) {
-        throw new HttpBadRequestException($request, reset($validation));
+        throw new HttpBadRequestException($request, reset($validation) . '.');
       }
 
       // Get inputs
@@ -46,13 +46,13 @@ class Accounts extends Controller
       // Check account
       $account = AdminAccount::where('username', $username)->first();
       if($account == null) {
-        throw new HttpBadRequestException($request, 'There is no account found');
+        throw new HttpBadRequestException($request, 'There is no account found.');
       }
 
       // Check password matches
       $passwordMatches = password_verify($password, $account->password);
       if(!$passwordMatches) {
-        throw new HttpBadRequestException($request, 'Password is invalid');
+        throw new HttpBadRequestException($request, 'Password is invalid.');
       }
 
       // Set cookie
@@ -92,7 +92,7 @@ class Accounts extends Controller
         'confirm-password' => 'required|same:password'
       ]);
       if($validation != null) {
-        throw new HttpBadRequestException($request, reset($validation));
+        throw new HttpBadRequestException($request, reset($validation) . '.');
       }
 
       // Get inputs
@@ -103,13 +103,13 @@ class Accounts extends Controller
       // Check role
       $role = Role::where('id', $roleId)->first();
       if($role == null) {
-        throw new HttpBadRequestException($request, 'There is no role found');
+        throw new HttpBadRequestException($request, 'There is no role found.');
       }
 
       // Check account
       $account = AdminAccount::where('username', $username)->first();
       if($account != null) {
-        throw new HttpBadRequestException($request, 'There is an account already using that username');
+        throw new HttpBadRequestException($request, 'There is an account already using that username.');
       }
 
       // Get clock library
@@ -190,7 +190,7 @@ class Accounts extends Controller
       'current-password' => 'required|min:6|max:32'
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation));
+      throw new HttpBadRequestException($request, reset($validation) . '.');
     }
 
     // Get inputs
@@ -201,7 +201,7 @@ class Accounts extends Controller
     $account = AdminAccount::where('id', $this->auth('id', 'admin'))->first();
     $currentPasswordMatches = password_verify($currentPassword, $account->password);
     if(!$currentPasswordMatches) {
-      throw new HttpBadRequestException($request, 'Current password is invalid');
+      throw new HttpBadRequestException($request, 'Current password is invalid.');
     }
 
     // Update database
@@ -232,7 +232,7 @@ class Accounts extends Controller
       'confirm-new-password' => 'required|same:new-password'
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation));
+      throw new HttpBadRequestException($request, reset($validation) . '.');
     }
 
     // Get inputs
@@ -243,7 +243,7 @@ class Accounts extends Controller
     $account = AdminAccount::where('id', $this->auth('id', 'admin'))->first();
     $currentPasswordMatches = password_verify($currentPassword, $account->password);
     if(!$currentPasswordMatches) {
-      throw new HttpBadRequestException($request, 'Current password is invalid');
+      throw new HttpBadRequestException($request, 'Current password is invalid.');
     }
 
     // Remove cookie
