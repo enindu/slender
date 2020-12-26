@@ -42,7 +42,7 @@ class UserRole
     // Check role exists
     $roleId = (int) $database->table('user_accounts')->where('unique_id', $request->getCookieParams()[$_ENV['app']['cookie']['user']])->value('role_id');
     $roleExists = array_search($roleId, $this->roles);
-    if(!$roleExists) {
+    if($roleExists === false) {
       throw new HttpForbiddenException($request);
     }
 
