@@ -8,9 +8,25 @@
   <meta name="keywords" content="{{ app.keywords }}">
   <meta name="author" content="{{ app.author }}">
   <title>{{ app.description|title }} | {{ app.name|title }}</title>
+  <link rel="icon" href="{{ "/images/favicon.png"|asset("user") }}" type="image/png">
+  <link rel="stylesheet" href="{{ "/@fortawesome/fontawesome-free/css/all.min.css"|npm_asset }}">
+  <link rel="stylesheet" href="{{ "/halfmoon/css/halfmoon.min.css"|npm_asset }}">
+  <link rel="stylesheet" href="{{ "/css/style.css"|asset("user") }}">
 </head>
 <body>
-  <h1>{{ app.name|title }}</h1>
-  <p>{{ app.description }}</p>
+  <div class="page-wrapper">
+    <div class="content-wrapper">
+      <div class="container-fluid h-full">
+        <div class="row justify-content-center align-items-center h-full">
+          <div class="col-auto text-center">
+            <img src="{{ "/images/logo.svg"|asset("user") }}" alt="{{ app.name }}" width="150" height="150">
+            <h4 class="my-0">{{ app.name|title }} {{ app.version }}</h4>
+            <div>{{ app.description }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="{{ "/halfmoon/js/halfmoon.min.js"|npm_asset }}"></script>
 </body>
 </html>

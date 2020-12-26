@@ -2,7 +2,7 @@
   <div class="sidebar-menu">
     <h6 class="sidebar-title">Dashboard</h6>
     <div class="sidebar-divider"></div>
-    <a href="{{ "/admin"|page }}" class="sidebar-link sidebar-link-with-icon mb-20">
+    <a href="{{ "/admin"|page }}" class="sidebar-link sidebar-link-with-icon mb-20 {{ id == "home" ? "active" }}">
       <span class="sidebar-icon rounded-circle {{ id == "home" ? "bg-primary text-white" }}">
         <i class="fa fa-home"></i>
       </span>
@@ -10,7 +10,7 @@
     </a>
     <h6 class="sidebar-title">Accounts</h6>
     <div class="sidebar-divider"></div>
-    <a href="{{ "/admin/accounts/profile"|page }}" class="sidebar-link sidebar-link-with-icon">
+    <a href="{{ "/admin/accounts/profile"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "accounts.profile" ? "active" }}">
       <span class="sidebar-icon rounded-circle {{ id == "accounts.profile" ? "bg-primary text-white" }}">
         <i class="fa fa-user"></i>
       </span>
