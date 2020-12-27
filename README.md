@@ -1,6 +1,6 @@
 # Slender
 
-Rapid web development environment based on Slim framework (Slim skeleton)
+Rapid web development environment based on Slim framework
 
 ## Features
 
@@ -30,15 +30,18 @@ $ composer create-project enindu/slender <project name>
 $ git clone https://github.com/enindu/slender.git
 ```
 
-If you cloned the repository, make sure you have installed required Composer libraries.
+### Install Required Libraries
+
+After installation, you may need to install required Composer and npm libraries.
 
 ```
 $ composer install
+$ npm install
 ```
 
 ### Change Directory Permissions
 
-After installation, you need to set permissions to write.
+And also, you may need to set permissions to write.
 
 ```
 # chmod -R 755 cache/

@@ -1,14 +1,14 @@
 {% extends "@admin/layouts/sub-2.twig" %}
 
-{% set id = "admins" %}
-{% set title = "Admins" %}
+{% set id = "users" %}
+{% set title = "Users" %}
 
 {% block sub_content %}
 <div class="container-fluid">
   <div class="row row-eq-spacing">
     <div class="col-12">
       <h4 class="my-0">
-        <i class="fa fa-shield-alt mr-5"></i> Admins
+        <i class="fa fa-users mr-5"></i> Users
       </h4>
     </div>
   </div>
@@ -16,12 +16,16 @@
     <div class="col-12 col-sm-6 col-lg-3 mb-20 mb-sm-0">
       <div class="card p-15">
         <h1 class="card-title">
-          <i class="fa fa-plus mr-5"></i> Add Admin
+          <i class="fa fa-plus mr-5"></i> Add User
         </h1>
-        <form action="{{ "/admin/admins/add"|page }}" method="post">
+        <form action="{{ "/admin/users/add"|page }}" method="post">
           <div class="form-group">
-            <label for="username" class="required">Enter username</label>
-            <input type="text" name="username" id="username" class="form-control" placeholder="Username" maxlength="6" required>
+            <label for="first-name" class="required">Enter first name</label>
+            <input type="text" name="first-name" id="first-name" class="form-control" placeholder="First Name" maxlength="191" required>
+          </div>
+          <div class="form-group">
+            <label for="last-name" class="required">Enter last name</label>
+            <input type="text" name="last-name" id="last-name" class="form-control" placeholder="Last Name" maxlength="191" required>
           </div>
           <div class="form-group">
             <label for="role-id" class="required">Choose role</label>
@@ -31,6 +35,14 @@
                 <option value="{{ item.id }}">{{ item.title }}</option>
               {% endfor %}
             </select>
+          </div>
+          <div class="form-group">
+            <label for="email" class="required">Enter email</label>
+            <input type="email" name="email" id="email" class="form-control" placeholder="Email" maxlength="191" required>
+          </div>
+          <div class="form-group">
+            <label for="phone" class="required">Enter phone</label>
+            <input type="tel" name="phone" id="phone" class="form-control" placeholder="Phone" minlength="10" maxlength="10" required>
           </div>
           <div class="form-group">
             <label for="password" class="required">Enter password</label>
@@ -51,21 +63,22 @@
     <div class="col-12 col-sm-6 col-lg-9">
       <div class="card p-15">
         <h1 class="card-title">
-          <i class="fa fa-shield-alt mr-5"></i> Admins
+          <i class="fa fa-users mr-5"></i> Users
         </h1>
         <div class="table-responsive">
           <table class="table table-bordered">
             <thead>
-              <tr>
-                <th class="w-25">ID</th>
-                <th>Status</th>
-                <th>Username</th>
-                <th>Role</th>
-                <th class="w-25"></th>
-              </tr>
+              <th class="w-25">ID</th>
+              <th>Status</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Role</th>
+              <th class="w-25"></th>
             </thead>
             <tbody>
-              {% for item in admins %}
+              {% for item in users %}
                 <tr>
                   <td>{{ item.id }}</td>
                   <td>
@@ -76,12 +89,15 @@
                       <span class="badge badge-danger">Inactive</span>
                     {% endif %}
                   </td>
-                  <td>{{ item.username }}</td>
+                  <td>{{ item.first_name }}</td>
+                  <td>{{ item.last_name }}</td>
+                  <td>{{ item.email }}</td>
+                  <td>{{ item.phone }}</td>
                   <td>{{ item.role.title }}</td>
                   <td>
                     <div class="d-flex">
                       {% if item.status %}
-                        <form action="{{ "/admin/admins/deactivate"|page }}" method="post" class="mr-5">
+                        <form action="{{ "/admin/users/deactivate"|page }}" method="post" class="mr-5">
                           <input type="hidden" name="id" value="{{ item.id }}">
                           <button class="btn btn-square">
                             <i class="fa fa-times"></i>
@@ -89,14 +105,14 @@
                         </form>
                       {% endif %}
                       {% if not item.status %}
-                        <form action="{{ "/admin/admins/activate"|page }}" method="post" class="mr-5">
+                        <form action="{{ "/admin/users/activate"|page }}" method="post" class="mr-5">
                           <input type="hidden" name="id" value="{{ item.id }}">
                           <button class="btn btn-square">
                             <i class="fa fa-check"></i>
                           </button>
                         </form>
                       {% endif %}
-                      <form action="{{ "/admin/admins/remove"|page }}" method="post">
+                      <form action="{{ "/admin/users/remove"|page }}" method="post">
                         <input type="hidden" name="id" value="{{ item.id }}">
                         <button class="btn btn-danger btn-square">
                           <i class="fa fa-trash-alt"></i>
@@ -107,9 +123,9 @@
                 </tr>
               {% else %}
                 <tr>
-                  <td colspan="5">
+                  <td colspan="8">
                     <div class="text-center">
-                      <i class="fa fa-frown mr-5"></i> No admins found!
+                      <i class="fa fa-frown mr-5"></i> No users found!
                     </div>
                   </td>
                 </tr>

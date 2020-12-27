@@ -3,6 +3,7 @@
 use App\Controllers\Admin\Accounts as AdminAccounts;
 use App\Controllers\Admin\Admins as AdminAdmins;
 use App\Controllers\Admin\Base as AdminBase;
+use App\Controllers\Admin\Users as AdminUsers;
 use App\Controllers\User\Base as UserBase;
 use App\Middleware\AdminAuth;
 use App\Middleware\AdminRole;
@@ -26,6 +27,13 @@ $app->group('/admin', function(RouteCollectorProxy $admin) use($container) {
     $admins->post('/deactivate', AdminAdmins::class . ':deactivate');
     $admins->post('/remove', AdminAdmins::class . ':remove');
   })->add(new AdminRole($container, [1]));
+  $admin->group('/users', function(RouteCollectorProxy $users) {
+    $users->get('', AdminBase::class . ':users');
+    $users->post('/add', AdminUsers::class . ':add');
+    $users->post('/activate', AdminUsers::class . ':activate');
+    $users->post('/deactivate', AdminUsers::class . ':deactivate');
+    $users->post('/remove', AdminUsers::class . ':remove');
+  })->add(new AdminRole($container, [1, 2]));
 })->add(new AdminAuth($container));
 
 // User routes

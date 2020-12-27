@@ -24,11 +24,19 @@
     </a>
     <h6 class="sidebar-title">Admins</h6>
     <div class="sidebar-divider"></div>
-    <a href="{{ "/admin/admins"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "admins" ? "active" }}">
+    <a href="{{ "/admin/admins"|page }}" class="sidebar-link sidebar-link-with-icon mb-20 {{ id == "admins" ? "active" }}">
       <span class="sidebar-icon rounded-circle {{ id == "admins" ? "bg-primary text-white" }}">
         <i class="fa fa-shield-alt"></i>
       </span>
       Admins
+    </a>
+    <h6 class="sidebar-title">Users</h6>
+    <div class="sidebar-divider"></div>
+    <a href="{{ "/admin/users"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "users" ? "active" }}">
+      <span class="sidebar-icon rounded-circle {{ id == "users" ? "bg-primary text-white" }}">
+        <i class="fa fa-users"></i>
+      </span>
+      Users
     </a>
   </div>
 </div>
