@@ -44,7 +44,7 @@ class Accounts extends Controller
       $password = trim($inputs['password']) . $_ENV['app']['key'];
 
       // Check account
-      $account = AdminAccount::where('username', $username)->first();
+      $account = AdminAccount::where('status', true)->where('username', $username)->first();
       if($account == null) {
         throw new HttpBadRequestException($request, 'There is no account found.');
       }

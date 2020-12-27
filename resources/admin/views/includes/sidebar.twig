@@ -16,11 +16,19 @@
       </span>
       Profile
     </a>
-    <a href="{{ "/admin/accounts/logout"|page }}" class="sidebar-link sidebar-link-with-icon">
+    <a href="{{ "/admin/accounts/logout"|page }}" class="sidebar-link sidebar-link-with-icon mb-20">
       <span class="sidebar-icon rounded-circle">
         <i class="fa fa-sign-out-alt"></i>
       </span>
       Logout
+    </a>
+    <h6 class="sidebar-title">Admins</h6>
+    <div class="sidebar-divider"></div>
+    <a href="{{ "/admin/admins"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "admins" ? "active" }}">
+      <span class="sidebar-icon rounded-circle {{ id == "admins" ? "bg-primary text-white" }}">
+        <i class="fa fa-shield-alt"></i>
+      </span>
+      Admins
     </a>
   </div>
 </div>

@@ -55,7 +55,7 @@ class UserAuth
     $database = $this->container->get('database');
 
     // Check account
-    $account = $database->table('user_accounts')->where('unique_id', $request->getCookieParams()[$_ENV['app']['cookie']['user']])->first();
+    $account = $database->table('user_accounts')->where('status', true)->where('unique_id', $request->getCookieParams()[$_ENV['app']['cookie']['user']])->first();
     if($account == null) {
       // Check session exists
       if($sessionExists) {
@@ -83,7 +83,9 @@ class UserAuth
 
     // Get session
     $_SESSION['auth']['user'] = [
-      'id'         => $account->id,
+      'id'         => (int) $account->id,
+      'role-id'    => (int) $account->role_id,
+      'status'     => (bool) $account->status,
       'first-name' => $account->first_name,
       'last-name'  => $account->last_name,
       'email'      => $account->email,
