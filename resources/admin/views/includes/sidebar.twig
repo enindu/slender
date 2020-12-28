@@ -2,14 +2,12 @@
   <div class="sidebar-menu">
     <h6 class="sidebar-title">Dashboard</h6>
     <div class="sidebar-divider"></div>
-    <a href="{{ "/admin"|page }}" class="sidebar-link sidebar-link-with-icon mb-20 {{ id == "home" ? "active" }}">
+    <a href="{{ "/admin"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "home" ? "active" }}">
       <span class="sidebar-icon rounded-circle {{ id == "home" ? "bg-primary text-white" }}">
         <i class="fa fa-home"></i>
       </span>
       Home
     </a>
-    <h6 class="sidebar-title">Accounts</h6>
-    <div class="sidebar-divider"></div>
     <a href="{{ "/admin/accounts/profile"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "accounts.profile" ? "active" }}">
       <span class="sidebar-icon rounded-circle {{ id == "accounts.profile" ? "bg-primary text-white" }}">
         <i class="fa fa-user"></i>
@@ -22,16 +20,14 @@
       </span>
       Logout
     </a>
-    <h6 class="sidebar-title">Admins</h6>
+    <h6 class="sidebar-title">Account</h6>
     <div class="sidebar-divider"></div>
-    <a href="{{ "/admin/admins"|page }}" class="sidebar-link sidebar-link-with-icon mb-20 {{ id == "admins" ? "active" }}">
+    <a href="{{ "/admin/admins"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "admins" ? "active" }}">
       <span class="sidebar-icon rounded-circle {{ id == "admins" ? "bg-primary text-white" }}">
         <i class="fa fa-shield-alt"></i>
       </span>
       Admins
     </a>
-    <h6 class="sidebar-title">Users</h6>
-    <div class="sidebar-divider"></div>
     <a href="{{ "/admin/users"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "users" ? "active" }}">
       <span class="sidebar-icon rounded-circle {{ id == "users" ? "bg-primary text-white" }}">
         <i class="fa fa-users"></i>
