@@ -1,0 +1,10 @@
+<div id="slider-{{ item.id }}" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-content-media w-600">
+      <a href="#" class="close" role="button">
+        <i class="fa fa-times"></i>
+      </a>
+      <img src="{{ item.file|file("sliders") }}" alt="{{ item.file }}" class="img-fluid">
+    </div>
+  </div>
+</div>

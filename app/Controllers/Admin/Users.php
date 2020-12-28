@@ -12,6 +12,23 @@ use Slim\Psr7\Response;
 class Users extends Controller
 {
   /**
+   * Base page
+   * 
+   * @param Request  $request
+   * @param Response $response
+   * @param array    $data
+   * 
+   * @return Response
+   */
+  public function base(Request $request, Response $response, array $data): Response
+  {
+    return $this->view($response, '@admin/users.twig', [
+      'roles' => Role::get(),
+      'users' => UserAccount::orderBy('id', 'desc')->get()
+    ]);
+  }
+
+  /**
    * Add function
    * 
    * @param Request  $request

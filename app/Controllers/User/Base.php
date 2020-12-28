@@ -9,7 +9,7 @@ use Slim\Psr7\Response;
 class Base extends Controller
 {
   /**
-   * Homepage
+   * Base page
    * 
    * @param Request  $request
    * @param Response $response
@@ -17,7 +17,7 @@ class Base extends Controller
    * 
    * @return Response
    */
-  public function home(Request $request, Response $response, array $data): Response
+  public function base(Request $request, Response $response, array $data): Response
   {
     return $this->view($response, '@user/home.twig');
   }

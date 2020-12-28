@@ -1,0 +1,125 @@
+{% extends "@admin/layouts/sub-2.twig" %}
+
+{% set id = "sliders" %}
+{% set title = "Sliders" %}
+
+{% block modal_content %}
+{% for item in sliders %}
+  {% include "@admin/modals/slider.twig" %}
+{% endfor %}
+{% endblock %}
+
+{% block sub_content %}
+<div class="container-fluid">
+  <div class="row row-eq-spacing">
+    <div class="col-12 col-sm-auto mb-20 mb-sm-0">
+      <a href="#" id="back" class="btn">
+        <i class="fa fa-chevron-left mr-5"></i> Back
+      </a>
+    </div>
+    <div class="col-12 col-sm-auto">
+      <h4 class="my-0">
+        <i class="fa fa-image mr-5"></i> Sliders
+      </h4>
+    </div>
+  </div>
+  <div class="row row-eq-spacing">
+    <div class="col-12 col-sm-6 col-lg-3 mb-20 mb-sm-0">
+      <div class="card p-15">
+        <h1 class="card-title">
+          <i class="fa fa-plus mr-5"></i> Add Slider
+        </h1>
+        <form action="{{ "/admin/sliders/add"|page }}" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="title">Enter title</label>
+            <input type="text" name="title" id="title" class="form-control" placeholder="Title" maxlength="191">
+          </div>
+          <div class="form-group">
+            <label for="subtitle">Enter subtitle</label>
+            <input type="text" name="subtitle" id="subtitle" class="form-control" placeholder="Subtitle" maxlength="191">
+          </div>
+          <div class="form-group">
+            <label for="type-id" class="required">Choose type</label>
+            <select name="type-id" id="type-id" class="form-control" required>
+              <option value="" hidden selected>Type</option>
+              {% for item in types %}
+                <option value="{{ item.id }}">{{ item.title }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="file" class="required">Choose file</label>
+            <div class="custom-file">
+              <input type="file" name="file" id="file" accept=".jpg,.jpeg,.png" required>
+              <label for="file">Choose File</label>
+            </div>
+            <div class="form-text">Recommended size: 1920x1080</div>
+          </div>
+          <div class="text-right">
+            <button class="btn">
+              <i class="fa fa-plus mr-5"></i> Add
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-9">
+      <div class="card p-15">
+        <h1 class="card-title">
+          <i class="fa fa-image mr-5"></i> Sliders
+        </h1>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <th class="w-25">ID</th>
+              <th class="w-25">Thumbnail</th>
+              <th>Title</th>
+              <th>Subtitle</th>
+              <th>Type</th>
+              <th class="w-25"></th>
+            </thead>
+            <tbody>
+              {% for item in sliders %}
+                <tr>
+                  <td>{{ item.id }}</td>
+                  <td>
+                    <img src="{{ item.file|file("sliders") }}" alt="{{ item.file }}" class="img-fluid">
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.title != "false" ? item.title : "N/A" }}</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.subtitle != "false" ? item.subtitle : "N/A" }}</div>
+                  </td>
+                  <td>{{ item.type.title }}</td>
+                  <td>
+                    <div class="d-flex">
+                      <a href="#slider-{{ item.id }}" class="btn btn-square mr-5">
+                        <i class="fa fa-eye"></i>
+                      </a>
+                      <form action="{{ "/admin/sliders/remove"|page }}" method="post">
+                        <input type="hidden" name="id" value="{{ item.id }}">
+                        <button class="btn btn-danger btn-square">
+                          <i class="fa fa-trash-alt"></i>
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td colspan="6">
+                    <div class="text-center">
+                      <i class="fa fa-frown mr-5"></i> No sliders found!
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

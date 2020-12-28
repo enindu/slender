@@ -2,4 +2,6 @@ bootstrap/app.php
 cache/routes/*
 cache/views/*
 node_modules/
+temporary/*
+uploads/sliders/*
 vendor/

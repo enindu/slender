@@ -28,11 +28,19 @@
       </span>
       Admins
     </a>
-    <a href="{{ "/admin/users"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "users" ? "active" }}">
+    <a href="{{ "/admin/users"|page }}" class="sidebar-link sidebar-link-with-icon mb-20 {{ id == "users" ? "active" }}">
       <span class="sidebar-icon rounded-circle {{ id == "users" ? "bg-primary text-white" }}">
         <i class="fa fa-users"></i>
       </span>
       Users
+    </a>
+    <h6 class="sidebar-title">Common</h6>
+    <div class="sidebar-divider"></div>
+    <a href="{{ "/admin/sliders"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "sliders" ? "active" }}">
+      <span class="sidebar-icon rounded-circle {{ id == "sliders" ? "bg-primary text-white" }}">
+        <i class="fa fa-image"></i>
+      </span>
+      Sliders
     </a>
   </div>
 </div>
