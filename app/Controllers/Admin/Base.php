@@ -22,7 +22,12 @@ class Base extends Controller
    */
   public function home(Request $request, Response $response, array $data): Response
   {
-    return $this->view($response, '@admin/home.twig');
+    return $this->view($response, '@admin/home.twig', [
+      'account' => AdminAccount::where('id', $this->auth('id', 'admin'))->first(),
+      'admins'  => AdminAccount::get(),
+      'users'   => UserAccount::get(),
+      'roles'   => Role::get()
+    ]);
   }
 
   /**

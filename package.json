@@ -27,7 +27,7 @@
   },
   "main": "sources/slender.js",
   "scripts": {
-    "slender": "echo \"Slender - Rapid web development environment based on Slim framework (Slim skeleton)\""
+    "slender": "echo \"Slender - Rapid web development environment based on Slim framework\""
   },
   "repository": {
     "type": "git",
