@@ -1,11 +1,11 @@
 {% extends "@admin/layouts/sub-2.twig" %}
 
-{% set id = "sliders" %}
-{% set title = "Sliders" %}
+{% set id = "images" %}
+{% set title = "Images" %}
 
 {% block modal_content %}
-{% for item in sliders %}
-  {% include "@admin/modals/slider.twig" %}
+{% for item in images %}
+  {% include "@admin/modals/image.twig" %}
 {% endfor %}
 {% endblock %}
 
@@ -19,7 +19,7 @@
     </div>
     <div class="col-12 col-sm-auto">
       <h4 class="my-0">
-        <i class="fa fa-image mr-5"></i> Sliders
+        <i class="fa fa-image mr-5"></i> Images
       </h4>
     </div>
   </div>
@@ -27,9 +27,9 @@
     <div class="col-12 col-sm-6 col-lg-3 mb-20 mb-sm-0">
       <div class="card p-15">
         <h1 class="card-title">
-          <i class="fa fa-plus mr-5"></i> Add Slider
+          <i class="fa fa-plus mr-5"></i> Add Image
         </h1>
-        <form action="{{ "/admin/sliders/add"|page }}" method="post" enctype="multipart/form-data">
+        <form action="{{ "/admin/images/add"|page }}" method="post" enctype="multipart/form-data">
           <div class="form-group">
             <label for="title">Enter title</label>
             <input type="text" name="title" id="title" class="form-control" placeholder="Title" maxlength="191">
@@ -48,12 +48,15 @@
             </select>
           </div>
           <div class="form-group">
+            <label for="description">Enter description</label>
+            <textarea name="description" id="description" class="form-control h-200" placeholder="Description" maxlength="500"></textarea>
+          </div>
+          <div class="form-group">
             <label for="file" class="required">Choose file</label>
             <div class="custom-file">
               <input type="file" name="file" id="file" accept=".jpg,.jpeg,.png" required>
               <label for="file">Choose File</label>
             </div>
-            <div class="form-text">Recommended size: 1920x1080</div>
           </div>
           <div class="text-right">
             <button class="btn">
@@ -66,7 +69,7 @@
     <div class="col-12 col-sm-6 col-lg-9">
       <div class="card p-15">
         <h1 class="card-title">
-          <i class="fa fa-image mr-5"></i> Sliders
+          <i class="fa fa-image mr-5"></i> Images
         </h1>
         <div class="table-responsive">
           <table class="table table-bordered">
@@ -75,15 +78,16 @@
               <th class="w-25">Thumbnail</th>
               <th>Title</th>
               <th>Subtitle</th>
+              <th>Description</th>
               <th>Type</th>
               <th class="w-25"></th>
             </thead>
             <tbody>
-              {% for item in sliders %}
+              {% for item in images %}
                 <tr>
                   <td>{{ item.id }}</td>
                   <td>
-                    <img src="{{ item.file|file("sliders") }}" alt="{{ item.file }}" class="img-fluid">
+                    <img src="{{ item.file|file("images") }}" alt="{{ item.file }}" class="img-fluid">
                   </td>
                   <td>
                     <div class="text-wrap">{{ item.title != "false" ? item.title : "N/A" }}</div>
@@ -91,13 +95,16 @@
                   <td>
                     <div class="text-wrap">{{ item.subtitle != "false" ? item.subtitle : "N/A" }}</div>
                   </td>
+                  <td>
+                    <div class="text-wrap">{{ item.description != "false" ? item.description : "N/A" }}</div>
+                  </td>
                   <td>{{ item.type.title }}</td>
                   <td>
                     <div class="d-flex">
-                      <a href="#slider-{{ item.id }}" class="btn btn-square mr-5">
+                      <a href="#image-{{ item.id }}" class="btn btn-square mr-5">
                         <i class="fa fa-eye"></i>
                       </a>
-                      <form action="{{ "/admin/sliders/remove"|page }}" method="post">
+                      <form action="{{ "/admin/images/remove"|page }}" method="post">
                         <input type="hidden" name="id" value="{{ item.id }}">
                         <button class="btn btn-danger btn-square">
                           <i class="fa fa-trash-alt"></i>
@@ -108,9 +115,9 @@
                 </tr>
               {% else %}
                 <tr>
-                  <td colspan="6">
+                  <td colspan="7">
                     <div class="text-center">
-                      <i class="fa fa-frown mr-5"></i> No sliders found!
+                      <i class="fa fa-frown mr-5"></i> No images found!
                     </div>
                   </td>
                 </tr>

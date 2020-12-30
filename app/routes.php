@@ -3,7 +3,7 @@
 use App\Controllers\Admin\Accounts as AdminAccounts;
 use App\Controllers\Admin\Admins as AdminAdmins;
 use App\Controllers\Admin\Base as AdminBase;
-use App\Controllers\Admin\Sliders as AdminSliders;
+use App\Controllers\Admin\Images as AdminImages;
 use App\Controllers\Admin\Users as AdminUsers;
 use App\Controllers\User\Base as UserBase;
 use App\Middleware\AdminAuth;
@@ -35,10 +35,10 @@ $app->group('/admin', function(RouteCollectorProxy $admin) use($container) {
     $users->post('/deactivate', AdminUsers::class . ':deactivate');
     $users->post('/remove', AdminUsers::class . ':remove');
   })->add(new AdminRole($container, [1, 2]));
-  $admin->group('/sliders', function(RouteCollectorProxy $sliders) {
-    $sliders->get('', AdminSliders::class . ':base');
-    $sliders->post('/add', AdminSliders::class . ':add');
-    $sliders->post('/remove', AdminSliders::class . ':remove');
+  $admin->group('/images', function(RouteCollectorProxy $images) {
+    $images->get('', AdminImages::class . ':base');
+    $images->post('/add', AdminImages::class . ':add');
+    $images->post('/remove', AdminImages::class . ':remove');
   });
 })->add(new AdminAuth($container));
 

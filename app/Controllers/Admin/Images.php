@@ -3,14 +3,13 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\Controller;
-use App\Models\Slider;
+use App\Models\Image;
 use App\Models\Type;
-use Intervention\Image\Constraint;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
-class Sliders extends Controller
+class Images extends Controller
 {
   /**
    * Base page
@@ -23,9 +22,9 @@ class Sliders extends Controller
    */
   public function base(Request $request, Response $response, array $data): Response
   {
-    return $this->view($response, '@admin/sliders.twig', [
-      'types'   => Type::get(),
-      'sliders' => Slider::orderBy('id', 'desc')->get()
+    return $this->view($response, '@admin/images.twig', [
+      'types'  => Type::get(),
+      'images' => Image::orderBy('id', 'desc')->get()
     ]);
   }
 
@@ -44,9 +43,10 @@ class Sliders extends Controller
     // Check input validation
     $inputs = $request->getParsedBody();
     $inputValidation = $this->validate($inputs, [
-      'title'    => 'max:191',
-      'subtitle' => 'max:191',
-      'type-id'  => 'required|integer'
+      'title'       => 'max:191',
+      'subtitle'    => 'max:191',
+      'type-id'     => 'required|integer',
+      'description' => 'max:500'
     ]);
     if($inputValidation != null) {
       throw new HttpBadRequestException($request, reset($inputValidation) . '.');
@@ -65,6 +65,7 @@ class Sliders extends Controller
     $title = trim($inputs['title']);
     $subtitle = trim($inputs['subtitle']);
     $typeId = (int) trim($inputs['type-id']);
+    $description = trim($inputs['description']);
     $file = $files['file'];
 
     // Check type
@@ -73,49 +74,27 @@ class Sliders extends Controller
       throw new HttpBadRequestException($request, 'There is no type found.');
     }
 
-    // Upload temporary file
+    // Upload file
     $fileExtension = pathinfo($file->getClientFilename(), PATHINFO_EXTENSION);
     $fileName = uniqid(bin2hex(random_bytes(8))) . '.' . $fileExtension;
-    $file->moveTo(__DIR__ . '/../../../temporary/' . $fileName);
-
-    // Get image and filesystem libraries
-    $image = $this->container->get('image');
-    $filesystem = $this->container->get('filesystem');
-
-    // Get raw image
-    $rawImage = $image->make(__DIR__ . '/../../../temporary/' . $fileName);
-
-    // Check raw image resolution
-    $rawImageWidth = $rawImage->width();
-    $rawImageHeight = $rawImage->height();
-    if($rawImageWidth < 1920 || $rawImageHeight < 1080) {
-      $filesystem->remove(__DIR__ . '/../../../temporary/' . $fileName);
-      throw new HttpBadRequestException($request, 'Image must be at least 1920x1080.');
-    }
-
-    // Manipulate raw image
-    $rawImage->resize(1920, null, function(Constraint $constraint) {
-      $constraint->aspectRatio();
-    })->crop(1920, 1080)->save(__DIR__ . '/../../../uploads/sliders/' . $fileName);
-
-    // Remove temorary file
-    $filesystem->remove(__DIR__ . '/../../../temporary/' . $fileName);
+    $file->moveTo(__DIR__ . '/../../../uploads/images/' . $fileName);
 
     // Get clock library
     $clock = $this->container->get('clock');
 
     // Update database
-    Slider::insert([
-      'type_id'    => $typeId,
-      'title'      => $title != '' ? $title : 'false',
-      'subtitle'   => $subtitle != '' ? $subtitle : 'false',
-      'file'       => $fileName,
-      'created_at' => $clock::now(),
-      'updated_at' => $clock::now()
+    Image::insert([
+      'type_id'     => $typeId,
+      'title'       => $title != '' ? $title : 'false',
+      'subtitle'    => $subtitle != '' ? $subtitle : 'false',
+      'description' => $description != '' ? $description : 'false',
+      'file'        => $fileName,
+      'created_at'  => $clock::now(),
+      'updated_at'  => $clock::now()
     ]);
 
     // Return response
-    return $response->withHeader('location', '/admin/sliders');
+    return $response->withHeader('location', '/admin/images');
   }
 
   /**
@@ -142,22 +121,22 @@ class Sliders extends Controller
     // Get inputs
     $id = (int) trim($inputs['id']);
 
-    // Check slider
-    $slider = Slider::where('id', $id)->first();
-    if($slider == null) {
-      throw new HttpBadRequestException($request, 'There is no slider found.');
+    // Check image
+    $image = Image::where('id', $id)->first();
+    if($image == null) {
+      throw new HttpBadRequestException($request, 'There is no image found.');
     }
 
     // Get filesystem library
     $filesystem = $this->container->get('filesystem');
 
     // Remove file
-    $filesystem->remove(__DIR__ . '/../../../uploads/sliders/' . $slider->file);
+    $filesystem->remove(__DIR__ . '/../../../uploads/images/' . $image->file);
 
     // Update database
-    $slider->delete();
+    $image->delete();
 
     // Return response
-    return $response->withHeader('location', '/admin/sliders');
+    return $response->withHeader('location', '/admin/images');
   }
 }

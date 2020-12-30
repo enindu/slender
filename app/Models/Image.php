@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Slider extends Model
+class Image extends Model
 {
   public $timestamps = true;
-  protected $table = "sliders";
+  protected $table = "images";
 
   /**
    * Has one type
