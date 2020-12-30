@@ -49,12 +49,12 @@ $_ENV = [
   ],
   'middleware' => [
     'session' => [
+      'name'      => 'slender',
       'lifetime'  => 0,
       'path'      => '/',
       'domain'    => '',
       'secure'    => false,
-      'http-only' => false,
-      'name'      => 'slender'
+      'http-only' => false
     ]
   ]
 ];

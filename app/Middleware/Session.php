@@ -8,25 +8,6 @@ use Slim\Psr7\Response;
 
 class Session
 {
-  private $settings;
-
-  /**
-   * Session constructor
-   * 
-   * @param array $settings
-   */
-  public function __construct(array $settings)
-  {
-    $this->settings = [
-      'name'      => isset($settings['name']) ? $settings['name'] : 'slender',
-      'lifetime'  => isset($settings['lifetime']) ? $settings['lifetime'] : 0,
-      'path'      => isset($settings['path']) ? $settings['path'] : '/',
-      'domain'    => isset($settings['domain']) ? $settings['domain'] : '',
-      'secure'    => isset($settings['secure']) ? $settings['secure'] : false,
-      'http-only' => isset($settings['http-only']) ? $settings['http-only'] : false
-    ];
-  }
-
   /**
    * Session invoker
    * 
@@ -38,20 +19,20 @@ class Session
   public function __invoke(Request $request, RequestHandlerInterface $requestHandler): Response
   {
     // Check cookie exists
-    $cookieExists = isset($request->getCookieParams()[$this->settings['name']]);
+    $cookieExists = isset($request->getCookieParams()[$_ENV['middleware']['session']['name']]);
     if($cookieExists) {
       return $requestHandler->handle($request);
     }
 
     // Set cookie parameters and start session
     session_set_cookie_params([
-      'lifetime' => $this->settings['lifetime'],
-      'path'     => $this->settings['path'],
-      'domain'   => $this->settings['domain'],
-      'secure'   => $this->settings['secure'],
-      'httponly' => $this->settings['http-only']
+      'lifetime' => $_ENV['middleware']['session']['lifetime'],
+      'path'     => $_ENV['middleware']['session']['path'],
+      'domain'   => $_ENV['middleware']['session']['domain'],
+      'secure'   => $_ENV['middleware']['session']['secure'],
+      'httponly' => $_ENV['middleware']['session']['http-only']
     ]);
-    session_name($this->settings['name']);
+    session_name($_ENV['middleware']['session']['name']);
     session_id(md5(uniqid(bin2hex(random_bytes(32)))));
     session_start();
 
