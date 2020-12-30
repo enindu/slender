@@ -5,6 +5,8 @@ namespace App\Controllers\Admin;
 use App\Controllers\Controller;
 use App\Models\AdminAccount;
 use App\Models\Role;
+use App\Models\Slider;
+use App\Models\Type;
 use App\Models\UserAccount;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -26,7 +28,9 @@ class Base extends Controller
       'account' => AdminAccount::where('id', $this->auth('id', 'admin'))->first(),
       'admins'  => AdminAccount::get(),
       'users'   => UserAccount::get(),
-      'roles'   => Role::get()
+      'roles'   => Role::get(),
+      'sliders' => Slider::get(),
+      'types'   => Type::get()
     ]);
   }
 }

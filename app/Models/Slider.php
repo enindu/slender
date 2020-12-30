@@ -17,6 +17,6 @@ class Slider extends Model
    */
   public function type(): HasOne
   {
-    return $this->hasOne(SliderType::class, 'id', 'slider_type_id');
+    return $this->hasOne(Type::class, 'id', 'type_id');
   }
 }

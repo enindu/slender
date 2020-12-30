@@ -4,7 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\Controller;
 use App\Models\Slider;
-use App\Models\SliderType;
+use App\Models\Type;
 use Intervention\Image\Constraint;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Psr7\Request;
@@ -24,7 +24,7 @@ class Sliders extends Controller
   public function base(Request $request, Response $response, array $data): Response
   {
     return $this->view($response, '@admin/sliders.twig', [
-      'types'   => SliderType::get(),
+      'types'   => Type::get(),
       'sliders' => Slider::orderBy('id', 'desc')->get()
     ]);
   }
@@ -68,7 +68,7 @@ class Sliders extends Controller
     $file = $files['file'];
 
     // Check type
-    $type = SliderType::where('id', $typeId)->get();
+    $type = Type::where('id', $typeId)->get();
     if($type == null) {
       throw new HttpBadRequestException($request, 'There is no type found.');
     }
@@ -106,12 +106,12 @@ class Sliders extends Controller
 
     // Update database
     Slider::insert([
-      'slider_type_id' => $typeId,
-      'title'          => $title != '' ? $title : 'false',
-      'subtitle'       => $subtitle != '' ? $subtitle : 'false',
-      'file'           => $fileName,
-      'created_at'     => $clock::now(),
-      'updated_at'     => $clock::now()
+      'type_id'    => $typeId,
+      'title'      => $title != '' ? $title : 'false',
+      'subtitle'   => $subtitle != '' ? $subtitle : 'false',
+      'file'       => $fileName,
+      'created_at' => $clock::now(),
+      'updated_at' => $clock::now()
     ]);
 
     // Return response
