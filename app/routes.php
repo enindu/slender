@@ -4,6 +4,7 @@ use App\Controllers\Admin\Accounts as AdminAccounts;
 use App\Controllers\Admin\Admins as AdminAdmins;
 use App\Controllers\Admin\Base as AdminBase;
 use App\Controllers\Admin\Images as AdminImages;
+use App\Controllers\Admin\Roles as AdminRoles;
 use App\Controllers\Admin\Users as AdminUsers;
 use App\Controllers\User\Base as UserBase;
 use App\Middleware\AdminAuth;
@@ -21,6 +22,11 @@ $app->group('/admin', function(RouteCollectorProxy $admin) use($container) {
     $accounts->post('/change-information', AdminAccounts::class . ':changeInformation');
     $accounts->post('/change-password', AdminAccounts::class . ':changePassword');
   });
+  $admin->group('/roles', function(RouteCollectorProxy $roles) {
+    $roles->get('', AdminRoles::class . ':base');
+    $roles->post('/add', AdminRoles::class . ':add');
+    $roles->post('/remove', AdminRoles::class . ':remove');
+  })->add(new AdminRole($container, [1]));
   $admin->group('/admins', function(RouteCollectorProxy $admins) {
     $admins->get('', AdminAdmins::class . ':base');
     $admins->post('/add', AdminAdmins::class . ':add');

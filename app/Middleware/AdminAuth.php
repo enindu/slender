@@ -55,7 +55,7 @@ class AdminAuth
     $database = $this->container->get('database');
 
     // Check account
-    $account = $database->table('admin_accounts')->where('status', true)->where('unique_id', $request->getCookieParams()[$_ENV['app']['cookie']['admin']])->first();
+    $account = $database->table('admins')->where('status', true)->where('unique_id', $request->getCookieParams()[$_ENV['app']['cookie']['admin']])->first();
     if($account == null) {
       // Check session exists
       if($sessionExists) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 30, 2020 at 02:08 PM
+-- Generation Time: Dec 30, 2020 at 07:26 PM
 -- Server version: 10.5.8-MariaDB
 -- PHP Version: 7.4.13
 
@@ -24,16 +24,17 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin_accounts`
+-- Table structure for table `admins`
 --
 
-CREATE TABLE `admin_accounts` (
+CREATE TABLE `admins` (
   `id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   `unique_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 1,
   `username` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -46,11 +47,12 @@ CREATE TABLE `admin_accounts` (
 
 CREATE TABLE `images` (
   `id` int(11) NOT NULL,
-  `type_id` int(11) NOT NULL,
+  `section_id` int(11) NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
   `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
   `description` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
   `file` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -64,47 +66,32 @@ CREATE TABLE `images` (
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `roles`
---
-
-INSERT INTO `roles` (`id`, `title`, `created_at`, `updated_at`) VALUES
-(1, 'Administrator', '1995-07-21 06:29:00', '1995-07-21 06:29:00'),
-(2, 'Moderator', '1995-07-21 06:29:00', '1995-07-21 06:29:00'),
-(3, 'User', '1995-07-21 06:29:00', '1995-07-21 06:29:00');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `types`
+-- Table structure for table `sections`
 --
 
-CREATE TABLE `types` (
+CREATE TABLE `sections` (
   `id` int(11) NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `types`
---
-
-INSERT INTO `types` (`id`, `title`, `created_at`, `updated_at`) VALUES
-(1, 'Slider', '1995-07-21 06:29:00', '1995-07-21 06:29:00'),
-(2, 'Gallery', '1995-07-21 06:29:00', '1995-07-21 06:29:00');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_accounts`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `user_accounts` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   `unique_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -114,6 +101,7 @@ CREATE TABLE `user_accounts` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -123,11 +111,10 @@ CREATE TABLE `user_accounts` (
 --
 
 --
--- Indexes for table `admin_accounts`
+-- Indexes for table `admins`
 --
-ALTER TABLE `admin_accounts`
+ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `unique_id` (`unique_id`);
 
 --
@@ -140,33 +127,29 @@ ALTER TABLE `images`
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `title` (`title`);
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `types`
+-- Indexes for table `sections`
 --
-ALTER TABLE `types`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `title` (`title`);
+ALTER TABLE `sections`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_accounts`
+-- Indexes for table `users`
 --
-ALTER TABLE `user_accounts`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_id` (`unique_id`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `phone` (`phone`);
+  ADD UNIQUE KEY `unique_id` (`unique_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `admin_accounts`
+-- AUTO_INCREMENT for table `admins`
 --
-ALTER TABLE `admin_accounts`
+ALTER TABLE `admins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -179,19 +162,19 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `types`
+-- AUTO_INCREMENT for table `sections`
 --
-ALTER TABLE `types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `sections`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `user_accounts`
+-- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `user_accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

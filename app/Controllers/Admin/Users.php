@@ -4,7 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\Controller;
 use App\Models\Role;
-use App\Models\UserAccount;
+use App\Models\User;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -24,7 +24,7 @@ class Users extends Controller
   {
     return $this->view($response, '@admin/users.twig', [
       'roles' => Role::get(),
-      'users' => UserAccount::orderBy('id', 'desc')->get()
+      'users' => User::orderBy('id', 'desc')->get()
     ]);
   }
 
@@ -69,9 +69,9 @@ class Users extends Controller
       throw new HttpBadRequestException($request, 'There is no role found.');
     }
 
-    // Check account
-    $account = UserAccount::where('email', $email)->orWhere('phone', $phone)->first();
-    if($account != null) {
+    // Check user
+    $user = User::where('email', $email)->orWhere('phone', $phone)->first();
+    if($user != null) {
       throw new HttpBadRequestException($request, 'There is an account already using that email or phone.');
     }
 
@@ -79,7 +79,7 @@ class Users extends Controller
     $clock = $this->container->get('clock');
 
     // Update database
-    UserAccount::insert([
+    User::insert([
       'role_id'    => $roleId,
       'unique_id'  => md5(uniqid(bin2hex(random_bytes(32)))),
       'first_name' => $firstName,
@@ -119,15 +119,15 @@ class Users extends Controller
     // Get inputs
     $id = (int) trim($inputs['id']);
 
-    // Check account
-    $account = UserAccount::where('id', $id)->first();
-    if($account == null) {
+    // Check user
+    $user = User::where('id', $id)->first();
+    if($user == null) {
       throw new HttpBadRequestException($request, 'There is no account found.');
     }
 
     // Update database
-    $account->status = true;
-    $account->save();
+    $user->status = true;
+    $user->save();
 
     // Return response
     return $response->withHeader('location', '/admin/users');
@@ -157,15 +157,15 @@ class Users extends Controller
     // Get inputs
     $id = (int) trim($inputs['id']);
 
-    // Check account
-    $account = UserAccount::where('id', $id)->first();
-    if($account == null) {
+    // Check user
+    $user = User::where('id', $id)->first();
+    if($user == null) {
       throw new HttpBadRequestException($request, 'There is no account found.');
     }
 
     // Update database
-    $account->status = false;
-    $account->save();
+    $user->status = false;
+    $user->save();
 
     // Return response
     return $response->withHeader('location', '/admin/users');
@@ -195,14 +195,14 @@ class Users extends Controller
     // Get inputs
     $id = (int) trim($inputs['id']);
 
-    // Check account
-    $account = UserAccount::where('id', $id)->first();
-    if($account == null) {
+    // Check user
+    $user = User::where('id', $id)->first();
+    if($user == null) {
       throw new HttpBadRequestException($request, 'There is no account found.');
     }
 
     // Update database
-    $account->delete();
+    $user->delete();
 
     // Return response
     return $response->withHeader('location', '/admin/users');

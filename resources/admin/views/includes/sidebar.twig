@@ -8,6 +8,12 @@
       </span>
       Home
     </a>
+    <a href="{{ "/admin/roles"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "roles" ? "active" }}">
+      <span class="sidebar-icon rounded-circle {{ id == "roles" ? "bg-primary text-white" }}">
+        <i class="fa fa-crown"></i>
+      </span>
+      Roles
+    </a>
     <a href="{{ "/admin/accounts/profile"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "accounts.profile" ? "active" }}">
       <span class="sidebar-icon rounded-circle {{ id == "accounts.profile" ? "bg-primary text-white" }}">
         <i class="fa fa-user"></i>
@@ -34,7 +40,7 @@
       </span>
       Users
     </a>
-    <h6 class="sidebar-title">Common</h6>
+    <h6 class="sidebar-title">Upload</h6>
     <div class="sidebar-divider"></div>
     <a href="{{ "/admin/images"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "images" ? "active" }}">
       <span class="sidebar-icon rounded-circle {{ id == "images" ? "bg-primary text-white" }}">

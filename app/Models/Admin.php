@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AdminAccount extends Model
+class Admin extends Model
 {
+  use SoftDeletes;
+  
   public $timestamps = true;
-  protected $table = "admin_accounts";
+  protected $table = "admins";
 
   /**
    * Has one role

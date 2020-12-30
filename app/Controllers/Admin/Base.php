@@ -3,11 +3,10 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\Controller;
-use App\Models\AdminAccount;
+use App\Models\Admin;
 use App\Models\Image;
 use App\Models\Role;
-use App\Models\Type;
-use App\Models\UserAccount;
+use App\Models\User;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
@@ -25,12 +24,11 @@ class Base extends Controller
   public function base(Request $request, Response $response, array $data): Response
   {
     return $this->view($response, '@admin/home.twig', [
-      'account' => AdminAccount::where('id', $this->auth('id', 'admin'))->first(),
-      'admins'  => AdminAccount::get(),
-      'users'   => UserAccount::get(),
-      'roles'   => Role::get(),
-      'images'  => Image::get(),
-      'types'   => Type::get()
+      'admin'  => Admin::where('id', $this->auth('id', 'admin'))->first(),
+      'roles'  => Role::get(),
+      'admins' => Admin::get(),
+      'users'  => User::get(),
+      'images' => Image::get()
     ]);
   }
 }

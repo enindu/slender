@@ -14,15 +14,45 @@
         <div class="mb-20">
           <div>
             <i class="fa fa-asterisk mr-5"></i>
-            <strong>Username:</strong> {{ account.username }}
+            <strong>Username:</strong> {{ admin.username }}
           </div>
           <div>
             <i class="fa fa-asterisk mr-5"></i>
-            <strong>Role:</strong> {{ account.role.title }}
+            <strong>Role:</strong> {{ admin.role.title }}
           </div>
         </div>
         <a href="{{ "/admin/accounts/profile"|page }}" class="btn btn-block">
           <i class="fa fa-user mr-5"></i> Profile
+        </a>
+      </div>
+      <div class="card p-15">
+        <h1 class="card-title">
+          <i class="fa fa-image mr-5"></i> Images
+        </h1>
+        <div class="mb-20">
+          <div>
+            <i class="fa fa-asterisk mr-5"></i>
+            <strong>Images:</strong> {{ images|length }} images
+          </div>
+        </div>
+        <a href="{{ "/admin/images"|page }}" class="btn btn-block">
+          <i class="fa fa-image mr-5"></i> Images
+        </a>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3 mb-20 mb-sm-0">
+      <div class="card p-15">
+        <h1 class="card-title">
+          <i class="fa fa-crown mr-5"></i> Roles
+        </h1>
+        <div class="mb-20">
+          <div>
+            <i class="fa fa-asterisk mr-5"></i>
+            <strong>Roles:</strong> {{ roles|length }} roles
+          </div>
+        </div>
+        <a href="{{ "/admin/roles"|page }}" class="btn btn-block">
+          <i class="fa fa-crown mr-5"></i> Roles
         </a>
       </div>
     </div>
@@ -36,17 +66,13 @@
             <i class="fa fa-asterisk mr-5"></i>
             <strong>Admins:</strong> {{ admins|length }} admins
           </div>
-          <div>
-            <i class="fa fa-asterisk mr-5"></i>
-            <strong>Roles:</strong> {{ roles|length }} roles
-          </div>
         </div>
         <a href="{{ "/admin/admins"|page }}" class="btn btn-block">
           <i class="fa fa-shield-alt mr-5"></i> Admins
         </a>
       </div>
     </div>
-    <div class="col-12 col-sm-6 col-lg-3 mb-20 mb-sm-0">
+    <div class="col-12 col-sm-6 col-lg-3">
       <div class="card p-15">
         <h1 class="card-title">
           <i class="fa fa-users mr-5"></i> Users
@@ -56,33 +82,9 @@
             <i class="fa fa-asterisk mr-5"></i>
             <strong>Users:</strong> {{ users|length }} users
           </div>
-          <div>
-            <i class="fa fa-asterisk mr-5"></i>
-            <strong>Roles:</strong> {{ roles|length }} roles
-          </div>
         </div>
         <a href="{{ "/admin/users"|page }}" class="btn btn-block">
           <i class="fa fa-users mr-5"></i> Users
-        </a>
-      </div>
-    </div>
-    <div class="col-12 col-sm-6 col-lg-3">
-      <div class="card p-15">
-        <h1 class="card-title">
-          <i class="fa fa-image mr-5"></i> Images
-        </h1>
-        <div class="mb-20">
-          <div>
-            <i class="fa fa-asterisk mr-5"></i>
-            <strong>Images:</strong> {{ images|length }} images
-          </div>
-          <div>
-            <i class="fa fa-asterisk mr-5"></i>
-            <strong>Types:</strong> {{ types|length }} types
-          </div>
-        </div>
-        <a href="{{ "/admin/images"|page }}" class="btn btn-block">
-          <i class="fa fa-image mr-5"></i> Images
         </a>
       </div>
     </div>

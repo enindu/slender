@@ -3,7 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\Controller;
-use App\Models\AdminAccount;
+use App\Models\Admin;
 use App\Models\Role;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Psr7\Request;
@@ -25,7 +25,7 @@ class Admins extends Controller
   {
     return $this->view($response, '@admin/admins.twig', [
       'roles'  => Role::get(),
-      'admins' => AdminAccount::orderBy('id', 'desc')->get()
+      'admins' => Admin::orderBy('id', 'desc')->get()
     ]);
   }
 
@@ -64,9 +64,9 @@ class Admins extends Controller
       throw new HttpBadRequestException($request, 'There is no role found.');
     }
 
-    // Check account
-    $account = AdminAccount::where('username', $username)->first();
-    if($account != null) {
+    // Check admin
+    $admin = Admin::where('username', $username)->first();
+    if($admin != null) {
       throw new HttpBadRequestException($request, 'There is an account already using that username.');
     }
 
@@ -74,7 +74,7 @@ class Admins extends Controller
     $clock = $this->container->get('clock');
 
     // Update database
-    AdminAccount::insert([
+    Admin::insert([
       'role_id'    => $roleId,
       'unique_id'  => md5(uniqid(bin2hex(random_bytes(32)))),
       'username'   => $username,
@@ -111,9 +111,9 @@ class Admins extends Controller
     // Get inputs
     $id = (int) trim($inputs['id']);
 
-    // Check account
-    $account = AdminAccount::where('id', $id)->first();
-    if($account == null) {
+    // Check admin
+    $admin = Admin::where('id', $id)->first();
+    if($admin == null) {
       throw new HttpBadRequestException($request, 'There is no account found.');
     }
 
@@ -123,8 +123,8 @@ class Admins extends Controller
     }
 
     // Update database
-    $account->status = true;
-    $account->save();
+    $admin->status = true;
+    $admin->save();
 
     // Return response
     return $response->withHeader('location', '/admin/admins');
@@ -154,9 +154,9 @@ class Admins extends Controller
     // Get inputs
     $id = (int) trim($inputs['id']);
 
-    // Check account
-    $account = AdminAccount::where('id', $id)->first();
-    if($account == null) {
+    // Check admin
+    $admin = Admin::where('id', $id)->first();
+    if($admin == null) {
       throw new HttpBadRequestException($request, 'There is no account found.');
     }
 
@@ -166,8 +166,8 @@ class Admins extends Controller
     }
 
     // Update database
-    $account->status = false;
-    $account->save();
+    $admin->status = false;
+    $admin->save();
 
     // Return response
     return $response->withHeader('location', '/admin/admins');
@@ -197,9 +197,9 @@ class Admins extends Controller
     // Get inputs
     $id = (int) trim($inputs['id']);
 
-    // Check account
-    $account = AdminAccount::where('id', $id)->first();
-    if($account == null) {
+    // Check admin
+    $admin = Admin::where('id', $id)->first();
+    if($admin == null) {
       throw new HttpBadRequestException($request, 'There is no account found.');
     }
 
@@ -209,7 +209,7 @@ class Admins extends Controller
     }
 
     // Update database
-    $account->delete();
+    $admin->delete();
 
     // Return response
     return $response->withHeader('location', '/admin/admins');

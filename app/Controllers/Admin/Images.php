@@ -4,7 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\Controller;
 use App\Models\Image;
-use App\Models\Type;
+use App\Models\Section;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -23,8 +23,8 @@ class Images extends Controller
   public function base(Request $request, Response $response, array $data): Response
   {
     return $this->view($response, '@admin/images.twig', [
-      'types'  => Type::get(),
-      'images' => Image::orderBy('id', 'desc')->get()
+      'sections' => Section::get(),
+      'images'   => Image::orderBy('id', 'desc')->get()
     ]);
   }
 
@@ -45,7 +45,7 @@ class Images extends Controller
     $inputValidation = $this->validate($inputs, [
       'title'       => 'max:191',
       'subtitle'    => 'max:191',
-      'type-id'     => 'required|integer',
+      'section-id'  => 'required|integer',
       'description' => 'max:500'
     ]);
     if($inputValidation != null) {
@@ -64,14 +64,14 @@ class Images extends Controller
     // Get inputs and files
     $title = trim($inputs['title']);
     $subtitle = trim($inputs['subtitle']);
-    $typeId = (int) trim($inputs['type-id']);
+    $sectionId = (int) trim($inputs['section-id']);
     $description = trim($inputs['description']);
     $file = $files['file'];
 
-    // Check type
-    $type = Type::where('id', $typeId)->get();
-    if($type == null) {
-      throw new HttpBadRequestException($request, 'There is no type found.');
+    // Check section
+    $section = Section::where('id', $sectionId)->get();
+    if($section == null) {
+      throw new HttpBadRequestException($request, 'There is no section found.');
     }
 
     // Upload file
@@ -84,7 +84,7 @@ class Images extends Controller
 
     // Update database
     Image::insert([
-      'type_id'     => $typeId,
+      'section_id'  => $sectionId,
       'title'       => $title != '' ? $title : 'false',
       'subtitle'    => $subtitle != '' ? $subtitle : 'false',
       'description' => $description != '' ? $description : 'false',
@@ -126,12 +126,6 @@ class Images extends Controller
     if($image == null) {
       throw new HttpBadRequestException($request, 'There is no image found.');
     }
-
-    // Get filesystem library
-    $filesystem = $this->container->get('filesystem');
-
-    // Remove file
-    $filesystem->remove(__DIR__ . '/../../../uploads/images/' . $image->file);
 
     // Update database
     $image->delete();

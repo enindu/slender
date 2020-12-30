@@ -3,7 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\Controller;
-use App\Models\AdminAccount;
+use App\Models\Admin;
 use App\Models\Role;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Psr7\Request;
@@ -43,20 +43,20 @@ class Accounts extends Controller
       $username = trim($inputs['username']);
       $password = trim($inputs['password']) . $_ENV['app']['key'];
 
-      // Check account
-      $account = AdminAccount::where('status', true)->where('username', $username)->first();
-      if($account == null) {
+      // Check admin
+      $admin = Admin::where('status', true)->where('username', $username)->first();
+      if($admin == null) {
         throw new HttpBadRequestException($request, 'There is no account found.');
       }
 
       // Check password matches
-      $passwordMatches = password_verify($password, $account->password);
+      $passwordMatches = password_verify($password, $admin->password);
       if(!$passwordMatches) {
         throw new HttpBadRequestException($request, 'Password is invalid.');
       }
 
       // Set cookie
-      setcookie($_ENV['app']['cookie']['admin'], $account->unique_id, strtotime('1 week'), '/');
+      setcookie($_ENV['app']['cookie']['admin'], $admin->unique_id, strtotime('1 week'), '/');
 
       // Return response
       return $response->withHeader('location', '/admin');
@@ -106,9 +106,9 @@ class Accounts extends Controller
         throw new HttpBadRequestException($request, 'There is no role found.');
       }
 
-      // Check account
-      $account = AdminAccount::where('username', $username)->first();
-      if($account != null) {
+      // Check admin
+      $admin = Admin::where('username', $username)->first();
+      if($admin != null) {
         throw new HttpBadRequestException($request, 'There is an account already using that username.');
       }
 
@@ -116,7 +116,7 @@ class Accounts extends Controller
       $clock = $this->container->get('clock');
 
       // Update database
-      AdminAccount::insert([
+      Admin::insert([
         'role_id'    => $roleId,
         'unique_id'  => md5(uniqid(bin2hex(random_bytes(32)))),
         'username'   => $username,
@@ -167,7 +167,7 @@ class Accounts extends Controller
   public function profile(Request $request, Response $response, array $data): Response
   {
     return $this->view($response, '@admin/accounts.profile.twig', [
-      'account' => AdminAccount::where('id', $this->auth('id', 'admin'))->first()
+      'admin' => Admin::where('id', $this->auth('id', 'admin'))->first()
     ]);
   }
 
@@ -198,15 +198,15 @@ class Accounts extends Controller
     $currentPassword = trim($inputs['current-password']) . $_ENV['app']['key'];
 
     // Check current password matches
-    $account = AdminAccount::where('id', $this->auth('id', 'admin'))->first();
-    $currentPasswordMatches = password_verify($currentPassword, $account->password);
+    $admin = Admin::where('id', $this->auth('id', 'admin'))->first();
+    $currentPasswordMatches = password_verify($currentPassword, $admin->password);
     if(!$currentPasswordMatches) {
       throw new HttpBadRequestException($request, 'Current password is invalid.');
     }
 
     // Update database
-    $account->username = $username;
-    $account->save();
+    $admin->username = $username;
+    $admin->save();
 
     // Return response
     return $response->withHeader('location', '/admin/accounts/profile');
@@ -240,8 +240,8 @@ class Accounts extends Controller
     $newPassword = trim($inputs['new-password']) . $_ENV['app']['key'];
 
     // Check current password matches
-    $account = AdminAccount::where('id', $this->auth('id', 'admin'))->first();
-    $currentPasswordMatches = password_verify($currentPassword, $account->password);
+    $admin = Admin::where('id', $this->auth('id', 'admin'))->first();
+    $currentPasswordMatches = password_verify($currentPassword, $admin->password);
     if(!$currentPasswordMatches) {
       throw new HttpBadRequestException($request, 'Current password is invalid.');
     }
@@ -250,9 +250,9 @@ class Accounts extends Controller
     setcookie($_ENV['app']['cookie']['admin'], 'expired', strtotime('now') - 1, '/');
 
     // Update database
-    $account->unique_id = md5(uniqid(bin2hex(random_bytes(32))));
-    $account->password = password_hash($newPassword, PASSWORD_BCRYPT);
-    $account->save();
+    $admin->unique_id = md5(uniqid(bin2hex(random_bytes(32))));
+    $admin->password = password_hash($newPassword, PASSWORD_BCRYPT);
+    $admin->save();
 
     // Return response
     return $response->withHeader('location', '/admin/accounts/login');

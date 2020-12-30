@@ -4,19 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Image extends Model
 {
+  use SoftDeletes;
+  
   public $timestamps = true;
   protected $table = "images";
 
   /**
-   * Has one type
+   * Has one section
    * 
    * @return HasOne
    */
-  public function type(): HasOne
+  public function section(): HasOne
   {
-    return $this->hasOne(Type::class, 'id', 'type_id');
+    return $this->hasOne(Section::class, 'id', 'section_id');
   }
 }
