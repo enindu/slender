@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 30, 2020 at 07:26 PM
+-- Generation Time: Dec 30, 2020 at 11:59 PM
 -- Server version: 10.5.8-MariaDB
 -- PHP Version: 7.4.13
 
@@ -70,6 +70,15 @@ CREATE TABLE `roles` (
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `title`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'Administrator', NULL, '1995-07-21 06:29:00', '2020-12-30 19:39:51'),
+(2, 'Moderator', NULL, '2020-12-30 23:58:52', '2020-12-30 23:58:52'),
+(3, 'User', NULL, '2020-12-30 23:58:57', '2020-12-30 23:58:57');
 
 -- --------------------------------------------------------
 
@@ -162,7 +171,7 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sections`

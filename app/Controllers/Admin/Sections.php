@@ -3,12 +3,12 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\Controller;
-use App\Models\Role;
+use App\Models\Section;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
-class Roles extends Controller
+class Sections extends Controller
 {
   /**
    * Base page
@@ -21,8 +21,8 @@ class Roles extends Controller
    */
   public function base(Request $request, Response $response, array $data): Response
   {
-    return $this->view($response, '@admin/roles.twig', [
-      'roles' => Role::orderBy('id', 'desc')->get()
+    return $this->view($response, '@admin/sections.twig', [
+      'sections' => Section::orderBy('id', 'desc')->get()
     ]);
   }
 
@@ -50,24 +50,24 @@ class Roles extends Controller
     // Get inputs
     $title = trim($inputs['title']);
 
-    // Check role
-    $role = Role::where('title', $title)->first();
-    if($role != null) {
-      throw new HttpBadRequestException($request, 'There is a role already using that title.');
+    // Check section
+    $section = Section::where('title', $title)->first();
+    if($section != null) {
+      throw new HttpBadRequestException($request, 'There is a section already using that title.');
     }
 
     // Get clock library
     $clock = $this->container->get('clock');
 
     // Update database
-    Role::insert([
+    Section::insert([
       'title'      => $title,
       'created_at' => $clock::now(),
       'updated_at' => $clock::now()
     ]);
 
     // Return response
-    return $response->withHeader('location', '/admin/roles');
+    return $response->withHeader('location', '/admin/sections');
   }
 
   /**
@@ -94,16 +94,16 @@ class Roles extends Controller
     // Get inputs
     $id = (int) trim($inputs['id']);
 
-    // Check role
-    $role = Role::where('id', $id)->first();
-    if($role == null) {
-      throw new HttpBadRequestException($request, 'There is no role found.');
+    // Check section
+    $section = Section::where('id', $id)->first();
+    if($section == null) {
+      throw new HttpBadRequestException($request, 'There is no section found.');
     }
 
     // Update database
-    $role->delete();
+    $section->delete();
 
     // Return response
-    return $response->withHeader('location', '/admin/roles');
+    return $response->withHeader('location', '/admin/sections');
   }
 }
