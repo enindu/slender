@@ -1,0 +1,7 @@
+*.php text eol=lf
+*.twig text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+
+*.example linguist-language=PHP
+*.twig linguist-language=PHP
