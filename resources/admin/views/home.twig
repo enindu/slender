@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="row row-eq-spacing">
-    <div class="col-12 col-sm-6 col-lg-3 mb-20 mb-sm-0">
+    <div class="col-12 col-sm-6 col-lg-3 mb-20">
       <div class="card p-15">
         <h1 class="card-title">
           <i class="fa fa-user mr-5"></i> Profile
@@ -28,6 +28,62 @@
           <i class="fa fa-user mr-5"></i> Profile
         </a>
       </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3 mb-20">
+      <div class="card p-15">
+        <h1 class="card-title">
+          <i class="fa fa-crown mr-5"></i> Roles
+        </h1>
+        <div class="mb-20">
+          <div>
+            <strong>Roles:</strong> {{ roles|length }} roles
+          </div>
+          <div>
+            &nbsp;
+          </div>
+        </div>
+        <a href="{{ "/admin/roles"|page }}" class="btn btn-block">
+          <i class="fa fa-crown mr-5"></i> Roles
+        </a>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3 mb-20 mb-lg-0">
+      <div class="card p-15">
+        <h1 class="card-title">
+          <i class="fa fa-chart-pie mr-5"></i> Sections
+        </h1>
+        <div class="mb-20">
+          <div>
+            <strong>Sections:</strong> {{ sections|length }} sections
+          </div>
+          <div>
+            &nbsp;
+          </div>
+        </div>
+        <a href="{{ "/admin/sections"|page }}" class="btn btn-block">
+          <i class="fa fa-chart-pie mr-5"></i> Sections
+        </a>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3 mb-20 mb-lg-0">
+      <div class="card p-15">
+        <h1 class="card-title">
+          <i class="fa fa-shield-alt mr-5"></i> Admins
+        </h1>
+        <div class="mb-20">
+          <div>
+            <strong>Admins:</strong> {{ admins|length }} admins
+          </div>
+          <div>
+            &nbsp;
+          </div>
+        </div>
+        <a href="{{ "/admin/admins"|page }}" class="btn btn-block">
+          <i class="fa fa-shield-alt mr-5"></i> Admins
+        </a>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3 mb-20 mb-lg-0">
       <div class="card p-15">
         <h1 class="card-title">
           <i class="fa fa-users mr-5"></i> Users
@@ -48,22 +104,6 @@
     <div class="col-12 col-sm-6 col-lg-3 mb-20 mb-sm-0">
       <div class="card p-15">
         <h1 class="card-title">
-          <i class="fa fa-crown mr-5"></i> Roles
-        </h1>
-        <div class="mb-20">
-          <div>
-            <strong>Roles:</strong> {{ roles|length }} roles
-          </div>
-          <div>
-            &nbsp;
-          </div>
-        </div>
-        <a href="{{ "/admin/roles"|page }}" class="btn btn-block">
-          <i class="fa fa-crown mr-5"></i> Roles
-        </a>
-      </div>
-      <div class="card p-15">
-        <h1 class="card-title">
           <i class="fa fa-image mr-5"></i> Images
         </h1>
         <div class="mb-20">
@@ -79,39 +119,21 @@
         </a>
       </div>
     </div>
-    <div class="col-12 col-sm-6 col-lg-3 mb-20 mb-sm-0">
-      <div class="card p-15">
-        <h1 class="card-title">
-          <i class="fa fa-chart-pie mr-5"></i> Sections
-        </h1>
-        <div class="mb-20">
-          <div>
-            <strong>Sections:</strong> {{ sections|length }} sections
-          </div>
-          <div>
-            &nbsp;
-          </div>
-        </div>
-        <a href="{{ "/admin/sections"|page }}" class="btn btn-block">
-          <i class="fa fa-chart-pie mr-5"></i> Sections
-        </a>
-      </div>
-    </div>
     <div class="col-12 col-sm-6 col-lg-3">
       <div class="card p-15">
         <h1 class="card-title">
-          <i class="fa fa-shield-alt mr-5"></i> Admins
+          <i class="fa fa-file-alt mr-5"></i> Files
         </h1>
         <div class="mb-20">
           <div>
-            <strong>Admins:</strong> {{ admins|length }} admins
+            <strong>Files:</strong> {{ files|length }} files
           </div>
           <div>
             &nbsp;
           </div>
         </div>
-        <a href="{{ "/admin/admins"|page }}" class="btn btn-block">
-          <i class="fa fa-shield-alt mr-5"></i> Admins
+        <a href="{{ "/admin/files"|page }}" class="btn btn-block">
+          <i class="fa fa-file-alt mr-5"></i> Files
         </a>
       </div>
     </div>

@@ -22,4 +22,14 @@ class Section extends Model
   {
     return $this->hasMany(Image::class, 'section_id', 'id');
   }
+
+  /**
+   * Has many files
+   * 
+   * @return HasMany
+   */
+  public function files(): HasMany
+  {
+    return $this->hasMany(File::class, 'section_id', 'id');
+  }
 }
