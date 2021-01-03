@@ -6,6 +6,7 @@ use App\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Role;
 use Slim\Exception\HttpBadRequestException;
+use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
@@ -25,7 +26,48 @@ class Admins extends Controller
   {
     return $this->view($response, '@admin/admins.twig', [
       'roles'  => Role::get(),
-      'admins' => Admin::orderBy('id', 'desc')->get()
+      'admins' => Admin::orderBy('id', 'desc')->take(10)->get()
+    ]);
+  }
+
+  /**
+   * All page
+   * 
+   * @param Request  $request
+   * @param Response $response
+   * @param array    $data
+   * 
+   * @throws HttpNotFoundException
+   * @return Response
+   */
+  public function all(Request $request, Response $response, array $data): Response
+  {
+    // Check validation
+    $parameters = $request->getQueryParams();
+    $validation = $this->validate($parameters, [
+      'page' => 'required|integer'
+    ]);
+    if($validation != null) {
+      throw new HttpNotFoundException($request);
+    }
+
+    // Get parameters
+    $page = (int) trim($parameters['page']);
+
+    // Check page
+    $resultsPerPage = 10;
+    $allResults = count(Admin::get());
+    $numberOfPages = ceil($allResults / $resultsPerPage);
+    if($page < 1 || $page > $numberOfPages) {
+      throw new HttpNotFoundException($request);
+    }
+
+    // Return response
+    $pageResults = ($page - 1) * $resultsPerPage;
+    return $this->view($response, '@admin/admins.all.twig', [
+      'page'            => $page,
+      'number_of_pages' => $numberOfPages,
+      'admins'          => Admin::orderBy('id', 'desc')->skip($pageResults)->take($resultsPerPage)->get()
     ]);
   }
 

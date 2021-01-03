@@ -25,7 +25,48 @@ class Contents extends Controller
   {
     return $this->view($response, '@admin/contents.twig', [
       'sections' => Section::get(),
-      'contents' => Content::orderBy('id', 'desc')->get()
+      'contents' => Content::orderBy('id', 'desc')->take(10)->get()
+    ]);
+  }
+
+  /**
+   * All page
+   * 
+   * @param Request  $request
+   * @param Response $response
+   * @param array    $data
+   * 
+   * @throws HttpNotFoundException
+   * @return Response
+   */
+  public function all(Request $request, Response $response, array $data): Response
+  {
+    // Check validation
+    $parameters = $request->getQueryParams();
+    $validation = $this->validate($parameters, [
+      'page' => 'required|integer'
+    ]);
+    if($validation != null) {
+      throw new HttpNotFoundException($request);
+    }
+
+    // Get parameters
+    $page = (int) trim($parameters['page']);
+
+    // Check page
+    $resultsPerPage = 10;
+    $allResults = count(Content::get());
+    $numberOfPages = ceil($allResults / $resultsPerPage);
+    if($page < 1 || $page > $numberOfPages) {
+      throw new HttpNotFoundException($request);
+    }
+
+    // Return response
+    $pageResults = ($page - 1) * $resultsPerPage;
+    return $this->view($response, '@admin/contents.all.twig', [
+      'page'            => $page,
+      'number_of_pages' => $numberOfPages,
+      'contents'        => Content::orderBy('id', 'desc')->skip($pageResults)->take($resultsPerPage)->get()
     ]);
   }
 

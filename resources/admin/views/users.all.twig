@@ -1,7 +1,7 @@
 {% extends "@admin/layouts/sub-2.twig" %}
 
-{% set id = "users" %}
-{% set title = "Users" %}
+{% set id = "users.all" %}
+{% set title = "All | Users" %}
 
 {% block sub_content %}
 <div class="container-fluid">
@@ -18,54 +18,7 @@
     </div>
   </div>
   <div class="row row-eq-spacing">
-    <div class="col-12 col-sm-6 col-lg-3 mb-20 mb-sm-0">
-      <div class="card p-15">
-        <h1 class="card-title">
-          <i class="fa fa-plus mr-5"></i> Add User
-        </h1>
-        <form action="{{ "/admin/users/add"|page }}" method="post">
-          <div class="form-group">
-            <label for="first-name" class="required">Enter first name</label>
-            <input type="text" name="first-name" id="first-name" class="form-control" placeholder="First Name" maxlength="191" required>
-          </div>
-          <div class="form-group">
-            <label for="last-name" class="required">Enter last name</label>
-            <input type="text" name="last-name" id="last-name" class="form-control" placeholder="Last Name" maxlength="191" required>
-          </div>
-          <div class="form-group">
-            <label for="role-id" class="required">Choose role</label>
-            <select name="role-id" id="role-id" class="form-control" required>
-              <option value="" hidden selected>Role</option>
-              {% for item in roles %}
-                <option value="{{ item.id }}">{{ item.title }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="email" class="required">Enter email</label>
-            <input type="email" name="email" id="email" class="form-control" placeholder="Email" maxlength="191" required>
-          </div>
-          <div class="form-group">
-            <label for="phone" class="required">Enter phone</label>
-            <input type="tel" name="phone" id="phone" class="form-control" placeholder="Phone" minlength="10" maxlength="10" required>
-          </div>
-          <div class="form-group">
-            <label for="password" class="required">Enter password</label>
-            <input type="password" name="password" id="password" class="form-control" placeholder="Password" minlength="6" maxlength="32" required>
-          </div>
-          <div class="form-group">
-            <label for="confirm-password" class="required">Confirm password</label>
-            <input type="password" name="confirm-password" id="confirm-password" class="form-control" placeholder="Confirm Password" minlength="6" maxlength="32" required>
-          </div>
-          <div class="text-right">
-            <button class="btn">
-              <i class="fa fa-plus mr-5"></i> Add
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="col-12 col-sm-6 col-lg-9">
+    <div class="col-12">
       <div class="card p-15">
         <h1 class="card-title">
           <i class="fa fa-users mr-5"></i> Users
@@ -140,11 +93,15 @@
             </tbody>
           </table>
         </div>
-        <div class="text-right">
-          <a href="{{ "/admin/users/all?page=1"|page }}" class="btn {{ users|length < 1 ? "disabled pointer-events-none" }}">
-            Show All <i class="fa fa-chevron-right ml-5"></i>
-          </a>
-        </div>
+        <nav>
+          <ul class="pagination pagination-rounded text-center mb-0">
+            {% for item in 1..number_of_pages %}
+              <li class="page-item {{ item == page ? "active" }}">
+                <a href="{{ "/admin/users/all?page=" ~ item }}" class="page-link">{{ item }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
       </div>
     </div>
   </div>

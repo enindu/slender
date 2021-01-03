@@ -8,14 +8,14 @@
       </span>
       Home
     </a>
-    <a href="{{ "/admin/roles"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "roles" ? "active" }}">
-      <span class="sidebar-icon rounded-circle {{ id == "roles" ? "bg-primary text-white" }}">
+    <a href="{{ "/admin/roles"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "roles" or id == "roles.all" ? "active" }}">
+      <span class="sidebar-icon rounded-circle {{ id == "roles" or id == "roles.all" ? "bg-primary text-white" }}">
         <i class="fa fa-crown"></i>
       </span>
       Roles
     </a>
-    <a href="{{ "/admin/sections"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "sections" ? "active" }}">
-      <span class="sidebar-icon rounded-circle {{ id == "sections" ? "bg-primary text-white" }}">
+    <a href="{{ "/admin/sections"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "sections" or id == "sections.all" ? "active" }}">
+      <span class="sidebar-icon rounded-circle {{ id == "sections" or id == "sections.all" ? "bg-primary text-white" }}">
         <i class="fa fa-chart-pie"></i>
       </span>
       Sections
@@ -34,34 +34,34 @@
     </a>
     <h6 class="sidebar-title">Account</h6>
     <div class="sidebar-divider"></div>
-    <a href="{{ "/admin/admins"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "admins" ? "active" }}">
-      <span class="sidebar-icon rounded-circle {{ id == "admins" ? "bg-primary text-white" }}">
+    <a href="{{ "/admin/admins"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "admins" or id == "admins.all" ? "active" }}">
+      <span class="sidebar-icon rounded-circle {{ id == "admins" or id == "admins.all" ? "bg-primary text-white" }}">
         <i class="fa fa-shield-alt"></i>
       </span>
       Admins
     </a>
-    <a href="{{ "/admin/users"|page }}" class="sidebar-link sidebar-link-with-icon mb-20 {{ id == "users" ? "active" }}">
-      <span class="sidebar-icon rounded-circle {{ id == "users" ? "bg-primary text-white" }}">
+    <a href="{{ "/admin/users"|page }}" class="sidebar-link sidebar-link-with-icon mb-20 {{ id == "users" or id == "users.all" ? "active" }}">
+      <span class="sidebar-icon rounded-circle {{ id == "users" or id == "users.all" ? "bg-primary text-white" }}">
         <i class="fa fa-users"></i>
       </span>
       Users
     </a>
     <h6 class="sidebar-title">Upload</h6>
     <div class="sidebar-divider"></div>
-    <a href="{{ "/admin/images"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "images" ? "active" }}">
-      <span class="sidebar-icon rounded-circle {{ id == "images" ? "bg-primary text-white" }}">
+    <a href="{{ "/admin/images"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "images" or id == "images.all" ? "active" }}">
+      <span class="sidebar-icon rounded-circle {{ id == "images" or id == "images.all" ? "bg-primary text-white" }}">
         <i class="fa fa-image"></i>
       </span>
       Images
     </a>
-    <a href="{{ "/admin/files"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "files" ? "active" }}">
-      <span class="sidebar-icon rounded-circle {{ id == "files" ? "bg-primary text-white" }}">
+    <a href="{{ "/admin/files"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "files" or id == "files.all" ? "active" }}">
+      <span class="sidebar-icon rounded-circle {{ id == "files" or id == "files.all" ? "bg-primary text-white" }}">
         <i class="fa fa-file-alt"></i>
       </span>
       Files
     </a>
-    <a href="{{ "/admin/contents"|page }}" class="sidebar-link sidebar-link-with-icon mb-20 {{ id == "contents" or id == "contents.single" ? "active" }}">
-      <span class="sidebar-icon rounded-circle {{ id == "contents" or id == "contents.single" ? "bg-primary text-white" }}">
+    <a href="{{ "/admin/contents"|page }}" class="sidebar-link sidebar-link-with-icon mb-20 {{ id == "contents" or id == "contents.all" or id == "contents.single" ? "active" }}">
+      <span class="sidebar-icon rounded-circle {{ id == "contents" or id == "contents.all" or id == "contents.single" ? "bg-primary text-white" }}">
         <i class="fa fa-pen"></i>
       </span>
       Contents

@@ -27,16 +27,19 @@ $app->group('/admin', function(RouteCollectorProxy $admin) use($container) {
   });
   $admin->group('/roles', function(RouteCollectorProxy $roles) {
     $roles->get('', AdminRoles::class . ':base');
+    $roles->get('/all', AdminRoles::class . ':all');
     $roles->post('/add', AdminRoles::class . ':add');
     $roles->post('/remove', AdminRoles::class . ':remove');
   })->add(new AdminRole($container, [1]));
   $admin->group('/sections', function(RouteCollectorProxy $sections) {
     $sections->get('', AdminSections::class . ':base');
+    $sections->get('/all', AdminSections::class . ':all');
     $sections->post('/add', AdminSections::class . ':add');
     $sections->post('/remove', AdminSections::class . ':remove');
   })->add(new AdminRole($container, [1, 2]));
   $admin->group('/admins', function(RouteCollectorProxy $admins) {
     $admins->get('', AdminAdmins::class . ':base');
+    $admins->get('/all', AdminAdmins::class . ':all');
     $admins->post('/add', AdminAdmins::class . ':add');
     $admins->post('/activate', AdminAdmins::class . ':activate');
     $admins->post('/deactivate', AdminAdmins::class . ':deactivate');
@@ -44,6 +47,7 @@ $app->group('/admin', function(RouteCollectorProxy $admin) use($container) {
   })->add(new AdminRole($container, [1]));
   $admin->group('/users', function(RouteCollectorProxy $users) {
     $users->get('', AdminUsers::class . ':base');
+    $users->get('/all', AdminUsers::class . ':all');
     $users->post('/add', AdminUsers::class . ':add');
     $users->post('/activate', AdminUsers::class . ':activate');
     $users->post('/deactivate', AdminUsers::class . ':deactivate');
@@ -51,16 +55,19 @@ $app->group('/admin', function(RouteCollectorProxy $admin) use($container) {
   })->add(new AdminRole($container, [1, 2]));
   $admin->group('/images', function(RouteCollectorProxy $images) {
     $images->get('', AdminImages::class . ':base');
+    $images->get('/all', AdminImages::class . ':all');
     $images->post('/add', AdminImages::class . ':add');
     $images->post('/remove', AdminImages::class . ':remove');
   });
   $admin->group('/files', function(RouteCollectorProxy $files) {
     $files->get('', AdminFiles::class . ':base');
+    $files->get('/all', AdminFiles::class . ':all');
     $files->post('/add', AdminFiles::class . ':add');
     $files->post('/remove', AdminFiles::class . ':remove');
   });
   $admin->group('/contents', function(RouteCollectorProxy $contents) {
     $contents->get('', AdminContents::class . ':base');
+    $contents->get('/all', AdminContents::class . ':all');
     $contents->post('/add', AdminContents::class . ':add');
     $contents->post('/update', AdminContents::class . ':update');
     $contents->post('/remove', AdminContents::class . ':remove');
