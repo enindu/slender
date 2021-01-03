@@ -4,6 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Content;
 use App\Models\File;
 use App\Models\Image;
 use App\Models\Role;
@@ -32,7 +33,8 @@ class Base extends Controller
       'admins'   => Admin::get(),
       'users'    => User::get(),
       'images'   => Image::get(),
-      'files'    => File::get()
+      'files'    => File::get(),
+      'contents' => Content::get()
     ]);
   }
 }

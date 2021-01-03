@@ -32,4 +32,14 @@ class Section extends Model
   {
     return $this->hasMany(File::class, 'section_id', 'id');
   }
+
+  /**
+   * Has many contents
+   * 
+   * @return HasMany
+   */
+  public function contents(): HasMany
+  {
+    return $this->hasMany(Content::class, 'section_id', 'id');
+  }
 }

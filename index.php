@@ -12,6 +12,7 @@ $container = new Container();
 require_once __DIR__ . "/containers/filesystem.php";
 require_once __DIR__ . "/containers/clock.php";
 require_once __DIR__ . "/containers/image.php";
+require_once __DIR__ . "/containers/markdown.php";
 require_once __DIR__ . "/containers/database.php";
 require_once __DIR__ . "/containers/view.php";
 require_once __DIR__ . "/containers/mailer.php";

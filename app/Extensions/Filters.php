@@ -36,7 +36,8 @@ class Filters extends AbstractExtension implements ExtensionInterface
       new TwigFilter('file', [$this, 'file']),
       new TwigFilter('content', [$this, 'content']),
       new TwigFilter('limit', [$this, 'limit']),
-      new TwigFilter('human_date', [$this, 'humanDate'])
+      new TwigFilter('human_date', [$this, 'humanDate']),
+      new TwigFilter('markdown', [$this, 'markdown'])
     ];
   }
 
@@ -161,7 +162,7 @@ class Filters extends AbstractExtension implements ExtensionInterface
    * 
    * @return string
    */
-  public function limit(string $text, int $length = 50): string
+  public function limit(string $text, int $length = 100): string
   {
     // Check text length
     $textLength = strlen($text);
@@ -169,7 +170,7 @@ class Filters extends AbstractExtension implements ExtensionInterface
       return $text;
     }
 
-    // Return text
+    // Return shorten text
     return substr($text, 0, $length - 3) . "...";
   }
 
@@ -187,5 +188,21 @@ class Filters extends AbstractExtension implements ExtensionInterface
 
     // Return human date
     return $clock::parse($date)->diffForHumans($clock::now());
+  }
+
+  /**
+   * Markdown function
+   * 
+   * @param string $content
+   * 
+   * @return string
+   */
+  public function markdown(string $content): string
+  {
+    // Get markdown library
+    $markdown = $this->container->get('markdown');
+
+    // Return HTML content
+    return $markdown->text($content);
   }
 }
