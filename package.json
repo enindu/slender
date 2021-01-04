@@ -1,18 +1,22 @@
 {
   "name": "slender",
-  "version": "0.2.1-dev",
-  "description": "Rapid web development environment based on Slim framework",
+  "version": "0.2.1",
+  "description": "Developer-friendly, low-level, rapid web development environment based on Slim framework",
   "type": "module",
   "keywords": [
-    "admin-panel",
-    "eloquent-orm",
-    "halfmoon",
-    "mvc-architecture",
+    "slim",
+    "mvc",
     "php-di",
-    "psr",
-    "slim-framework",
-    "swiftmailer",
-    "twig"
+    "twig",
+    "eloquent",
+    "swift-mailer",
+    "carbon",
+    "intervention-image",
+    "parsedown",
+    "rakit-validation",
+    "halfmoon",
+    "admin-panel",
+    "account-management"
   ],
   "homepage": "https://github.com/enindu/slender",
   "bugs": {
@@ -27,7 +31,7 @@
   },
   "main": "sources/slender.js",
   "scripts": {
-    "slender": "echo \"Slender - Rapid web development environment based on Slim framework\""
+    "slender": "echo \"Slender - Developer-friendly, low-level, rapid web development environment based on Slim framework\""
   },
   "repository": {
     "type": "git",

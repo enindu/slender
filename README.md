@@ -2,22 +2,22 @@
 
 Slender is a developer-friendly, low-level, rapid web development environment based on Slim framework.
 
-There are no commandline magic tools to manage anything in Slender! You need to create everything manually, by hand.
+There are no command-line magic tools to manage anything in Slender! You need to create everything manually, by hand.
 
 ## Features
 
 - Based on [Slim](https://www.slimframework.com) framework
 - Written in MVC architecture
-- Has built-in admin panel
-- Has route-based account role management system
+- Has built-in admin panel with [Halfmoon](https://www.gethalfmoon.com) framework
 - Has built-in admin and user authentication system
+- Has route-based account role management system
 - Dependency injection with [PHP DI](https://php-di.org)
 - Template management with [Twig](https://twig.symfony.com)
 - Database management with [Eloquent](https://laravel.com/docs/8.x/eloquent)
 - Email management with [Swift Mailer](https://swiftmailer.symfony.com)
 - Date and time manipulation with [Carbon](https://carbon.nesbot.com)
 - Image manipulation with [Intervention Image](http://image.intervention.io)
-- Markdown manipulation with [Parsdown](https://parsedown.org)
+- Markdown manipulation with [Parsedown](https://parsedown.org)
 - Data validation with [Rakit Validation](https://github.com/rakit/validation)
 
 ## Install

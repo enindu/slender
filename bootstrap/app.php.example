@@ -5,9 +5,9 @@ use Twig\Template;
 $_ENV = [
   'app' => [
     'name'        => 'Slender',
-    'description' => 'Rapid web development environment based on Slim framework',
-    'version'     => 'v0.2.1-dev',
-    'keywords'    => 'admin-panel, eloquent-orm, halfmoon, mvc-architecture, php-di, psr, slim-framework, swiftmailer, twig',
+    'description' => 'Developer-friendly, low-level, rapid web development environment based on Slim framework',
+    'version'     => 'v0.2.1',
+    'keywords'    => 'slim, mvc, php-di, twig, eloquent, swift-mailer, carbon, intervention-image, parsedown, rakit-validation, halfmoon, admin-panel, account-management',
     'author'      => 'Enindu Alahapperuma (enindu@gmail.com)',
     'url'         => 'http://localhost',
     'timezone'    => 'Asia/Colombo',
@@ -46,6 +46,9 @@ $_ENV = [
     'port'     => '',
     'username' => '',
     'password' => ''
+  ],
+  'markdown' => [
+    'safe-mode' => true
   ],
   'middleware' => [
     'session' => [
