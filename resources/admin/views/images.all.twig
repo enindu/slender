@@ -47,7 +47,7 @@
                 <tr>
                   <td>{{ item.id }}</td>
                   <td>
-                    <img src="{{ item.file|file("images") }}" alt="{{ item.file }}" class="img-fluid">
+                    <img src="{{ item.file|file("images") }}" alt="{{ item.file }}" class="img-fluid" loading="lazy">
                   </td>
                   <td>
                     <div class="text-wrap">{{ item.title != "false" ? item.title : "N/A" }}</div>
