@@ -1,0 +1,88 @@
+{% extends "@admin/layouts/sub-2.twig" %}
+
+{% set id = "categories.all" %}
+{% set title = "All | Categories" %}
+
+{% block sub_content %}
+<div class="container-fluid">
+  <div class="row row-eq-spacing">
+    <div class="col-12 col-sm-auto mb-20 mb-sm-0">
+      <a href="#" id="back" class="btn">
+        <i class="fa fa-chevron-left mr-5"></i> Back
+      </a>
+    </div>
+    <div class="col-12 col-sm-auto">
+      <h4 class="my-0">
+        <i class="fa fa-cube mr-5"></i> Categories
+      </h4>
+    </div>
+  </div>
+  <div class="row row-eq-spacing">
+    <div class="col-12">
+      <div class="card p-15">
+        <h1 class="card-title">
+          <i class="fa fa-cube mr-5"></i> Categories
+        </h1>
+        <div class="table-responsive mb-20">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="w-25">ID</th>
+                <th>Slug</th>
+                <th>Title</th>
+                <th>Subtitle</th>
+                <th>Description</th>
+                <th class="w-25"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in categories %}
+                <tr>
+                  <td>{{ item.id }}</td>
+                  <td>
+                    <div class="text-wrap">{{ item.slug }}</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.title }}</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.subtitle != "false" ? item.subtitle : "N/A" }}</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.description != "false" ? item.description : "N/A" }}</div>
+                  </td>
+                  <td>
+                    <form action="{{ "/admin/categories/remove"|page }}" method="post">
+                      <input type="hidden" name="id" value="{{ item.id }}">
+                      <button class="btn btn-danger btn-square">
+                        <i class="fa fa-trash-alt"></i>
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td colspan="6">
+                    <div class="text-center">
+                      <i class="fa fa-frown mr-5"></i> No categories found!
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <nav>
+          <ul class="pagination pagination-rounded text-center mb-0">
+            {% for item in 1..number_of_pages %}
+              <li class="page-item {{ item == page ? "active" }}">
+                <a href="{{ "/admin/categories/all?page=" ~ item }}" class="page-link">{{ item }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
