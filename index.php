@@ -18,6 +18,7 @@ require_once __DIR__ . "/containers/view.php";
 require_once __DIR__ . "/containers/mailer.php";
 require_once __DIR__ . "/containers/message.php";
 require_once __DIR__ . "/containers/validator.php";
+require_once __DIR__ . "/containers/html-minify.php";
 
 // Create app
 $app = AppFactory::createFromContainer($container);

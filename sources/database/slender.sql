@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 03, 2021 at 03:05 PM
+-- Generation Time: Jan 21, 2021 at 01:21 AM
 -- Server version: 10.5.8-MariaDB
--- PHP Version: 7.4.13
+-- PHP Version: 7.4.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,6 +34,23 @@ CREATE TABLE `admins` (
   `status` tinyint(1) NOT NULL DEFAULT 1,
   `username` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
+  `description` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
   `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -111,7 +128,7 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `title`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'Administrator', NULL, '1995-07-21 06:29:00', '2020-12-30 19:39:51'),
+(1, 'Administrator', NULL, '1995-07-21 06:29:00', '2021-01-04 02:00:41'),
 (2, 'Moderator', NULL, '2020-12-30 23:58:52', '2020-12-30 23:58:52'),
 (3, 'User', NULL, '2020-12-30 23:58:57', '2020-12-30 23:58:57');
 
@@ -124,6 +141,24 @@ INSERT INTO `roles` (`id`, `title`, `deleted_at`, `created_at`, `updated_at`) VA
 CREATE TABLE `sections` (
   `id` int(11) NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subcategories`
+--
+
+CREATE TABLE `subcategories` (
+  `id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
+  `description` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
   `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -162,6 +197,13 @@ ALTER TABLE `admins`
   ADD UNIQUE KEY `unique_id` (`unique_id`);
 
 --
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `slug` (`slug`);
+
+--
 -- Indexes for table `contents`
 --
 ALTER TABLE `contents`
@@ -192,6 +234,13 @@ ALTER TABLE `sections`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `subcategories`
+--
+ALTER TABLE `subcategories`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `slug` (`slug`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -206,6 +255,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -236,6 +291,12 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `sections`
 --
 ALTER TABLE `sections`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `subcategories`
+--
+ALTER TABLE `subcategories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

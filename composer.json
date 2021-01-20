@@ -45,7 +45,8 @@
     "swiftmailer/swiftmailer": "^6.2",
     "symfony/filesystem": "^5.1",
     "symfony/var-dumper": "^5.1",
-    "twig/twig": "^3.0"
+    "twig/twig": "^3.0",
+    "voku/html-min": "^4.4"
   },
   "autoload": {
     "psr-4": {

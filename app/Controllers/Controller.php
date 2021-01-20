@@ -38,8 +38,8 @@ class Controller
     $view = $this->container->get('view');
 
     // Return response
-    $response->withHeader('Content-Type', 'text/html')->getBody()->write($view->render($template, $data));
-    return $response;
+    $response->getBody()->write($view->render($template, $data));
+    return $response->withHeader('content-type', 'text/html');
   }
 
   /**
