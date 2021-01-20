@@ -10,6 +10,7 @@ use App\Models\File;
 use App\Models\Image;
 use App\Models\Role;
 use App\Models\Section;
+use App\Models\Subcategory;
 use App\Models\User;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -28,15 +29,16 @@ class Base extends Controller
   public function base(Request $request, Response $response, array $data): Response
   {
     return $this->view($response, '@admin/home.twig', [
-      'admin'      => Admin::where('id', $this->auth('id', 'admin'))->first(),
-      'roles'      => Role::get(),
-      'sections'   => Section::get(),
-      'admins'     => Admin::get(),
-      'users'      => User::get(),
-      'images'     => Image::get(),
-      'files'      => File::get(),
-      'contents'   => Content::get(),
-      'categories' => Category::get()
+      'admin'         => Admin::where('id', $this->auth('id', 'admin'))->first(),
+      'roles'         => Role::get(),
+      'sections'      => Section::get(),
+      'admins'        => Admin::get(),
+      'users'         => User::get(),
+      'images'        => Image::get(),
+      'files'         => File::get(),
+      'contents'      => Content::get(),
+      'categories'    => Category::get(),
+      'subcategories' => Subcategory::get()
     ]);
   }
 }

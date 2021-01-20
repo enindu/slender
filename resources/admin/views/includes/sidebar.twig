@@ -68,11 +68,17 @@
     </a>
     <h6 class="sidebar-title">Category</h6>
     <div class="sidebar-divider"></div>
-    <a href="{{ "/admin/categories"|page }}" class="sidebar-link sidebar-link-with-icon mb-20 {{ id == "categories" or id == "categories.all" ? "active" }}">
+    <a href="{{ "/admin/categories"|page }}" class="sidebar-link sidebar-link-with-icon {{ id == "categories" or id == "categories.all" ? "active" }}">
       <span class="sidebar-icon rounded-circle {{ id == "categories" or id == "categories.all" ? "bg-primary text-white" }}">
         <i class="fa fa-cube"></i>
       </span>
       Categories
+    </a>
+    <a href="{{ "/admin/subcategories"|page }}" class="sidebar-link sidebar-link-with-icon mb-20 {{ id == "subcategories" or id == "subcategories.all" ? "active" }}">
+      <span class="sidebar-icon rounded-circle {{ id == "subcategories" or id == "subcategories.all" ? "bg-primary text-white" }}">
+        <i class="fa fa-cubes"></i>
+      </span>
+      Subcategories
     </a>
     <h6 class="sidebar-title">External Links</h6>
     <div class="sidebar-divider"></div>

@@ -32,6 +32,7 @@
                 <th>Title</th>
                 <th>Subtitle</th>
                 <th>Description</th>
+                <th>Subcategories</th>
                 <th class="w-25"></th>
               </tr>
             </thead>
@@ -51,6 +52,7 @@
                   <td>
                     <div class="text-wrap">{{ item.description != "false" ? item.description : "N/A" }}</div>
                   </td>
+                  <td>{{ item.subcategories|length }} subcategories</td>
                   <td>
                     <form action="{{ "/admin/categories/remove"|page }}" method="post">
                       <input type="hidden" name="id" value="{{ item.id }}">
@@ -62,7 +64,7 @@
                 </tr>
               {% else %}
                 <tr>
-                  <td colspan="6">
+                  <td colspan="7">
                     <div class="text-center">
                       <i class="fa fa-frown mr-5"></i> No categories found!
                     </div>
