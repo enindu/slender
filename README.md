@@ -19,6 +19,7 @@ There are no command-line magic tools to manage anything in Slender! You need to
 - Image manipulation with [Intervention Image](http://image.intervention.io)
 - Markdown manipulation with [Parsedown](https://parsedown.org)
 - Data validation with [Rakit Validation](https://github.com/rakit/validation)
+- Server-side HTML minify with [HTML Min](https://github.com/voku/HtmlMin)
 
 ## Install
 
