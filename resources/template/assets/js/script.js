@@ -1,8 +1,1 @@
-window.addEventListener('DOMContentLoaded', () => {
-  const back = document.getElementById('back');
-  if(back != null) {
-    back.addEventListener('click', () => {
-      window.history.go(-1);
-    });
-  }
-});
+window.addEventListener("DOMContentLoaded",(()=>{const e=document.getElementById("back");null!=e&&e.addEventListener("click",(()=>{window.history.go(-1)}))}));

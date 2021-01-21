@@ -1,15 +1,1 @@
-window.addEventListener('DOMContentLoaded', () => {
-  const back = document.getElementById('back');
-  if(back != null) {
-    back.addEventListener('click', () => {
-      window.history.go(-1);
-    });
-  }
-
-  const sidebar = document.getElementById('sidebar');
-  if(sidebar != null) {
-    sidebar.addEventListener('click', () => {
-      halfmoon.toggleSidebar();
-    });
-  }
-});
+window.addEventListener("DOMContentLoaded",(()=>{const e=document.getElementById("back");null!=e&&e.addEventListener("click",(()=>{window.history.go(-1)}));const n=document.getElementById("sidebar");null!=n&&n.addEventListener("click",(()=>{halfmoon.toggleSidebar()}))}));
