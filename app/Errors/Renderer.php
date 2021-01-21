@@ -17,7 +17,11 @@ class Renderer implements ErrorRendererInterface
    */
   public function __construct(Container $container)
   {
+    // Get dependency container
     $this->container = $container;
+
+    // Run database library
+    $container->get('database');
   }
 
   /**
