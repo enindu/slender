@@ -107,12 +107,6 @@ class Subcategories extends Controller
       throw new HttpBadRequestException($request, 'There is no category found.');
     }
 
-    // Check subcategory
-    $subcategory = Subcategory::where('title', $title)->first();
-    if($subcategory != null) {
-      throw new HttpBadRequestException($request, 'There is a subcategory found using that title.');
-    }
-
     // Get clock library
     $clock = $this->container->get('clock');
 
