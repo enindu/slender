@@ -1,3 +1,4 @@
+.cache/
 bootstrap/app.php
 cache/routes/*
 cache/views/*
