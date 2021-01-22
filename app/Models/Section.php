@@ -42,4 +42,14 @@ class Section extends Model
   {
     return $this->hasMany(Content::class, 'section_id', 'id');
   }
+
+  /**
+   * Has many categories
+   * 
+   * @return HasMany
+   */
+  public function categories(): HasMany
+  {
+    return $this->hasMany(Category::class, 'section_id', 'id');
+  }
 }

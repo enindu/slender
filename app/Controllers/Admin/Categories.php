@@ -4,6 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Section;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
@@ -23,6 +24,7 @@ class Categories extends Controller
   public function base(Request $request, Response $response, array $data): Response
   {
     return $this->view($response, '@admin/categories.twig', [
+      'sections'   => Section::get(),
       'categories' => Category::orderBy('id', 'desc')->take(10)->get()
     ]);
   }
@@ -85,6 +87,7 @@ class Categories extends Controller
     $validation = $this->validate($inputs, [
       'title'       => 'required|max:191',
       'subtitle'    => 'max:191',
+      'section-id'  => 'required|integer',
       'description' => 'max:500'
     ]);
     if($validation != null) {
@@ -94,7 +97,14 @@ class Categories extends Controller
     // Get inputs and files
     $title = trim($inputs['title']);
     $subtitle = trim($inputs['subtitle']);
+    $sectionId = (int) trim($inputs['section-id']);
     $description = trim($inputs['description']);
+
+    // Check section
+    $section = Section::where('id', $sectionId)->get();
+    if($section == null) {
+      throw new HttpBadRequestException($request, 'There is no section found.');
+    }
 
     // Check category
     $category = Category::where('title', $title)->first();
@@ -107,6 +117,7 @@ class Categories extends Controller
 
     // Update database
     Category::insert([
+      'section_id'  => $sectionId,
       'slug'        => strtolower(uniqid(str_replace([' ', '/', '\\', '\'', '"'], '-', str_replace(['(', ')', '[', ']', '{', '}', ',', '.'], '', $title)) . '-')),
       'title'       => $title,
       'subtitle'    => $subtitle != '' ? $subtitle : 'false',

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 21, 2021 at 01:21 AM
+-- Generation Time: Jan 23, 2021 at 02:07 AM
 -- Server version: 10.5.8-MariaDB
 -- PHP Version: 7.4.14
 
@@ -47,6 +47,7 @@ CREATE TABLE `admins` (
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
+  `section_id` int(11) NOT NULL,
   `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',

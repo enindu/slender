@@ -50,6 +50,7 @@
                 <th>Images</th>
                 <th>Files</th>
                 <th>Contents</th>
+                <th>Categories</th>
                 <th class="w-25"></th>
               </tr>
             </thead>
@@ -61,6 +62,7 @@
                   <td>{{ item.images|length }} images</td>
                   <td>{{ item.files|length }} files</td>
                   <td>{{ item.contents|length }} contents</td>
+                  <td>{{ item.categories|length }} categories</td>
                   <td>
                     <form action="{{ "/admin/sections/remove"|page }}" method="post">
                       <input type="hidden" name="id" value="{{ item.id }}">
@@ -72,7 +74,7 @@
                 </tr>
               {% else %}
                 <tr>
-                  <td colspan="6">
+                  <td colspan="7">
                     <div class="text-center">
                       <i class="fa fa-frown mr-5"></i> No sections found!
                     </div>
