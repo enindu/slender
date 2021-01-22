@@ -29,9 +29,16 @@
     "email": "enindu@gmail.com",
     "url": "https://github.com/enindu"
   },
-  "main": "sources/app.js",
+  "private": true,
   "scripts": {
-    "slender": "echo \"Slender - Developer-friendly, low-level, rapid web development environment based on Slim framework\""
+    "slender": "echo \"Slender - Developer-friendly, low-level, rapid web development environment based on Slim framework\"",
+    "bundle-admin-css": "parcel build sources/assets/admin/css/*.css --out-dir resources/admin/assets/css --public-url ./",
+    "bundle-admin-js": "parcel build sources/assets/admin/js/*.js --out-dir resources/admin/assets/js --public-url ./",
+    "bundle-user-css": "parcel build sources/assets/user/css/*.css --out-dir resources/user/assets/css --public-url ./",
+    "bundle-user-js": "parcel build sources/assets/user/js/*.js --out-dir resources/user/assets/js --public-url ./",
+    "bundle-template-css": "parcel build sources/assets/template/css/*.css --out-dir resources/template/assets/css --public-url ./",
+    "bundle-template-js": "parcel build sources/assets/template/js/*.js --out-dir resources/template/assets/js --public-url ./",
+    "bundle": "npm run bundle-admin-css && npm run bundle-admin-js && npm run bundle-user-css && npm run bundle-user-js && npm run bundle-template-css && npm run bundle-template-js"
   },
   "repository": {
     "type": "git",
@@ -39,6 +46,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.2",
-    "halfmoon": "^1.1.1"
+    "halfmoon": "^1.1.1",
+    "parcel-bundler": "^1.12.4"
   }
 }

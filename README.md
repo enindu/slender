@@ -20,7 +20,7 @@ There are no command-line magic tools to manage anything in Slender! You need to
 - Markdown manipulation with [Parsedown](https://parsedown.org)
 - Data validation with [Rakit Validation](https://github.com/rakit/validation)
 - HTML minification on runtime with [HTML Min](https://github.com/voku/HtmlMin)
-- CSS and JavaScript minification by command-line with [Minify](https://coderaiser.github.io/minify)
+- CSS and JavaScript bundling with [Parcel](https://parceljs.org)
 
 ## Install
 
