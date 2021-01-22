@@ -4,19 +4,9 @@
   "version": "0.2.3",
   "type": "project",
   "keywords": [
+    "php",
     "slim",
-    "mvc",
-    "php-di",
-    "twig",
-    "eloquent",
-    "swift-mailer",
-    "carbon",
-    "intervention-image",
-    "parsedown",
-    "rakit-validation",
-    "halfmoon",
-    "admin-panel",
-    "account-management"
+    "cms"
   ],
   "homepage": "https://github.com/enindu/slender",
   "readme": "https://github.com/enindu/slender#readme",
