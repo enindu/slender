@@ -31,8 +31,7 @@
   },
   "main": "sources/app.js",
   "scripts": {
-    "slender": "echo \"Slender - Developer-friendly, low-level, rapid web development environment based on Slim framework\"",
-    "minify": "node sources/minify.js"
+    "slender": "echo \"Slender - Developer-friendly, low-level, rapid web development environment based on Slim framework\""
   },
   "repository": {
     "type": "git",
@@ -40,7 +39,6 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.2",
-    "halfmoon": "^1.1.1",
-    "minify": "^6.0.1"
+    "halfmoon": "^1.1.1"
   }
 }
