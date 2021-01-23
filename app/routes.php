@@ -90,6 +90,6 @@ $app->group('/admin', function(RouteCollectorProxy $admin) use($container) {
 })->add(new AdminAuth($container));
 
 // User routes
-$app->group('/', function(RouteCollectorProxy $user) {
-  $user->get('', UserBase::class . ':base');
+$app->group('', function(RouteCollectorProxy $user) {
+  $user->get('/', UserBase::class . ':base');
 });
