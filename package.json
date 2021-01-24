@@ -37,6 +37,6 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.2",
     "halfmoon": "^1.1.1",
-    "parcel-bundler": "^1.12.4"
+    "parcel": "^1.12.4"
   }
 }
