@@ -88,7 +88,7 @@ class Contents extends Controller
       'title'       => 'required|max:191',
       'subtitle'    => 'max:191',
       'section-id'  => 'required|integer',
-      'description' => 'required|max:500'
+      'description' => 'required'
     ]);
     if($validation != null) {
       throw new HttpBadRequestException($request, reset($validation) . '.');
@@ -142,7 +142,7 @@ class Contents extends Controller
       'title'       => 'required|max:191',
       'subtitle'    => 'max:191',
       'section-id'  => 'required|integer',
-      'description' => 'required|max:500'
+      'description' => 'required'
     ]);
     if($validation != null) {
       throw new HttpBadRequestException($request, reset($validation) . '.');
