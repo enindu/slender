@@ -47,7 +47,9 @@
                 <tr>
                   <td>{{ item.id }}</td>
                   <td>
-                    <img src="{{ item.file|file("images") }}" alt="{{ item.file }}" class="img-fluid" loading="lazy">
+                    <a href="#image-{{ item.id }}">
+                      <img src="{{ item.file|file("images") }}" alt="{{ item.file }}" class="img-fluid" loading="lazy">
+                    </a>
                   </td>
                   <td>
                     <div class="text-wrap">{{ item.title != "false" ? item.title : "N/A" }}</div>
@@ -61,9 +63,6 @@
                   <td>{{ item.section.title }}</td>
                   <td>
                     <div class="d-flex">
-                      <a href="#image-{{ item.id }}" class="btn btn-square mr-5">
-                        <i class="fa fa-eye"></i>
-                      </a>
                       <form action="{{ "/admin/images/remove"|page }}" method="post">
                         <input type="hidden" name="id" value="{{ item.id }}">
                         <button class="btn btn-danger btn-square">
