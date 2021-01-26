@@ -162,7 +162,7 @@ class Contents extends Controller
     }
 
     // Check section
-    $section = Section::where('id', $sectionId)->get();
+    $section = Section::where('id', $sectionId)->first();
     if($section == null) {
       throw new HttpBadRequestException($request, 'There is no section found.');
     }
