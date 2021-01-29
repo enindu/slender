@@ -45,7 +45,9 @@
             <tbody>
               {% for item in images %}
                 <tr>
-                  <td>{{ item.id }}</td>
+                  <td>
+                    <div class="text-wrap">{{ item.id }}</div>
+                  </td>
                   <td>
                     <a href="#image-{{ item.id }}">
                       <img src="{{ item.file|file("images") }}" alt="{{ item.file }}" class="img-fluid" loading="lazy">
@@ -60,7 +62,9 @@
                   <td>
                     <div class="text-wrap">{{ item.description != "false" ? item.description : "N/A" }}</div>
                   </td>
-                  <td>{{ item.section.title }}</td>
+                  <td>
+                    <div class="text-wrap">{{ item.section.title }}</div>
+                  </td>
                   <td>
                     <div class="d-flex">
                       <form action="{{ "/admin/images/remove"|page }}" method="post">

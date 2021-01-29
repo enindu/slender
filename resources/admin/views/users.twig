@@ -87,7 +87,9 @@
             <tbody>
               {% for item in users %}
                 <tr>
-                  <td>{{ item.id }}</td>
+                  <td>
+                    <div class="text-wrap">{{ item.id }}</div>
+                  </td>
                   <td>
                     {% if item.status %}
                       <span class="badge badge-primary">Active</span>
@@ -96,11 +98,21 @@
                       <span class="badge badge-danger">Inactive</span>
                     {% endif %}
                   </td>
-                  <td>{{ item.first_name }}</td>
-                  <td>{{ item.last_name }}</td>
-                  <td>{{ item.email }}</td>
-                  <td>{{ item.phone }}</td>
-                  <td>{{ item.role.title }}</td>
+                  <td>
+                    <div class="text-wrap">{{ item.first_name }}</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.last_name }}</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.email }}</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.phone }}</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.role.title }}</div>
+                  </td>
                   <td>
                     <div class="d-flex">
                       {% if item.status %}

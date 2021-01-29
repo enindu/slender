@@ -39,7 +39,9 @@
             <tbody>
               {% for item in subcategories %}
                 <tr>
-                  <td>{{ item.id }}</td>
+                  <td>
+                    <div class="text-wrap">{{ item.id }}</div>
+                  </td>
                   <td>
                     <div class="text-wrap">{{ item.slug }}</div>
                   </td>

@@ -38,7 +38,9 @@
             <tbody>
               {% for item in contents %}
                 <tr>
-                  <td>{{ item.id }}</td>
+                  <td>
+                    <div class="text-wrap">{{ item.id }}</div>
+                  </td>
                   <td>
                     <div class="text-wrap">{{ item.title }}</div>
                   </td>
@@ -48,7 +50,9 @@
                   <td>
                     <div class="text-wrap">{{ item.description|limit|markdown|raw }}</div>
                   </td>
-                  <td>{{ item.section.title }}</td>
+                  <td>
+                    <div class="text-wrap">{{ item.section.title }}</div>
+                  </td>
                   <td>
                     <div class="d-flex">
                       <a href="{{ "/admin/contents/"|page ~ item.id }}" class="btn btn-square mr-5">

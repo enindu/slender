@@ -37,7 +37,9 @@
             <tbody>
               {% for item in admins %}
                 <tr>
-                  <td>{{ item.id }}</td>
+                  <td>
+                    <div class="text-wrap">{{ item.id }}</div>
+                  </td>
                   <td>
                     {% if item.status %}
                       <span class="badge badge-primary">Active</span>
@@ -46,8 +48,12 @@
                       <span class="badge badge-danger">Inactive</span>
                     {% endif %}
                   </td>
-                  <td>{{ item.username }}</td>
-                  <td>{{ item.role.title }}</td>
+                  <td>
+                    <div class="text-wrap">{{ item.username }}</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.role.title }}</div>
+                  </td>
                   <td>
                     <div class="d-flex">
                       {% if item.status %}

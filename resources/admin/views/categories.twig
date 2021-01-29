@@ -75,7 +75,9 @@
             <tbody>
               {% for item in categories %}
                 <tr>
-                  <td>{{ item.id }}</td>
+                  <td>
+                    <div class="text-wrap">{{ item.id }}</div>
+                  </td>
                   <td>
                     <div class="text-wrap">{{ item.slug }}</div>
                   </td>
@@ -88,7 +90,9 @@
                   <td>
                     <div class="text-wrap">{{ item.description != "false" ? item.description : "N/A" }}</div>
                   </td>
-                  <td>{{ item.subcategories|length }} subcategories</td>
+                  <td>
+                    <div class="text-wrap">{{ item.subcategories|length }} subcategories</div>
+                  </td>
                   <td>
                     <div class="text-wrap">{{ item.section.title }}</div>
                   </td>

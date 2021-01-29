@@ -55,10 +55,18 @@
             <tbody>
               {% for item in roles %}
                 <tr>
-                  <td>{{ item.id }}</td>
-                  <td>{{ item.title }}</td>
-                  <td>{{ item.admins|length }} admins</td>
-                  <td>{{ item.users|length }} users</td>
+                  <td>
+                    <div class="text-wrap">{{ item.id }}</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.title }}</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.admins|length }} admins</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.users|length }} users</div>
+                  </td>
                   <td>
                     <form action="{{ "/admin/roles/remove"|page }}" method="post">
                       <input type="hidden" name="id" value="{{ item.id }}">

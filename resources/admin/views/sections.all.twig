@@ -39,12 +39,24 @@
             <tbody>
               {% for item in sections %}
                 <tr>
-                  <td>{{ item.id }}</td>
-                  <td>{{ item.title }}</td>
-                  <td>{{ item.images|length }} images</td>
-                  <td>{{ item.files|length }} files</td>
-                  <td>{{ item.contents|length }} contents</td>
-                  <td>{{ item.categories|length }} categories</td>
+                  <td>
+                    <div class="text-wrap">{{ item.id }}</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.title }}</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.images|length }} images</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.files|length }} files</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.contents|length }} contents</div>
+                  </td>
+                  <td>
+                    <div class="text-wrap">{{ item.categories|length }} categories</div>
+                  </td>
                   <td>
                     <form action="{{ "/admin/sections/remove"|page }}" method="post">
                       <input type="hidden" name="id" value="{{ item.id }}">

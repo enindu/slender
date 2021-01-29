@@ -38,7 +38,9 @@
             <tbody>
               {% for item in files %}
                 <tr>
-                  <td>{{ item.id }}</td>
+                  <td>
+                    <div class="text-wrap">{{ item.id }}</div>
+                  </td>
                   <td>
                     <div class="text-wrap">{{ item.title != "false" ? item.title : "N/A" }}</div>
                   </td>
@@ -48,7 +50,9 @@
                   <td>
                     <div class="text-wrap">{{ item.description != "false" ? item.description : "N/A" }}</div>
                   </td>
-                  <td>{{ item.section.title }}</td>
+                  <td>
+                    <div class="text-wrap">{{ item.section.title }}</div>
+                  </td>
                   <td>
                     <div class="d-flex">
                       <a href="{{ item.file|file("files") }}" class="btn btn-square mr-5" download>
