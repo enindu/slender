@@ -2,6 +2,7 @@
   "name": "enindu/slender",
   "description": "Developer-friendly, low-level, rapid web development environment based on Slim framework",
   "version": "0.2.4-dev",
+  "minimum-stability": "stable",
   "type": "project",
   "keywords": [
     "php",
@@ -42,6 +43,5 @@
     "psr-4": {
       "App\\": "app/"
     }
-  },
-  "minimum-stability": "stable"
+  }
 }
