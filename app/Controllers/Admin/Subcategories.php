@@ -88,8 +88,7 @@ class Subcategories extends Controller
     $validation = $this->validate($inputs, [
       'title'       => 'required|max:191',
       'subtitle'    => 'max:191',
-      'category-id' => 'required|integer',
-      'description' => 'max:500'
+      'category-id' => 'required|integer'
     ]);
     if($validation != null) {
       throw new HttpBadRequestException($request, reset($validation) . '.');
@@ -123,6 +122,61 @@ class Subcategories extends Controller
 
     // Return response
     return $response->withHeader('location', '/admin/subcategories');
+  }
+
+  /**
+   * Update function
+   * 
+   * @param Request  $request
+   * @param Response $response
+   * @param array    $data
+   * 
+   * @throws HttpBadRequestException
+   * @return Response
+   */
+  public function update(Request $request, Response $response, array $data): Response
+  {
+    // Check validation
+    $inputs = $request->getParsedBody();
+    $validation = $this->validate($inputs, [
+      'id'          => 'required|integer',
+      'title'       => 'required|max:191',
+      'subtitle'    => 'max:191',
+      'category-id' => 'required|integer'
+    ]);
+    if($validation != null) {
+      throw new HttpBadRequestException($request, reset($validation) . '.');
+    }
+
+    // Get inputs and files
+    $id = (int) trim($inputs['id']);
+    $title = trim($inputs['title']);
+    $subtitle = trim($inputs['subtitle']);
+    $categoryId = (int) trim($inputs['category-id']);
+    $description = trim($inputs['description']);
+
+    // Check subcategory
+    $subcategory = Subcategory::where('id', $id)->first();
+    if($subcategory == null) {
+      throw new HttpBadRequestException($request, 'There is no subcategory found.');
+    }
+
+    // Check category
+    $category = Category::where('id', $categoryId)->first();
+    if($category == null) {
+      throw new HttpBadRequestException($request, 'There is no category found.');
+    }
+
+    // Update database
+    $subcategory->category_id = $categoryId;
+    $subcategory->slug = strtolower(uniqid(str_replace([' ', '/', '\\', '\'', '"'], '-', str_replace(['(', ')', '[', ']', '{', '}', ',', '.'], '', $title)) . '-'));
+    $subcategory->title = $title;
+    $subcategory->subtitle = $subtitle != "" ? $subtitle : "false";
+    $subcategory->description = $description != "" ? $description : "false";
+    $subcategory->save();
+
+    // Return response
+    return $response->withHeader('location', '/admin/subcategories/' . $id);
   }
 
   /**
@@ -160,5 +214,30 @@ class Subcategories extends Controller
 
     // Return response
     return $response->withHeader('location', '/admin/subcategories');
+  }
+
+  /**
+   * Single page
+   * 
+   * @param Request  $request
+   * @param Response $response
+   * @param array    $data
+   * 
+   * @throws HttpNotFoundException
+   * @return Response
+   */
+  public function single(Request $request, Response $response, array $data): Response
+  {
+    // Check subcategory
+    $subcategory = Subcategory::where('id', $data['id'])->first();
+    if($subcategory == null) {
+      throw new HttpNotFoundException($request);
+    }
+
+    // Return response
+    return $this->view($response, '@admin/subcategories.single.twig', [
+      'subcategory' => $subcategory,
+      'categories'  => Category::get()
+    ]);
   }
 }

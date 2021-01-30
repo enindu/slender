@@ -85,10 +85,9 @@ class Categories extends Controller
     // Check validation
     $inputs = $request->getParsedBody();
     $validation = $this->validate($inputs, [
-      'title'       => 'required|max:191',
-      'subtitle'    => 'max:191',
-      'section-id'  => 'required|integer',
-      'description' => 'max:500'
+      'title'      => 'required|max:191',
+      'subtitle'   => 'max:191',
+      'section-id' => 'required|integer'
     ]);
     if($validation != null) {
       throw new HttpBadRequestException($request, reset($validation) . '.');
@@ -104,12 +103,6 @@ class Categories extends Controller
     $section = Section::where('id', $sectionId)->get();
     if($section == null) {
       throw new HttpBadRequestException($request, 'There is no section found.');
-    }
-
-    // Check category
-    $category = Category::where('title', $title)->first();
-    if($category != null) {
-      throw new HttpBadRequestException($request, 'There is a category already using that title.');
     }
 
     // Get clock library
@@ -128,6 +121,61 @@ class Categories extends Controller
 
     // Return response
     return $response->withHeader('location', '/admin/categories');
+  }
+
+  /**
+   * Update function
+   * 
+   * @param Request  $request
+   * @param Response $response
+   * @param array    $data
+   * 
+   * @throws HttpBadRequestException
+   * @return Response
+   */
+  public function update(Request $request, Response $response, array $data): Response
+  {
+    // Check validation
+    $inputs = $request->getParsedBody();
+    $validation = $this->validate($inputs, [
+      'id'         => 'required|integer',
+      'title'      => 'required|max:191',
+      'subtitle'   => 'max:191',
+      'section-id' => 'required|integer'
+    ]);
+    if($validation != null) {
+      throw new HttpBadRequestException($request, reset($validation) . '.');
+    }
+
+    // Get inputs and files
+    $id = (int) trim($inputs['id']);
+    $title = trim($inputs['title']);
+    $subtitle = trim($inputs['subtitle']);
+    $sectionId = (int) trim($inputs['section-id']);
+    $description = trim($inputs['description']);
+
+    // Check category
+    $category = Category::where('id', $id)->first();
+    if($category == null) {
+      throw new HttpBadRequestException($request, 'There is no category found.');
+    }
+
+    // Check section
+    $section = Section::where('id', $sectionId)->get();
+    if($section == null) {
+      throw new HttpBadRequestException($request, 'There is no section found.');
+    }
+
+    // Update database
+    $category->section_id = $sectionId;
+    $category->slug = strtolower(uniqid(str_replace([' ', '/', '\\', '\'', '"'], '-', str_replace(['(', ')', '[', ']', '{', '}', ',', '.'], '', $title)) . '-'));
+    $category->title = $title;
+    $category->subtitle = $subtitle != "" ? $subtitle : "false";
+    $category->description = $description != "" ? $description : "false";
+    $category->save();
+
+    // Return response
+    return $response->withHeader('location', '/admin/categories/' . $id);
   }
 
   /**
@@ -165,5 +213,30 @@ class Categories extends Controller
 
     // Return response
     return $response->withHeader('location', '/admin/categories');
+  }
+
+  /**
+   * Single page
+   * 
+   * @param Request  $request
+   * @param Response $response
+   * @param array    $data
+   * 
+   * @throws HttpNotFoundException
+   * @return Response
+   */
+  public function single(Request $request, Response $response, array $data): Response
+  {
+    // Check category
+    $category = Category::where('id', $data['id'])->first();
+    if($category == null) {
+      throw new HttpNotFoundException($request);
+    }
+
+    // Return response
+    return $this->view($response, '@admin/categories.single.twig', [
+      'category' => $category,
+      'sections' => Section::get()
+    ]);
   }
 }

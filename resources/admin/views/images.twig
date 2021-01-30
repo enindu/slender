@@ -108,14 +108,12 @@
                     <div class="text-wrap">{{ item.section.title }}</div>
                   </td>
                   <td>
-                    <div class="d-flex">
-                      <form action="{{ "/admin/images/remove"|page }}" method="post">
-                        <input type="hidden" name="id" value="{{ item.id }}">
-                        <button class="btn btn-danger btn-square">
-                          <i class="fa fa-trash-alt"></i>
-                        </button>
-                      </form>
-                    </div>
+                    <form action="{{ "/admin/images/remove"|page }}" method="post">
+                      <input type="hidden" name="id" value="{{ item.id }}">
+                      <button class="btn btn-danger btn-square">
+                        <i class="fa fa-trash-alt"></i>
+                      </button>
+                    </form>
                   </td>
                 </tr>
               {% else %}

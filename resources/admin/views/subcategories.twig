@@ -43,7 +43,10 @@
           </div>
           <div class="form-group">
             <label for="description">Enter description</label>
-            <textarea name="description" id="description" class="form-control h-200" placeholder="Description" maxlength="500"></textarea>
+            <textarea name="description" id="description" class="form-control h-200" placeholder="Description"></textarea>
+            <div class="form-text">
+              <small>Markdown supported</small>
+            </div>
           </div>
           <div class="text-right">
             <button class="btn">
@@ -87,18 +90,23 @@
                     <div class="text-wrap">{{ item.subtitle != "false" ? item.subtitle : "N/A" }}</div>
                   </td>
                   <td>
-                    <div class="text-wrap">{{ item.description != "false" ? item.description : "N/A" }}</div>
+                    <div class="text-wrap">{{ item.description != "false" ? item.description|limit|markdown|raw : "N/A" }}</div>
                   </td>
                   <td>
                     <div class="text-wrap">{{ item.category.title }}</div>
                   </td>
                   <td>
-                    <form action="{{ "/admin/subcategories/remove"|page }}" method="post">
-                      <input type="hidden" name="id" value="{{ item.id }}">
-                      <button class="btn btn-danger btn-square">
-                        <i class="fa fa-trash-alt"></i>
-                      </button>
-                    </form>
+                    <div class="d-flex">
+                      <a href="{{ "/admin/subcategories/"|page ~ item.id }}" class="btn btn-square mr-5">
+                        <i class="fa fa-wrench"></i>
+                      </a>
+                      <form action="{{ "/admin/subcategories/remove"|page }}" method="post">
+                        <input type="hidden" name="id" value="{{ item.id }}">
+                        <button class="btn btn-danger btn-square">
+                          <i class="fa fa-trash-alt"></i>
+                        </button>
+                      </form>
+                    </div>
                   </td>
                 </tr>
               {% else %}

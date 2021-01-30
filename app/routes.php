@@ -79,13 +79,17 @@ $app->group('/admin', function(RouteCollectorProxy $admin) use($container) {
     $categories->get('', AdminCategories::class . ':base');
     $categories->get('/all', AdminCategories::class . ':all');
     $categories->post('/add', AdminCategories::class . ':add');
+    $categories->post('/update', AdminCategories::class . ':update');
     $categories->post('/remove', AdminCategories::class . ':remove');
+    $categories->get('/{id}', AdminCategories::class . ':single');
   })->add(new AdminRole($container, [1, 2]));
   $admin->group('/subcategories', function(RouteCollectorProxy $subcategories) {
     $subcategories->get('', AdminSubcategories::class . ':base');
     $subcategories->get('/all', AdminSubcategories::class . ':all');
     $subcategories->post('/add', AdminSubcategories::class . ':add');
+    $subcategories->post('/update', AdminSubcategories::class . ':update');
     $subcategories->post('/remove', AdminSubcategories::class . ':remove');
+    $subcategories->get('/{id}', AdminSubcategories::class . ':single');
   })->add(new AdminRole($container, [1, 2]));
 })->add(new AdminAuth($container));
 
