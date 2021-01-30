@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 23, 2021 at 02:07 AM
+-- Generation Time: Jan 30, 2021 at 01:17 PM
 -- Server version: 10.5.8-MariaDB
--- PHP Version: 7.4.14
+-- PHP Version: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -51,7 +51,7 @@ CREATE TABLE `categories` (
   `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
-  `description` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
   `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -129,9 +129,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `title`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'Administrator', NULL, '1995-07-21 06:29:00', '2021-01-04 02:00:41'),
-(2, 'Moderator', NULL, '2020-12-30 23:58:52', '2020-12-30 23:58:52'),
-(3, 'User', NULL, '2020-12-30 23:58:57', '2020-12-30 23:58:57');
+(1, 'Administrator', NULL, '1995-07-21 06:29:00', '1995-07-21 06:29:00'),
+(2, 'Moderator', NULL, '1995-07-21 06:29:00', '1995-07-21 06:29:00'),
+(3, 'User', NULL, '1995-07-21 06:29:00', '1995-07-21 06:29:00');
 
 -- --------------------------------------------------------
 
@@ -159,7 +159,7 @@ CREATE TABLE `subcategories` (
   `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
-  `description` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
   `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
