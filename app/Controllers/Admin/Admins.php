@@ -19,7 +19,6 @@ class Admins extends Controller
    * @param Response $response
    * @param array    $data
    * 
-   * @throws HttpBadRequestException
    * @return Response
    */
   public function base(Request $request, Response $response, array $data): Response
