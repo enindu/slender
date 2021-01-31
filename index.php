@@ -3,8 +3,7 @@
 use DI\Container;
 use Slim\Factory\AppFactory;
 
-// Get Composer autoload and bootstrap
-require_once __DIR__ . "/vendor/autoload.php";
+// Get bootstrap
 require_once __DIR__ . "/bootstrap/bootstrap.php";
 
 // Create dependncy container and get library containers
