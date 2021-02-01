@@ -1,3 +1,5 @@
 <?php
 
-require_once __DIR__ . "/controllers/base.php";
+use App\Controllers\User\Base;
+
+$app->get("/", Base::class . ":base");
