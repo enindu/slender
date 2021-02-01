@@ -1,7 +1,7 @@
 {
   "name": "enindu/slender",
   "description": "Developer-friendly, low-level, rapid web development environment based on Slim framework",
-  "version": "0.2.4-dev",
+  "version": "0.2.4",
   "minimum-stability": "stable",
   "type": "project",
   "keywords": [
