@@ -12,6 +12,7 @@ require_once __DIR__ . "/settings/app.php";
 require_once __DIR__ . "/settings/system.php";
 
 $container = new Container();
+require_once __DIR__ . "/libraries/carbon.php";
 require_once __DIR__ . "/libraries/twig.php";
 
 $app = AppFactory::createFromContainer($container);
