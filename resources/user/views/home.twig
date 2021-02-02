@@ -1,0 +1,15 @@
+{% apply inline_css %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="{{ app.url }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ app.name }} {{ app.version }}</title>
+</head>
+<body>
+  <h1>{{ app.name }} {{ app.version }}</h1>
+  <p>{{ app.description }}</p>
+</body>
+</html>
+{% endapply %}

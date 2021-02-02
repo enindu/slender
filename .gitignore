@@ -1,3 +1,5 @@
 cache/routes/*
+cache/views/*
 logs/*
+uploads/*
 vendor/

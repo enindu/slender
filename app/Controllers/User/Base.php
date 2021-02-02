@@ -4,12 +4,12 @@ namespace App\Controllers\User;
 
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
+use System\Slender\Controller;
 
-class Base
+class Base extends Controller
 {
   public function base(Request $request, Response $response, array $data): Response
   {
-    $response->getBody()->write($_ENV["app"]["name"] . " " . $_ENV["app"]["version"]);
-    return $response->withHeader("Content-Type", "text/html");
+    return $this->view($response, "@user/home.twig");
   }
 }
