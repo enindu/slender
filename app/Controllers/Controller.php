@@ -6,6 +6,11 @@ use Slim\Psr7\Response;
 
 class Controller
 {
+  public function __construct()
+  {
+    require_once __DIR__ . "/../../libraries/eloquent.php";
+  }
+
   protected function view(Response $response, string $template, array $data = []): Response
   {
     $twig = require_once __DIR__ . "/../../libraries/twig.php";

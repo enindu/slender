@@ -5,7 +5,8 @@
         "php",
         "slender",
         "slim",
-        "twig"
+        "twig",
+        "eloquent"
     ],
     "version": "0.3.0-dev",
     "license": "MIT",
@@ -22,6 +23,8 @@
     "type": "project",
     "minimum-stability": "stable",
     "require": {
+        "illuminate/database": "^8.25",
+        "illuminate/events": "^8.25",
         "php": "^8.0",
         "slim/psr7": "^1.3",
         "slim/slim": "^4.7",

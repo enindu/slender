@@ -1,3 +1,4 @@
 cache/routes/*
 cache/views/*
+settings/app.php
 vendor/
