@@ -6,7 +6,8 @@
         "slender",
         "slim",
         "php-di",
-        "twig"
+        "twig",
+        "parsedown"
     ],
     "version": "0.3.0-dev",
     "license": "MIT",
@@ -29,6 +30,7 @@
         "php-di/php-di": "^6.3",
         "twig/twig": "^3.2",
         "twig/cssinliner-extra": "^3.2",
+        "erusev/parsedown": "^1.7",
         "nesbot/carbon": "^2.44"
     },
     "require-dev": {

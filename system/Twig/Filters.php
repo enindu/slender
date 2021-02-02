@@ -15,7 +15,8 @@ class Filters extends AbstractExtension
   {
     return [
       new TwigFilter("content", [$this, "content"]),
-      new TwigFilter("limit", [$this, "limit"])
+      new TwigFilter("limit", [$this, "limit"]),
+      new TwigFilter("markdown", [$this, "markdown"])
     ];
   }
 
@@ -37,5 +38,11 @@ class Filters extends AbstractExtension
     }
 
     return substr($text, 0, $length - 3) . "...";
+  }
+
+  public function markdown(string $text): string
+  {
+    $parsedown = $this->container->get("parsedown");
+    return $parsedown->text($text);
   }
 }

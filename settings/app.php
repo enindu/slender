@@ -6,7 +6,7 @@ $_ENV = [
   "app" => [
     "name"        => "Slender",
     "description" => "Developer-friendly, low-level, rapid web development environment, based on Slim framework",
-    "keywords"    => "php, slender, slim, php-di, twig",
+    "keywords"    => "php, slender, slim, php-di, twig, parsedown",
     "version"     => "v0.3.0-dev",
     "author"      => "Enindu Alahapperuma (me@enindu.com)",
     "url"         => "http://localhost",
@@ -23,4 +23,7 @@ $_ENV = [
     "auto-escape"         => "html",
     "optimizations"       => -1
   ],
+  "parsedown" => [
+    "safe-mode" => true
+  ]
 ];
