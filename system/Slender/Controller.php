@@ -7,7 +7,10 @@ use Slim\Psr7\Response;
 
 class Controller
 {
-  public function __construct(protected Container $container) {}
+  public function __construct(protected Container $container)
+  {
+    $this->container->get("eloquent");
+  }
 
   protected function view(Response $response, string $template, array $data = []): Response
   {
