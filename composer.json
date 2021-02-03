@@ -34,7 +34,8 @@
         "twig/twig": "^3.2",
         "twig/cssinliner-extra": "^3.2",
         "erusev/parsedown": "^1.7",
-        "nesbot/carbon": "^2.44"
+        "nesbot/carbon": "^2.44",
+        "symfony/filesystem": "^5.2"
     },
     "require-dev": {
         "symfony/var-dumper": "^5.2",
