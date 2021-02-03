@@ -35,6 +35,7 @@
         "twig/cssinliner-extra": "^3.2",
         "erusev/parsedown": "^1.7",
         "intervention/image": "^2.5",
+        "rakit/validation": "^1.4",
         "nesbot/carbon": "^2.44",
         "symfony/filesystem": "^5.2"
     },
