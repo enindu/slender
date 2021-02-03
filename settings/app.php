@@ -6,7 +6,7 @@ $_ENV = [
   "app" => [
     "name"        => "Slender",
     "description" => "Developer-friendly, low-level, rapid web development environment, based on Slim framework",
-    "keywords"    => "php, slender, slim, php-di, eloquent, twig, parsedown",
+    "keywords"    => "php, slender, slim, php-di, eloquent, twig, swift-mailer, parsedown",
     "version"     => "v0.3.0-dev",
     "author"      => "Enindu Alahapperuma (me@enindu.com)",
     "url"         => "http://localhost",
@@ -32,6 +32,12 @@ $_ENV = [
     "strict-variables"    => true,
     "auto-escape"         => "html",
     "optimizations"       => -1
+  ],
+  "swift-mailer" => [
+    "host"     => "smtp.mailtrap.io",
+    "port"     => "465",
+    "username" => "f204e4687aa3cb",
+    "password" => "3f23587357e4e7"
   ],
   "parsedown" => [
     "safe-mode" => true

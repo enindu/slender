@@ -15,10 +15,12 @@ $container = new Container();
 require_once __DIR__ . "/libraries/carbon.php";
 require_once __DIR__ . "/libraries/filesystem.php";
 require_once __DIR__ . "/libraries/image.php";
-require_once __DIR__ . "/libraries/validation.php";
 require_once __DIR__ . "/libraries/parsedown.php";
 require_once __DIR__ . "/libraries/eloquent.php";
 require_once __DIR__ . "/libraries/twig.php";
+require_once __DIR__ . "/libraries/swift-mailer.php";
+require_once __DIR__ . "/libraries/swift-message.php";
+require_once __DIR__ . "/libraries/validation.php";
 
 $app = AppFactory::createFromContainer($container);
 

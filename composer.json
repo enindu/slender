@@ -8,6 +8,7 @@
         "php-di",
         "eloquent",
         "twig",
+        "swift-mailer",
         "parsedown"
     ],
     "version": "0.3.0-dev",
@@ -33,6 +34,7 @@
         "illuminate/events": "^8.26",
         "twig/twig": "^3.2",
         "twig/cssinliner-extra": "^3.2",
+        "swiftmailer/swiftmailer": "^6.2",
         "erusev/parsedown": "^1.7",
         "intervention/image": "^2.5",
         "rakit/validation": "^1.4",

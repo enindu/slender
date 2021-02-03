@@ -20,6 +20,27 @@ class Controller
     return $response->withHeader("Content-Type", "text/html");
   }
 
+  protected function email(string $template, array $data): null|int
+  {
+    $swiftMessage = $this->container->get("swift-message");
+    $twig = $this->container->get("twig");
+
+    $view = $twig->render($template, $data["body"]);
+    $swiftMessage->setSubject($data["subject"]);
+    $swiftMessage->setFrom($data["from"]);
+    $swiftMessage->setTo($data["to"]);
+    $swiftMessage->setBody($view, "text/html");
+
+    $swiftMailer = $this->container->get("swift-mailer");
+
+    $emailRecipients = $swiftMailer->send($swiftMessage);
+    if($emailRecipients == 0) {
+      return $emailRecipients;
+    }
+
+    return null;
+  }
+
   protected function validate(array $data, array $rules): null|array
   {
     $validation = $this->container->get("validation");
