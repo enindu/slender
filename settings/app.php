@@ -35,5 +35,8 @@ $_ENV = [
   ],
   "parsedown" => [
     "safe-mode" => true
+  ],
+  "image" => [
+    "driver" => "gd"
   ]
 ];
