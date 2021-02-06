@@ -1,9 +1,9 @@
 html, body {
-  font-family: Montserrat, sans-serif !important;
+  font-family: sans-serif !important;
 }
 
 .text-monospace {
-  font-family: IBM Plex Mono, monospace !important;
+  font-family: monospace !important;
 }
 
 .font-size-100 {
