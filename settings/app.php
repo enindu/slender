@@ -11,7 +11,11 @@ $_ENV = [
     "author"      => "Enindu Alahapperuma (me@enindu.com)",
     "url"         => "http://localhost",
     "timezone"    => "Asia/Colombo",
-    "charset"     => "UTF-8"
+    "charset"     => "UTF-8",
+    "key"         => "",
+    "cookie"      => [
+      "admin" => ""
+    ]
   ],
   "eloquent" => [
     "driver"    => "mysql",
