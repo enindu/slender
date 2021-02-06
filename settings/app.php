@@ -13,10 +13,10 @@ $_ENV = [
     "domain"      => "localhost",
     "timezone"    => "Asia/Colombo",
     "charset"     => "UTF-8",
-    "key"         => "",
+    "key"         => "3dJkdbvpXScdBnpvHOKVlgMaRZKNRFYe",
     "cookie"      => [
-      "admin" => "",
-      "user"  => ""
+      "admin" => "slender_acOJXeuCyK",
+      "user"  => "slender_ae6x0tIr1e"
     ]
   ],
   "eloquent" => [
