@@ -44,5 +44,15 @@ $_ENV = [
   ],
   "image" => [
     "driver" => "gd"
+  ],
+  "middleware" => [
+    "session" => [
+      "name"      => "slender",
+      "lifetime"  => 0,
+      "path"      => "/",
+      "domain"    => "localhost",
+      "secure"    => false,
+      "http-only" => true
+    ]
   ]
 ];
