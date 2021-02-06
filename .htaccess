@@ -23,6 +23,7 @@
   RewriteRule ^resources/common/views/.* index.php [F,L]
   RewriteRule ^resources/user/views/.* index.php [F,L]
   RewriteRule ^settings/.* index.php [F,L]
+  RewriteRule ^sources/.* index.php [F,L]
   RewriteRule ^system/.* index.php [F,L]
   RewriteRule ^vendor/.* index.php [F,L]
 
