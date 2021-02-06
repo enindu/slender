@@ -4,7 +4,6 @@ use System\Twig\Filters;
 use System\Twig\Functions;
 use System\Twig\Globals;
 use Twig\Environment;
-use Twig\Extra\CssInliner\CssInlinerExtension;
 use Twig\Loader\FilesystemLoader;
 
 $container->set("twig", function() use ($container): Environment {
@@ -30,11 +29,9 @@ $container->set("twig", function() use ($container): Environment {
   $globals = new Globals($container);
   $functions = new Functions($container);
   $filters = new Filters($container);
-  $cssInlinerExtension = new CssInlinerExtension();
   
   $environment->addExtension($globals);
   $environment->addExtension($functions);
   $environment->addExtension($filters);
-  $environment->addExtension($cssInlinerExtension);
   return $environment;
 });

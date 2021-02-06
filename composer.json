@@ -33,7 +33,6 @@
         "illuminate/database": "^8.26",
         "illuminate/events": "^8.26",
         "twig/twig": "^3.2",
-        "twig/cssinliner-extra": "^3.2",
         "swiftmailer/swiftmailer": "^6.2",
         "erusev/parsedown": "^1.7",
         "intervention/image": "^2.5",
