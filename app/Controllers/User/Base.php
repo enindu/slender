@@ -4,7 +4,7 @@ namespace App\Controllers\User;
 
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
-use System\Slender\Controller;
+use System\Slender\Controllers\Controller;
 
 class Base extends Controller
 {
