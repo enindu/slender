@@ -15,7 +15,8 @@ $_ENV = [
     "charset"     => "UTF-8",
     "key"         => "",
     "cookie"      => [
-      "admin" => ""
+      "admin" => "",
+      "user"  => ""
     ]
   ],
   "eloquent" => [
