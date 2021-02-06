@@ -93,4 +93,16 @@ class Accounts extends Controller
       return $response->withHeader("Location", "/admin/accounts/login");
     }
   }
+
+  public function logout(Request $request, Response $response, array $data): Response
+  {
+    $method = $request->getMethod();
+    if($method == "GET") {
+      return $this->view($response, "@admin/accounts.logout.twig");
+    }
+    if($method == "POST") {
+      setcookie($_ENV["app"]["cookie"]["admin"], "expired", strtotime("now") - 1, "/admin", $_ENV["app"]["domain"], false, true);
+      return $response->withHeader("Location", "/admin/accounts/login");
+    }
+  }
 }
