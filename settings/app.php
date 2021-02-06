@@ -10,6 +10,7 @@ $_ENV = [
     "version"     => "v0.3.0-dev",
     "author"      => "Enindu Alahapperuma (me@enindu.com)",
     "url"         => "http://localhost",
+    "domain"      => "localhost",
     "timezone"    => "Asia/Colombo",
     "charset"     => "UTF-8",
     "key"         => "",

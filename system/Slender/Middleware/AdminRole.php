@@ -10,10 +10,7 @@ use Slim\Psr7\Response;
 
 class AdminRole
 {
-  public function __construct(
-    private Container $container,
-    private array $roles
-  ) {}
+  public function __construct(private Container $container, private array $roles) {}
 
   public function __invoke(Request $request, RequestHandlerInterface $handler): Response
   {
