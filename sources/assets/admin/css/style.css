@@ -1,27 +1,14 @@
 body {
   font-family: sans-serif !important;
-  font-size: 1.2rem;
 }
 
 textarea {
   resize: none;
 }
 
-.navbar-brand {
-  font-size: 1.8rem;
-}
-
 .navbar-brand img {
   height: 30px;
   width: 30px;
-}
-
-.sidebar-title {
-  font-size: 1.4rem;
-}
-
-.card-title {
-  font-size: 1.8rem;
 }
 
 .banner {

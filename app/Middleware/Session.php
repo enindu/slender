@@ -26,6 +26,7 @@ class Session
     session_name($_ENV["middleware"]["session"]["name"]);
     session_id(md5(uniqid(bin2hex(random_bytes(32)))));
     session_start();
+    
     return $response;
   }
 }

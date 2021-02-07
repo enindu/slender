@@ -53,4 +53,14 @@ class Controller
 
     return null;
   }
+
+  protected function auth(string $key, string $type): string|null
+  {
+    $keyExists = isset($_SESSION["auth"][$type][$key]);
+    if(!$keyExists) {
+      return null;
+    }
+
+    return $_SESSION["auth"][$type][$key];
+  }
 }
