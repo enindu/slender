@@ -2,12 +2,12 @@
 
 namespace App\Controllers\Admin;
 
+use App\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Role;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
-use System\Slender\Controllers\Controller;
 
 class Accounts extends Controller
 {

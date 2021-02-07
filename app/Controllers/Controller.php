@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Slender\Controllers;
+namespace App\Controllers;
 
 use DI\Container;
 use Slim\Psr7\Response;

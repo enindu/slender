@@ -2,9 +2,9 @@
 
 namespace App\Controllers\Admin;
 
+use App\Controllers\Controller;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
-use System\Slender\Controllers\Controller;
 
 class Base extends Controller
 {

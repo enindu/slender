@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Slender\Middleware;
+namespace App\Middleware;
 
 use DI\Container;
 use Psr\Http\Server\RequestHandlerInterface;

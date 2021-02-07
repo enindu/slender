@@ -1,6 +1,6 @@
 <?php
 
-use System\Slender\Middleware\Session;
+use App\Middleware\Session;
 use System\Slim\ErrorRenderer;
 
 $app->add(new Session());

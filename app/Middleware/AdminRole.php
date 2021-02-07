@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Slender\Middleware;
+namespace App\Middleware;
 
 use DI\Container;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -8,7 +8,7 @@ use Slim\Exception\HttpForbiddenException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
-class UserRole
+class AdminRole
 {
   public function __construct(private Container $container, private array $roles) {}
 
@@ -16,7 +16,7 @@ class UserRole
   {
     $eloquent = $this->container->get("eloquent");
 
-    $roleID = $eloquent->table("users")->where("unique_id", $request->getCookieParams()[$_ENV["app"]["cookie"]["user"]])->value("role_id");
+    $roleID = $eloquent->table("admins")->where("unique_id", $request->getCookieParams()[$_ENV["app"]["cookie"]["admin"]])->value("role_id");
     $roleExists = array_search($roleID, $this->roles, true);
     if(!$roleExists) {
       throw new HttpForbiddenException($request);

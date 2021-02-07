@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Slender\Middleware;
+namespace App\Middleware;
 
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Request;

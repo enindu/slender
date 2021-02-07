@@ -3,8 +3,8 @@
 use App\Controllers\Admin\Accounts as AdminAccounts;
 use App\Controllers\Admin\Base as AdminBase;
 use App\Controllers\User\Base as UserBase;
+use App\Middleware\AdminAuth;
 use Slim\Routing\RouteCollectorProxy;
-use System\Slender\Middleware\AdminAuth;
 
 $app->group("/admin", function(RouteCollectorProxy $admin) {
   $admin->get("", AdminBase::class . ":base");
