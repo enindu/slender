@@ -3,9 +3,9 @@
 use App\Controllers\Admin\Accounts as AdminAccounts;
 use App\Controllers\Admin\Base as AdminBase;
 use App\Controllers\Admin\Roles as AdminRoles;
+use App\Controllers\Admin\Sections as AdminSections;
 use App\Controllers\User\Base as UserBase;
 use App\Middleware\AdminAuth;
-use App\Middleware\AdminRole;
 use Slim\Routing\RouteCollectorProxy;
 
 $app->group("/admin", function(RouteCollectorProxy $admin) use ($container) {
@@ -23,7 +23,13 @@ $app->group("/admin", function(RouteCollectorProxy $admin) use ($container) {
     $roles->get("/all", AdminRoles::class . ":all");
     $roles->post("/add", AdminRoles::class . ':add');
     $roles->post("/remove", AdminRoles::class . ":remove");
-  })->add(new AdminRole($container, [1]));
+  });
+  $admin->group("/sections", function(RouteCollectorProxy $sections) {
+    $sections->get("", AdminSections::class . ":base");
+    $sections->get("/all", AdminSections::class . ":all");
+    $sections->post("/add", AdminSections::class . ":add");
+    $sections->post("/remove", AdminSections::class . ":remove");
+  });
 })->add(new AdminAuth($container));
 
 $app->group("", function(RouteCollectorProxy $user) {
