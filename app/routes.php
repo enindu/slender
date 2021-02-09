@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\Admin\Accounts as AdminAccounts;
+use App\Controllers\Admin\Admins as AdminAdmins;
 use App\Controllers\Admin\Base as AdminBase;
 use App\Controllers\Admin\Roles as AdminRoles;
 use App\Controllers\Admin\Sections as AdminSections;
@@ -8,7 +9,7 @@ use App\Controllers\User\Base as UserBase;
 use App\Middleware\AdminAuth;
 use Slim\Routing\RouteCollectorProxy;
 
-$app->group("/admin", function(RouteCollectorProxy $admin) use ($container) {
+$app->group("/admin", function(RouteCollectorProxy $admin) {
   $admin->get("", AdminBase::class . ":base");
   $admin->group("/accounts", function(RouteCollectorProxy $accounts) {
     $accounts->map(["GET", "POST"], "/login", AdminAccounts::class . ":login");
@@ -21,7 +22,7 @@ $app->group("/admin", function(RouteCollectorProxy $admin) use ($container) {
   $admin->group("/roles", function(RouteCollectorProxy $roles) {
     $roles->get("", AdminRoles::class . ":base");
     $roles->get("/all", AdminRoles::class . ":all");
-    $roles->post("/add", AdminRoles::class . ':add');
+    $roles->post("/add", AdminRoles::class . ":add");
     $roles->post("/remove", AdminRoles::class . ":remove");
   });
   $admin->group("/sections", function(RouteCollectorProxy $sections) {
@@ -29,6 +30,14 @@ $app->group("/admin", function(RouteCollectorProxy $admin) use ($container) {
     $sections->get("/all", AdminSections::class . ":all");
     $sections->post("/add", AdminSections::class . ":add");
     $sections->post("/remove", AdminSections::class . ":remove");
+  });
+  $admin->group("/admins", function(RouteCollectorProxy $admins) {
+    $admins->get("", AdminAdmins::class . ":base");
+    $admins->get("/all", AdminAdmins::class . ":all");
+    $admins->post("/add", AdminAdmins::class . ":add");
+    $admins->post("/activate", AdminAdmins::class . ":activate");
+    $admins->post("/deactivate", AdminAdmins::class . ":deactivate");
+    $admins->post("/remove", AdminAdmins::class . ":remove");
   });
 })->add(new AdminAuth($container));
 
