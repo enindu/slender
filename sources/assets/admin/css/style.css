@@ -10,11 +10,3 @@ textarea {
   height: 30px;
   width: 30px;
 }
-
-.banner {
-  background-image: url(../images/banner.svg);
-  background-position: center center;
-  background-repeat: no-repeat;
-  border: 1px solid rgba(0, 0 ,0, 0.2);
-  height: 600px;
-}
