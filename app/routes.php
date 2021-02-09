@@ -2,11 +2,13 @@
 
 use App\Controllers\Admin\Accounts as AdminAccounts;
 use App\Controllers\Admin\Base as AdminBase;
+use App\Controllers\Admin\Roles as AdminRoles;
 use App\Controllers\User\Base as UserBase;
 use App\Middleware\AdminAuth;
+use App\Middleware\AdminRole;
 use Slim\Routing\RouteCollectorProxy;
 
-$app->group("/admin", function(RouteCollectorProxy $admin) {
+$app->group("/admin", function(RouteCollectorProxy $admin) use ($container) {
   $admin->get("", AdminBase::class . ":base");
   $admin->group("/accounts", function(RouteCollectorProxy $accounts) {
     $accounts->map(["GET", "POST"], "/login", AdminAccounts::class . ":login");
@@ -14,8 +16,14 @@ $app->group("/admin", function(RouteCollectorProxy $admin) {
     $accounts->map(["GET", "POST"], "/logout", AdminAccounts::class . ":logout");
     $accounts->get("/profile", AdminAccounts::class . ":profile");
     $accounts->post("/change-information", AdminAccounts::class . ":changeInformation");
-    $accounts->post("/change-password", AdminAccounts::class . ':changePassword');
+    $accounts->post("/change-password", AdminAccounts::class . ":changePassword");
   });
+  $admin->group("/roles", function(RouteCollectorProxy $roles) {
+    $roles->get("", AdminRoles::class . ":base");
+    $roles->get("/all", AdminRoles::class . ":all");
+    $roles->post("/add", AdminRoles::class . ':add');
+    $roles->post("/remove", AdminRoles::class . ":remove");
+  })->add(new AdminRole($container, [1]));
 })->add(new AdminAuth($container));
 
 $app->group("", function(RouteCollectorProxy $user) {
