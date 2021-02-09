@@ -94,7 +94,7 @@
           </table>
         </div>
         <nav>
-          <ul class="pagination pagination-rounded text-center mb-0">
+          <ul class="pagination text-center mb-0">
             {% for item in 1..pages %}
               <li class="page-item {{ item == page ? "active" }}">
                 <a href="/admin/admins/all?page={{ item }}" class="page-link">{{ item }}</a>
