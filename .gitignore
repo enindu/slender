@@ -3,5 +3,5 @@ cache/routes/*
 cache/views/*
 logs/*
 node_modules/
-uploads/*
+uploads/images/*
 vendor/

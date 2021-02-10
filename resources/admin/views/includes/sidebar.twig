@@ -40,11 +40,19 @@
       </span>
       Admins
     </a>
-    <a href="/admin/users" class="sidebar-link sidebar-link-with-icon mb-20 {{ id == "users" or id == "users.all" ? "active" }}">
+    <a href="/admin/users" class="sidebar-link sidebar-link-with-icon {{ id == "users" or id == "users.all" ? "active" }}">
       <span class="sidebar-icon {{ id == "users" or id == "users.all" ? "bg-primary text-white" }}">
         <i class="fa fa-users"></i>
       </span>
       Users
+    </a>
+    <h6 class="sidebar-title">Upload</h6>
+    <div class="sidebar-divider"></div>
+    <a href="/admin/images" class="sidebar-link sidebar-link-with-icon {{ id == "images" or id == "images.all" ? "active" }}">
+      <span class="sidebar-icon {{ id == "images" or id == "images.all" ? "bg-primary text-white" }}">
+        <i class="fa fa-image"></i>
+      </span>
+      Images
     </a>
   </div>
 </div>
