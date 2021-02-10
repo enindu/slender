@@ -5,6 +5,7 @@ use App\Controllers\Admin\Admins as AdminAdmins;
 use App\Controllers\Admin\Base as AdminBase;
 use App\Controllers\Admin\Roles as AdminRoles;
 use App\Controllers\Admin\Sections as AdminSections;
+use App\Controllers\Admin\Users as AdminUsers;
 use App\Controllers\User\Base as UserBase;
 use App\Middleware\AdminAuth;
 use Slim\Routing\RouteCollectorProxy;
@@ -38,6 +39,14 @@ $app->group("/admin", function(RouteCollectorProxy $admin) {
     $admins->post("/activate", AdminAdmins::class . ":activate");
     $admins->post("/deactivate", AdminAdmins::class . ":deactivate");
     $admins->post("/remove", AdminAdmins::class . ":remove");
+  });
+  $admin->group("/users", function(RouteCollectorProxy $users) {
+    $users->get("", AdminUsers::class . ":base");
+    $users->get("/all", AdminUsers::class . ":all");
+    $users->post("/add", AdminUsers::class . ":add");
+    $users->post("/activate", AdminUsers::class . ":activate");
+    $users->post("/deactivate", AdminUsers::class . ":deactivate");
+    $users->post("/remove", AdminUsers::class . ":remove");
   });
 })->add(new AdminAuth($container));
 
