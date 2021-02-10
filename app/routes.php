@@ -3,6 +3,7 @@
 use App\Controllers\Admin\Accounts as AdminAccounts;
 use App\Controllers\Admin\Admins as AdminAdmins;
 use App\Controllers\Admin\Base as AdminBase;
+use App\Controllers\Admin\Files as AdminFiles;
 use App\Controllers\Admin\Images as AdminImages;
 use App\Controllers\Admin\Roles as AdminRoles;
 use App\Controllers\Admin\Sections as AdminSections;
@@ -54,6 +55,12 @@ $app->group("/admin", function(RouteCollectorProxy $admin) {
     $images->get("/all", AdminImages::class . ":all");
     $images->post("/add", AdminImages::class . ":add");
     $images->post("/remove", AdminImages::class . ":remove");
+  });
+  $admin->group("/files", function(RouteCollectorProxy $files) {
+    $files->get("", AdminFiles::class . ":base");
+    $files->get("/all", AdminFiles::class . ":all");
+    $files->post("/add", AdminFiles::class . ":add");
+    $files->post("/remove", AdminFiles::class . ":remove");
   });
 })->add(new AdminAuth($container));
 

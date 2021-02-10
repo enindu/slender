@@ -3,5 +3,6 @@ cache/routes/*
 cache/views/*
 logs/*
 node_modules/
+uploads/files/*
 uploads/images/*
 vendor/
