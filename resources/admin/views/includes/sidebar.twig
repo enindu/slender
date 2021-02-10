@@ -48,6 +48,12 @@
     </a>
     <h6 class="sidebar-title">Upload</h6>
     <div class="sidebar-divider"></div>
+    <a href="/admin/contents" class="sidebar-link sidebar-link-with-icon {{ id == "contents" or id == "contents.all" or id == "contents.single" ? "active" }}">
+      <span class="sidebar-icon {{ id == "contents" or id == "contents.all" or id == "contents.single" ? "bg-primary text-white" }}">
+        <i class="fa fa-pen"></i>
+      </span>
+      Contents
+    </a>
     <a href="/admin/images" class="sidebar-link sidebar-link-with-icon {{ id == "images" or id == "images.all" ? "active" }}">
       <span class="sidebar-icon {{ id == "images" or id == "images.all" ? "bg-primary text-white" }}">
         <i class="fa fa-image"></i>
