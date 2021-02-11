@@ -9,6 +9,7 @@ use App\Controllers\Admin\Files as AdminFiles;
 use App\Controllers\Admin\Images as AdminImages;
 use App\Controllers\Admin\Roles as AdminRoles;
 use App\Controllers\Admin\Sections as AdminSections;
+use App\Controllers\Admin\Subcategories as AdminSubcategories;
 use App\Controllers\Admin\Users as AdminUsers;
 use App\Controllers\User\Base as UserBase;
 use App\Middleware\AdminAuth;
@@ -79,6 +80,14 @@ $app->group("/admin", function(RouteCollectorProxy $admin) {
     $categories->post("/update", AdminCategories::class . ":update");
     $categories->post("/remove", AdminCategories::class . ":remove");
     $categories->get("/{id}", AdminCategories::class . ":single");
+  });
+  $admin->group("/subcategories", function(RouteCollectorProxy $subcategories) {
+    $subcategories->get("", AdminSubcategories::class . ":base");
+    $subcategories->get("/all", AdminSubcategories::class . ":all");
+    $subcategories->post("/add", AdminSubcategories::class . ":add");
+    $subcategories->post("/update", AdminSubcategories::class . ":update");
+    $subcategories->post("/remove", AdminSubcategories::class . ":remove");
+    $subcategories->get("/{id}", AdminSubcategories::class . ":single");
   });
 })->add(new AdminAuth($container));
 
