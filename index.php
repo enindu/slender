@@ -5,8 +5,8 @@ use Slim\Factory\AppFactory;
 
 require_once __DIR__ . "/vendor/autoload.php";
 
-$ubench = new Ubench();
-$ubench->start();
+// $ubench = new Ubench();
+// $ubench->start();
 
 require_once __DIR__ . "/settings/app.php";
 require_once __DIR__ . "/settings/system.php";
@@ -32,5 +32,9 @@ require_once __DIR__ . "/app/routes.php";
 
 $app->run();
 
-$ubench->end();
-file_put_contents(__DIR__ . "/logs/performance.log", "[" . date(DATE_ATOM) . "] " . $_ENV["app"]["name"] . ".DEBUG " . $ubench->getTime() . " | " . $ubench->getMemoryUsage() . "\n", FILE_APPEND);
+// $ubench->end();
+// file_put_contents(
+//   __DIR__ . "/logs/performance.log",
+//   "[" . date(DATE_ATOM) . "] " . $_ENV["app"]["name"] . ".DEBUG " . $ubench->getTime() . " | " . $ubench->getMemoryUsage() . "\n",
+//   FILE_APPEND
+// );

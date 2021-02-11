@@ -9,22 +9,22 @@ $_ENV = [
     "keywords"    => "php, slender, slim, php-di, eloquent, twig, swift-mailer, parsedown",
     "version"     => "v0.3.0-dev",
     "author"      => "Enindu Alahapperuma (me@enindu.com)",
-    "url"         => "http://localhost",
-    "domain"      => "localhost",
+    "url"         => "",
+    "domain"      => "",
     "timezone"    => "Asia/Colombo",
     "charset"     => "UTF-8",
-    "key"         => "3dJkdbvpXScdBnpvHOKVlgMaRZKNRFYe",
+    "key"         => "",
     "cookie"      => [
-      "admin" => "slender_acOJXeuCyK",
-      "user"  => "slender_ae6x0tIr1e"
+      "admin" => "",
+      "user"  => ""
     ]
   ],
   "eloquent" => [
     "driver"    => "mysql",
     "host"      => "localhost",
-    "database"  => "slender",
-    "username"  => "root",
-    "password"  => "root",
+    "database"  => "",
+    "username"  => "",
+    "password"  => "",
     "charset"   => "utf8",
     "collation" => "utf8_unicode_ci",
     "prefix"    => ""
@@ -40,10 +40,10 @@ $_ENV = [
     "optimizations"       => -1
   ],
   "swift-mailer" => [
-    "host"     => "smtp.mailtrap.io",
-    "port"     => "465",
-    "username" => "f204e4687aa3cb",
-    "password" => "3f23587357e4e7"
+    "host"     => "",
+    "port"     => "",
+    "username" => "",
+    "password" => ""
   ],
   "parsedown" => [
     "safe-mode" => true
@@ -53,10 +53,10 @@ $_ENV = [
   ],
   "middleware" => [
     "session" => [
-      "name"      => "slender",
+      "name"      => "",
       "lifetime"  => 0,
       "path"      => "/",
-      "domain"    => "localhost",
+      "domain"    => "",
       "secure"    => false,
       "http-only" => true
     ]
