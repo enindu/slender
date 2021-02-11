@@ -15,6 +15,6 @@ class File extends Model
 
   public function section(): HasOne
   {
-    return $this->hasOne(Section::class, "id", "section_id");
+    return $this->hasOne(Section::class, "id", "section_id")->withTrashed();
   }
 }

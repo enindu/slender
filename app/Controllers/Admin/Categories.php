@@ -3,20 +3,20 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\Controller;
-use App\Models\Content;
+use App\Models\Category;
 use App\Models\Section;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
-class Contents extends Controller
+class Categories extends Controller
 {
   public function base(Request $request, Response $response, array $data): Response
   {
-    return $this->view($response, "@admin/contents.twig", [
-      "sections" => Section::get(),
-      "contents" => Content::orderBy("id", "desc")->take(10)->get()
+    return $this->view($response, "@admin/categories.twig", [
+      "sections"   => Section::get(),
+      "categories" => Category::orderBy("id", "desc")->take(10)->get()
     ]);
   }
 
@@ -32,7 +32,7 @@ class Contents extends Controller
 
     $page = (int) $parameters["page"];
 
-    $results = count(Content::get());
+    $results = count(Category::get());
     $resultsPerPage = 10;
     $pageResults = ($page - 1) * $resultsPerPage;
     $pages = ceil($results / $resultsPerPage);
@@ -40,10 +40,10 @@ class Contents extends Controller
       throw new HttpNotFoundException($request);
     }
     
-    return $this->view($response, "@admin/contents.all.twig", [
-      "page"     => $page,
-      "pages"    => $pages,
-      "contents" => Content::orderBy("id", "desc")->skip($pageResults)->take($resultsPerPage)->get()
+    return $this->view($response, "@admin/categories.all.twig", [
+      "page"       => $page,
+      "pages"      => $pages,
+      "categories" => Category::orderBy("id", "desc")->skip($pageResults)->take($resultsPerPage)->get()
     ]);
   }
 
@@ -51,10 +51,9 @@ class Contents extends Controller
   {
     $inputs = $request->getParsedBody();
     $validation = $this->validate($inputs, [
-      "title"       => "required|max:191",
-      "subtitle"    => "max:191",
-      "section-id"  => "required|integer",
-      "description" => "required"
+      "title"      => "required|max:191",
+      "subtitle"   => "max:191",
+      "section-id" => "required|integer"
     ]);
     if($validation != null) {
       throw new HttpBadRequestException($request, reset($validation) . ".");
@@ -70,34 +69,34 @@ class Contents extends Controller
       throw new HttpBadRequestException($request, "There is no section found.");
     }
 
-    $content = Content::where("title", $title)->first();
-    if($content != null) {
-      throw new HttpBadRequestException($request, "There is a content already using that title.");
+    $category = Category::where("title", $title)->first();
+    if($category != null) {
+      throw new HttpBadRequestException($request, "There is a category already using that title.");
     }
 
     $carbon = $this->container->get("carbon");
 
-    Content::insert([
+    Category::insert([
       "section_id"  => $sectionID,
+      "slug"        => strtolower(uniqid(str_replace([" ", "/", "\\", "'", "\""], "-", str_replace(["(", ")", "[", "]", "{", "}", ",", "."], "", $title)) . "-")),
       "title"       => $title,
       "subtitle"    => $subtitle != "" ? $subtitle : "false",
-      "description" => $description,
+      "description" => $description != "" ? $description : "false",
       "created_at"  => $carbon::now(),
       "updated_at"  => $carbon::now()
     ]);
 
-    return $response->withHeader("Location", "/admin/contents");
+    return $response->withHeader("Location", "/admin/categories");
   }
 
   public function update(Request $request, Response $response, array $data): Response
   {
     $inputs = $request->getParsedBody();
     $validation = $this->validate($inputs, [
-      "id"          => "required|integer",
-      "title"       => "required|max:191",
-      "subtitle"    => "max:191",
-      "section-id"  => "required|integer",
-      "description" => "required"
+      "id"         => "required|integer",
+      "title"      => "required|max:191",
+      "subtitle"   => "max:191",
+      "section-id" => "required|integer"
     ]);
     if($validation != null) {
       throw new HttpBadRequestException($request, reset($validation) . ".");
@@ -109,28 +108,29 @@ class Contents extends Controller
     $sectionID = (int) trim($inputs["section-id"]);
     $description = trim($inputs["description"]);
 
-    $contentWithID = Content::where("id", $id)->first();
-    if($contentWithID == null) {
-      throw new HttpBadRequestException($request, "There is no content found.");
+    $categoryWithID = Category::where("id", $id)->first();
+    if($categoryWithID == null) {
+      throw new HttpBadRequestException($request, "There is no category found.");
     }
 
-    $contentWithTitle = Content::where("title", $title)->first();
-    if($contentWithTitle != null && $contentWithTitle->id != $contentWithID->id) {
-      throw new HttpBadRequestException($request, "There is a content already using that title.");
+    $categoryWithTitle = Category::where("title", $title)->first();
+    if($categoryWithTitle != null && $categoryWithTitle->id != $categoryWithID->id) {
+      throw new HttpBadRequestException($request, "There is a category already using that title.");
     }
 
-    $section = Section::where("id", $sectionID)->first();
+    $section = Section::where("id", $sectionID)->get();
     if($section == null) {
       throw new HttpBadRequestException($request, "There is no section found.");
     }
 
-    $contentWithID->section_id = $sectionID;
-    $contentWithID->title = $title;
-    $contentWithID->subtitle = $subtitle != "" ? $subtitle : "false";
-    $contentWithID->description = $description;
-    $contentWithID->save();
+    $categoryWithID->section_id = $sectionID;
+    $categoryWithID->slug = strtolower(uniqid(str_replace([" ", "/", "\\", "\'", "\""], "-", str_replace(["(", ")", "[", "]", "{", "}", ",", "."], "", $title)) . "-"));
+    $categoryWithID->title = $title;
+    $categoryWithID->subtitle = $subtitle != "" ? $subtitle : "false";
+    $categoryWithID->description = $description != "" ? $description : "false";
+    $categoryWithID->save();
 
-    return $response->withHeader("Location", "/admin/contents/" . $id);
+    return $response->withHeader("Location", "/admin/categories/" . $id);
   }
 
   public function remove(Request $request, Response $response, array $data): Response
@@ -145,25 +145,25 @@ class Contents extends Controller
 
     $id = (int) trim($inputs["id"]);
 
-    $content = Content::where("id", $id)->first();
-    if($content == null) {
-      throw new HttpBadRequestException($request, "There is no content found.");
+    $category = Category::where("id", $id)->first();
+    if($category == null) {
+      throw new HttpBadRequestException($request, "There is no category found.");
     }
 
-    $content->delete();
+    $category->delete();
 
-    return $response->withHeader("Location", "/admin/contents");
+    return $response->withHeader("Location", "/admin/categories");
   }
 
   public function single(Request $request, Response $response, array $data): Response
   {
-    $content = Content::where("id", $data["id"])->first();
-    if($content == null) {
+    $category = Category::where("id", $data["id"])->first();
+    if($category == null) {
       throw new HttpNotFoundException($request);
     }
 
-    return $this->view($response, "@admin/contents.single.twig", [
-      "content"  => $content,
+    return $this->view($response, "@admin/categories.single.twig", [
+      "category" => $category,
       "sections" => Section::get()
     ]);
   }
