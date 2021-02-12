@@ -69,11 +69,6 @@ class Subcategories extends Controller
       throw new HttpBadRequestException($request, "There is no category found.");
     }
 
-    $subcategory = Subcategory::where("title", $title)->first();
-    if($subcategory != null) {
-      throw new HttpBadRequestException($request, "There is a subcategory already using that title.");
-    }
-
     $carbon = $this->container->get("carbon");
 
     Subcategory::insert([
@@ -108,14 +103,9 @@ class Subcategories extends Controller
     $categoryID = (int) trim($inputs["category-id"]);
     $description = trim($inputs["description"]);
 
-    $subcategoryWithID = Subcategory::where("id", $id)->first();
-    if($subcategoryWithID == null) {
+    $subcategory = Subcategory::where("id", $id)->first();
+    if($subcategory == null) {
       throw new HttpBadRequestException($request, "There is no subcategory found.");
-    }
-
-    $subcategoryWithTitle = Subcategory::where("title", $title)->first();
-    if($subcategoryWithTitle != null && $subcategoryWithTitle->id != $subcategoryWithID->id) {
-      throw new HttpBadRequestException($request, "There is a subcategory already using that title.");
     }
 
     $category = Category::where("id", $categoryID)->first();
@@ -123,12 +113,12 @@ class Subcategories extends Controller
       throw new HttpBadRequestException($request, "There is no category found.");
     }
 
-    $subcategoryWithID->category_id = $categoryID;
-    $subcategoryWithID->slug = strtolower(uniqid(str_replace([" ", "/", "\\", "'", "\""], "-", str_replace(["(", ")", "[", "]", "{", "}", ",", "."], "", $title)) . "-"));
-    $subcategoryWithID->title = $title;
-    $subcategoryWithID->subtitle = $subtitle != "" ? $subtitle : "false";
-    $subcategoryWithID->description = $description != "" ? $description : "false";
-    $subcategoryWithID->save();
+    $subcategory->category_id = $categoryID;
+    $subcategory->slug = strtolower(uniqid(str_replace([" ", "/", "\\", "'", "\""], "-", str_replace(["(", ")", "[", "]", "{", "}", ",", "."], "", $title)) . "-"));
+    $subcategory->title = $title;
+    $subcategory->subtitle = $subtitle != "" ? $subtitle : "false";
+    $subcategory->description = $description != "" ? $description : "false";
+    $subcategory->save();
 
     return $response->withHeader("Location", "/admin/subcategories/" . $id);
   }

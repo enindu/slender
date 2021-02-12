@@ -69,11 +69,6 @@ class Categories extends Controller
       throw new HttpBadRequestException($request, "There is no section found.");
     }
 
-    $category = Category::where("title", $title)->first();
-    if($category != null) {
-      throw new HttpBadRequestException($request, "There is a category already using that title.");
-    }
-
     $carbon = $this->container->get("carbon");
 
     Category::insert([
@@ -108,14 +103,9 @@ class Categories extends Controller
     $sectionID = (int) trim($inputs["section-id"]);
     $description = trim($inputs["description"]);
 
-    $categoryWithID = Category::where("id", $id)->first();
-    if($categoryWithID == null) {
+    $category = Category::where("id", $id)->first();
+    if($category == null) {
       throw new HttpBadRequestException($request, "There is no category found.");
-    }
-
-    $categoryWithTitle = Category::where("title", $title)->first();
-    if($categoryWithTitle != null && $categoryWithTitle->id != $categoryWithID->id) {
-      throw new HttpBadRequestException($request, "There is a category already using that title.");
     }
 
     $section = Section::where("id", $sectionID)->get();
@@ -123,12 +113,12 @@ class Categories extends Controller
       throw new HttpBadRequestException($request, "There is no section found.");
     }
 
-    $categoryWithID->section_id = $sectionID;
-    $categoryWithID->slug = strtolower(uniqid(str_replace([" ", "/", "\\", "\'", "\""], "-", str_replace(["(", ")", "[", "]", "{", "}", ",", "."], "", $title)) . "-"));
-    $categoryWithID->title = $title;
-    $categoryWithID->subtitle = $subtitle != "" ? $subtitle : "false";
-    $categoryWithID->description = $description != "" ? $description : "false";
-    $categoryWithID->save();
+    $category->section_id = $sectionID;
+    $category->slug = strtolower(uniqid(str_replace([" ", "/", "\\", "\'", "\""], "-", str_replace(["(", ")", "[", "]", "{", "}", ",", "."], "", $title)) . "-"));
+    $category->title = $title;
+    $category->subtitle = $subtitle != "" ? $subtitle : "false";
+    $category->description = $description != "" ? $description : "false";
+    $category->save();
 
     return $response->withHeader("Location", "/admin/categories/" . $id);
   }

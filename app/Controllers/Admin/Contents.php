@@ -70,11 +70,6 @@ class Contents extends Controller
       throw new HttpBadRequestException($request, "There is no section found.");
     }
 
-    $content = Content::where("title", $title)->first();
-    if($content != null) {
-      throw new HttpBadRequestException($request, "There is a content already using that title.");
-    }
-
     $carbon = $this->container->get("carbon");
 
     Content::insert([
@@ -109,14 +104,9 @@ class Contents extends Controller
     $sectionID = (int) trim($inputs["section-id"]);
     $description = trim($inputs["description"]);
 
-    $contentWithID = Content::where("id", $id)->first();
-    if($contentWithID == null) {
+    $content = Content::where("id", $id)->first();
+    if($content == null) {
       throw new HttpBadRequestException($request, "There is no content found.");
-    }
-
-    $contentWithTitle = Content::where("title", $title)->first();
-    if($contentWithTitle != null && $contentWithTitle->id != $contentWithID->id) {
-      throw new HttpBadRequestException($request, "There is a content already using that title.");
     }
 
     $section = Section::where("id", $sectionID)->first();
@@ -124,11 +114,11 @@ class Contents extends Controller
       throw new HttpBadRequestException($request, "There is no section found.");
     }
 
-    $contentWithID->section_id = $sectionID;
-    $contentWithID->title = $title;
-    $contentWithID->subtitle = $subtitle != "" ? $subtitle : "false";
-    $contentWithID->description = $description;
-    $contentWithID->save();
+    $content->section_id = $sectionID;
+    $content->title = $title;
+    $content->subtitle = $subtitle != "" ? $subtitle : "false";
+    $content->description = $description;
+    $content->save();
 
     return $response->withHeader("Location", "/admin/contents/" . $id);
   }
