@@ -82,7 +82,7 @@
           <ul class="pagination text-center mb-0">
             {% for item in 1..pages %}
               <li class="page-item {{ item == page ? "active" }}">
-                <a href="/admin/sections/all?page=" class="page-link">{{ item }}</a>
+                <a href="/admin/sections/all?page={{ item }}" class="page-link">{{ item }}</a>
               </li>
             {% endfor %}
           </ul>
