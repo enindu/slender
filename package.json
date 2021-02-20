@@ -38,7 +38,9 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.2",
-    "halfmoon": "^1.1.1",
-    "parcel": "^2.0.0-nightly.579"
+    "halfmoon": "^1.1.1"
+  },
+  "devDependencies": {
+    "parcel": "^2.0.0-nightly.603"
   }
 }
