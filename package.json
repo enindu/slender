@@ -11,7 +11,7 @@
     "swift-mailer",
     "parsedown"
   ],
-  "version": "0.3.2",
+  "version": "0.3.3-dev",
   "license": "MIT",
   "homepage": "https://github.com/enindu/slender",
   "repository": {
@@ -23,7 +23,7 @@
   },
   "author": {
     "name": "Enindu Alahapperuma",
-    "email": "me@enindu.com",
+    "email": "enindu@gmail.com",
     "url": "https://enindu.com"
   },
   "private": true,
