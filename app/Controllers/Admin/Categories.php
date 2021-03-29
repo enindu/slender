@@ -64,7 +64,7 @@ class Categories extends Controller
     $sectionID = (int) trim($inputs["section-id"]);
     $description = trim($inputs["description"]);
 
-    $section = Section::where("id", $sectionID)->get();
+    $section = Section::where("id", $sectionID)->first();
     if($section == null) {
       throw new HttpBadRequestException($request, "There is no section found.");
     }
@@ -108,7 +108,7 @@ class Categories extends Controller
       throw new HttpBadRequestException($request, "There is no category found.");
     }
 
-    $section = Section::where("id", $sectionID)->get();
+    $section = Section::where("id", $sectionID)->first();
     if($section == null) {
       throw new HttpBadRequestException($request, "There is no section found.");
     }

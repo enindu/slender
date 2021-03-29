@@ -74,7 +74,7 @@ class Images extends Controller
     $description = trim($inputs["description"]);
     $file = $files["file"];
 
-    $section = Section::where("id", $sectionID)->get();
+    $section = Section::where("id", $sectionID)->first();
     if($section == null) {
       throw new HttpBadRequestException($request, "There is no section found.");
     }
