@@ -21,6 +21,25 @@ class Globals extends AbstractExtension implements GlobalsInterface
         "author"      => $_ENV["app"]["author"],
         "domain"      => $_ENV["app"]["domain"],
         "url"         => $_ENV["app"]["url"]
+      ],
+      "auth" => [
+        "admin" => [
+          "logged"   => isset($_SESSION["auth"]["admin"]),
+          "id"       => $_SESSION["auth"]["admin"]["id"] ?: false,
+          "role_id"  => $_SESSION["auth"]["admin"]["role-id"] ?: false,
+          "status"   => $_SESSION["auth"]["admin"]["status"] ?: false,
+          "username" => $_SESSION["auth"]["admin"]["username"] ?: false
+        ],
+        "public" => [
+          "logged"     => isset($_SESSION["auth"]["user"]),
+          "id"         => $_SESSION["auth"]["user"]["id"] ?: false,
+          "role_id"    => $_SESSION["auth"]["user"]["role-id"] ?: false,
+          "status"     => $_SESSION["auth"]["user"]["status"] ?: false,
+          "first_name" => $_SESSION["auth"]["user"]["first-name"] ?: false,
+          "last_name"  => $_SESSION["auth"]["user"]["last-name"] ?: false,
+          "email"      => $_SESSION["auth"]["user"]["email"] ?: false,
+          "phone"      => $_SESSION["auth"]["user"]["phone"] ?: false
+        ]
       ]
     ];
   }
