@@ -30,7 +30,7 @@ class Globals extends AbstractExtension implements GlobalsInterface
           "status"   => $_SESSION["auth"]["admin"]["status"] ?: false,
           "username" => $_SESSION["auth"]["admin"]["username"] ?: false
         ],
-        "public" => [
+        "user" => [
           "logged"     => isset($_SESSION["auth"]["user"]),
           "id"         => $_SESSION["auth"]["user"]["id"] ?: false,
           "role_id"    => $_SESSION["auth"]["user"]["role-id"] ?: false,
