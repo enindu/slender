@@ -1,9 +1,6 @@
 <?php
 
-use App\Middleware\Session;
 use System\Slim\ErrorRenderer;
-
-$app->add(new Session());
 
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();

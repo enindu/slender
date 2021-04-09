@@ -53,12 +53,13 @@ $_ENV = [
   ],
   "middleware" => [
     "session" => [
-      "name"      => "",
-      "lifetime"  => 0,
-      "path"      => "/",
-      "domain"    => "",
-      "secure"    => false,
-      "http-only" => true
+      "name"       => "",
+      "lifetime"   => 0,
+      "path"       => "/",
+      "domain"     => "",
+      "secure"     => false,
+      "http-only"  => true,
+      "sid-length" => 32
     ]
   ]
 ];

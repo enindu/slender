@@ -59,7 +59,7 @@ class UserAuth
       "first-name" => $account->first_name,
       "last-name"  => $account->last_name,
       "email"      => $account->email,
-      "phone"      => $account->phone,
+      "phone"      => $account->phone
     ];
 
     return $handler->handle($request);
