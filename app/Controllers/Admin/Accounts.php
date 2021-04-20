@@ -108,13 +108,6 @@ class Accounts extends Controller
     }
   }
 
-  public function profile(Request $request, Response $response, array $data): Response
-  {
-    return $this->view($response, "@admin/accounts.profile.twig", [
-      "admin" => Admin::where("id", $this->auth("id", "admin"))->first()
-    ]);
-  }
-
   public function changeInformation(Request $request, Response $response, array $data): Response
   {
     $inputs = $request->getParsedBody();
@@ -174,5 +167,12 @@ class Accounts extends Controller
     $admin->save();
 
     return $response->withHeader("Location", "/admin/accounts/login");
+  }
+
+  public function profile(Request $request, Response $response, array $data): Response
+  {
+    return $this->view($response, "@admin/accounts.profile.twig", [
+      "admin" => Admin::where("id", $this->auth("id", "admin"))->first()
+    ]);
   }
 }

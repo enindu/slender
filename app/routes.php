@@ -21,9 +21,9 @@ $app->group("/admin", function(RouteCollectorProxy $admin) {
     $accounts->map(["GET", "POST"], "/login", AdminAccounts::class . ":login");
     $accounts->map(["GET", "POST"], "/register", AdminAccounts::class . ":register");
     $accounts->map(["GET", "POST"], "/logout", AdminAccounts::class . ":logout");
-    $accounts->get("/profile", AdminAccounts::class . ":profile");
     $accounts->post("/change-information", AdminAccounts::class . ":changeInformation");
     $accounts->post("/change-password", AdminAccounts::class . ":changePassword");
+    $accounts->get("/profile", AdminAccounts::class . ":profile");
   });
   $admin->group("/roles", function(RouteCollectorProxy $roles) {
     $roles->get("", AdminRoles::class . ":base");
