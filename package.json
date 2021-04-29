@@ -9,7 +9,9 @@
     "eloquent",
     "twig",
     "swift-mailer",
-    "parsedown"
+    "parsedown",
+    "framework",
+    "cms"
   ],
   "version": "0.3.4-dev",
   "license": "MIT",

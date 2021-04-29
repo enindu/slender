@@ -1,2 +1,1 @@
-resources/* linguist-vendored
-sources/* linguist-vendored
+*.twig linguist-vendored
