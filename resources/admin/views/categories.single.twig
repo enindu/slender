@@ -65,9 +65,7 @@
         {% if category.description != "false" %}
           {{ category.description|markdown|raw }}
         {% else %}
-          <div class="text-center">
-            <i class="fa fa-frown mr-5"></i> No description found!
-          </div>
+          <i class="fa fa-frown mr-5"></i> No description found!
         {% endif %}
         <div class="text-right">
           <form action="/admin/categories/remove" method="post">
