@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 11, 2021 at 06:39 PM
--- Server version: 10.5.8-MariaDB
--- PHP Version: 8.0.2
+-- Generation Time: May 13, 2021 at 04:50 PM
+-- Server version: 10.5.10-MariaDB
+-- PHP Version: 8.0.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,9 +34,9 @@ CREATE TABLE `admins` (
   `status` tinyint(1) NOT NULL DEFAULT 1,
   `username` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -50,11 +50,11 @@ CREATE TABLE `categories` (
   `section_id` int(11) NOT NULL,
   `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
-  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N/A',
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N/A',
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -66,12 +66,12 @@ CREATE TABLE `categories` (
 CREATE TABLE `contents` (
   `id` int(11) NOT NULL,
   `section_id` int(11) NOT NULL,
-  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
-  `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N/A',
+  `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N/A',
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -83,13 +83,13 @@ CREATE TABLE `contents` (
 CREATE TABLE `files` (
   `id` int(11) NOT NULL,
   `section_id` int(11) NOT NULL,
-  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
-  `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
-  `description` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N/A',
+  `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N/A',
+  `description` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N/A',
   `file` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -101,13 +101,13 @@ CREATE TABLE `files` (
 CREATE TABLE `images` (
   `id` int(11) NOT NULL,
   `section_id` int(11) NOT NULL,
-  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
-  `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
-  `description` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N/A',
+  `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N/A',
+  `description` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N/A',
   `file` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -119,9 +119,9 @@ CREATE TABLE `images` (
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -133,9 +133,9 @@ CREATE TABLE `roles` (
 CREATE TABLE `sections` (
   `id` int(11) NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -149,11 +149,11 @@ CREATE TABLE `subcategories` (
   `category_id` int(11) NOT NULL,
   `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
-  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N/A',
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N/A',
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -172,9 +172,9 @@ CREATE TABLE `users` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --

@@ -75,7 +75,7 @@ class Contents extends Controller
     Content::insert([
       "section_id"  => $sectionID,
       "title"       => $title,
-      "subtitle"    => $subtitle != "" ? $subtitle : "false",
+      "subtitle"    => $subtitle != "" ? $subtitle : "N/A",
       "description" => $description,
       "created_at"  => $carbon::now(),
       "updated_at"  => $carbon::now()
@@ -116,7 +116,7 @@ class Contents extends Controller
 
     $content->section_id = $sectionID;
     $content->title = $title;
-    $content->subtitle = $subtitle != "" ? $subtitle : "false";
+    $content->subtitle = $subtitle != "" ? $subtitle : "N/A";
     $content->description = $description;
     $content->save();
 

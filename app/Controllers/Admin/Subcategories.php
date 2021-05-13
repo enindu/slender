@@ -75,8 +75,8 @@ class Subcategories extends Controller
       "category_id" => $categoryID,
       "slug"        => strtolower(uniqid(str_replace([" ", "/", "\\", "'", "\""], "-", str_replace(["(", ")", "[", "]", "{", "}", ",", "."], "", $title)) . "-")),
       "title"       => $title,
-      "subtitle"    => $subtitle != "" ? $subtitle : "false",
-      "description" => $description != "" ? $description : "false",
+      "subtitle"    => $subtitle != "" ? $subtitle : "N/A",
+      "description" => $description != "" ? $description : "N/A",
       "created_at"  => $carbon::now(),
       "updated_at"  => $carbon::now()
     ]);
@@ -116,8 +116,8 @@ class Subcategories extends Controller
     $subcategory->category_id = $categoryID;
     $subcategory->slug = strtolower(uniqid(str_replace([" ", "/", "\\", "'", "\""], "-", str_replace(["(", ")", "[", "]", "{", "}", ",", "."], "", $title)) . "-"));
     $subcategory->title = $title;
-    $subcategory->subtitle = $subtitle != "" ? $subtitle : "false";
-    $subcategory->description = $description != "" ? $description : "false";
+    $subcategory->subtitle = $subtitle != "" ? $subtitle : null;
+    $subcategory->description = $description != "" ? $description : null;
     $subcategory->save();
 
     return $response->withHeader("Location", "/admin/subcategories/" . $id);

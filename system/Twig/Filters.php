@@ -43,6 +43,7 @@ class Filters extends AbstractExtension
   public function markdown(string $text): string
   {
     $parsedown = $this->container->get("parsedown");
+
     return $parsedown->text($text);
   }
 }

@@ -41,7 +41,7 @@ class Accounts extends Controller
       }
 
       setcookie($_ENV["app"]["cookie"]["admin"], $admin->unique_id, 0, "/admin", $_ENV["app"]["domain"], false, true);
-      
+
       return $response->withHeader("Location", "/admin");
     }
   }

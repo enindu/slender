@@ -87,9 +87,9 @@ class Images extends Controller
 
     Image::insert([
       "section_id"  => $sectionID,
-      "title"       => $title != "" ? $title : "false",
-      "subtitle"    => $subtitle != "" ? $subtitle : "false",
-      "description" => $description != "" ? $description : "false",
+      "title"       => $title != "" ? $title : "N/A",
+      "subtitle"    => $subtitle != "" ? $subtitle : "N/A",
+      "description" => $description != "" ? $description : "N/A",
       "file"        => $fileName,
       "created_at"  => $carbon::now(),
       "updated_at"  => $carbon::now()

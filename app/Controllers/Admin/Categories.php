@@ -75,8 +75,8 @@ class Categories extends Controller
       "section_id"  => $sectionID,
       "slug"        => strtolower(uniqid(str_replace([" ", "/", "\\", "'", "\""], "-", str_replace(["(", ")", "[", "]", "{", "}", ",", "."], "", $title)) . "-")),
       "title"       => $title,
-      "subtitle"    => $subtitle != "" ? $subtitle : "false",
-      "description" => $description != "" ? $description : "false",
+      "subtitle"    => $subtitle != "" ? $subtitle : "N/A",
+      "description" => $description != "" ? $description : "N/A",
       "created_at"  => $carbon::now(),
       "updated_at"  => $carbon::now()
     ]);
@@ -116,8 +116,8 @@ class Categories extends Controller
     $category->section_id = $sectionID;
     $category->slug = strtolower(uniqid(str_replace([" ", "/", "\\", "\'", "\""], "-", str_replace(["(", ")", "[", "]", "{", "}", ",", "."], "", $title)) . "-"));
     $category->title = $title;
-    $category->subtitle = $subtitle != "" ? $subtitle : "false";
-    $category->description = $description != "" ? $description : "false";
+    $category->subtitle = $subtitle != "" ? $subtitle : "N/A";
+    $category->description = $description != "" ? $description : "N/A";
     $category->save();
 
     return $response->withHeader("Location", "/admin/categories/" . $id);
