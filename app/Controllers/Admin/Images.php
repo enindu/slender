@@ -62,7 +62,7 @@ class Images extends Controller
 
     $files = $request->getUploadedFiles();
     $fileValidation = $this->validate($_FILES, [
-      "file" => "required|uploaded_file:0,5M,jpeg,png"
+      "file" => "required|uploaded_file:0,5M,jpeg,png,webp"
     ]);
     if($fileValidation != null) {
       throw new HttpBadRequestException($request, reset($fileValidation) . ".");
