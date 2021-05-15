@@ -9,6 +9,7 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
+use System\Slender\StringHelper;
 
 class Subcategories extends Controller
 {
@@ -73,7 +74,7 @@ class Subcategories extends Controller
 
     Subcategory::insert([
       "category_id" => $categoryID,
-      "slug"        => strtolower(uniqid(str_replace([" ", "/", "\\", "'", "\""], "-", str_replace(["(", ")", "[", "]", "{", "}", ",", "."], "", $title)) . "-")),
+      "slug"        => StringHelper::createSlug($title),
       "title"       => $title,
       "subtitle"    => $subtitle != "" ? $subtitle : "N/A",
       "description" => $description != "" ? $description : "N/A",
@@ -114,10 +115,10 @@ class Subcategories extends Controller
     }
 
     $subcategory->category_id = $categoryID;
-    $subcategory->slug = strtolower(uniqid(str_replace([" ", "/", "\\", "'", "\""], "-", str_replace(["(", ")", "[", "]", "{", "}", ",", "."], "", $title)) . "-"));
+    $subcategory->slug = StringHelper::createSlug($title);
     $subcategory->title = $title;
-    $subcategory->subtitle = $subtitle != "" ? $subtitle : null;
-    $subcategory->description = $description != "" ? $description : null;
+    $subcategory->subtitle = $subtitle != "" ? $subtitle : "N/A";
+    $subcategory->description = $description != "" ? $description : "N/A";
     $subcategory->save();
 
     return $response->withHeader("Location", "/admin/subcategories/" . $id);

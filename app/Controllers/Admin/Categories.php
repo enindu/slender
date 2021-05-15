@@ -9,6 +9,7 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
+use System\Slender\StringHelper;
 
 class Categories extends Controller
 {
@@ -73,7 +74,7 @@ class Categories extends Controller
 
     Category::insert([
       "section_id"  => $sectionID,
-      "slug"        => strtolower(uniqid(str_replace([" ", "/", "\\", "'", "\""], "-", str_replace(["(", ")", "[", "]", "{", "}", ",", "."], "", $title)) . "-")),
+      "slug"        => StringHelper::createSlug($title),
       "title"       => $title,
       "subtitle"    => $subtitle != "" ? $subtitle : "N/A",
       "description" => $description != "" ? $description : "N/A",
@@ -114,7 +115,7 @@ class Categories extends Controller
     }
 
     $category->section_id = $sectionID;
-    $category->slug = strtolower(uniqid(str_replace([" ", "/", "\\", "\'", "\""], "-", str_replace(["(", ")", "[", "]", "{", "}", ",", "."], "", $title)) . "-"));
+    $category->slug = StringHelper::createSlug($title);
     $category->title = $title;
     $category->subtitle = $subtitle != "" ? $subtitle : "N/A";
     $category->description = $description != "" ? $description : "N/A";
