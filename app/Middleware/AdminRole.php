@@ -17,8 +17,7 @@ class AdminRole
     $eloquent = $this->container->get("eloquent");
 
     $roleID = $eloquent->table("admins")->where("unique_id", $request->getCookieParams()[$_ENV["app"]["cookie"]["admin"]])->value("role_id");
-    $roleExists = array_search($roleID, $this->roles);
-    if($roleExists === false) {
+    if(array_search($roleID, $this->roles) === false) {
       throw new HttpForbiddenException($request);
     }
 
