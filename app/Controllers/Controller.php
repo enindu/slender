@@ -16,8 +16,7 @@ class Controller
   {
     $twig = $this->container->get("twig");
 
-    $view = $twig->render($template, $data);
-    $response->getBody()->write($view);
+    $response->getBody()->write($twig->render($template, $data));
     return $response->withHeader("Content-Type", "text/html");
   }
 
@@ -26,11 +25,10 @@ class Controller
     $swiftMessage = $this->container->get("swift-message");
     $twig = $this->container->get("twig");
 
-    $view = $twig->render($template, $data["body"]);
     $swiftMessage->setSubject($data["subject"]);
     $swiftMessage->setFrom($data["from"]);
     $swiftMessage->setTo($data["to"]);
-    $swiftMessage->setBody($view, "text/html");
+    $swiftMessage->setBody($twig->render($template, $data["body"]), "text/html");
 
     $swiftMailer = $this->container->get("swift-mailer");
 
@@ -47,8 +45,7 @@ class Controller
     $validation = $this->container->get("validation");
 
     $validate = $validation->validate($data, $rules);
-    $validationFails = $validate->fails();
-    if($validationFails) {
+    if($validate->fails()) {
       return $validate->errors()->all();
     }
 
@@ -57,8 +54,7 @@ class Controller
 
   protected function auth(string $key, string $type): string|null
   {
-    $keyExists = isset($_SESSION["auth"][$type][$key]);
-    if(!$keyExists) {
+    if(!isset($_SESSION["auth"][$type][$key])) {
       return null;
     }
 
