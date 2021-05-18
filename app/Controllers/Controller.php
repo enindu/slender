@@ -16,7 +16,8 @@ class Controller
   {
     $twig = $this->container->get("twig");
 
-    $response->getBody()->write($twig->render($template, $data));
+    $view = $twig->render($template, $data);
+    $response->getBody()->write($view);
     return $response->withHeader("Content-Type", "text/html");
   }
 

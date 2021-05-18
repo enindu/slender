@@ -13,6 +13,7 @@ class AdminAuth
 
   public function __invoke(Request $request, RequestHandlerInterface $handler): Response
   {
+    $response = $handler->handle($request);
     $path = $request->getUri()->getPath();
     $sessionExists = isset($_SESSION["auth"]["admin"]);
     $cookieExists = isset($request->getCookieParams()[$_ENV["app"]["cookie"]["admin"]]);
@@ -26,7 +27,7 @@ class AdminAuth
         return $response->withHeader("Location", "/admin/accounts/login");
       }
 
-      return $handler->handle($request);
+      return $response;
     }
 
     $eloquent = $this->container->get("eloquent");
@@ -44,7 +45,7 @@ class AdminAuth
         return $response->withHeader("Location", "/admin/accounts/login");
       }
 
-      return $handler->handle($request);
+      return $response;
     }
 
     if($path == "/admin/accounts/login" || $path == "/admin/accounts/register") {
@@ -59,6 +60,6 @@ class AdminAuth
       "username" => $account->username
     ];
 
-    return $handler->handle($request);
+    return $response;
   }
 }

@@ -6,9 +6,13 @@ use App\Controllers\Controller;
 use App\Models\Image;
 use App\Models\Section;
 use Slim\Exception\HttpBadRequestException;
+use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
+use System\Slender\Crypto;
+use System\Slender\Date;
+use System\Slender\Text;
 
 class Images extends Controller
 {
@@ -50,28 +54,22 @@ class Images extends Controller
   public function add(Request $request, Response $response, array $data): Response
   {
     $inputs = $request->getParsedBody();
-    $inputValidation = $this->validate($inputs, [
+    $files = $request->getUploadedFiles();
+    $validation = $this->validate($inputs + $_FILES, [
       "title"       => "max:191",
       "subtitle"    => "max:191",
       "section-id"  => "required|integer",
-      "description" => "max:500"
+      "description" => "max:500",
+      "file"        => "required|uploaded_file:0,5M,jpeg,png,webp"
     ]);
-    if($inputValidation != null) {
-      throw new HttpBadRequestException($request, reset($inputValidation) . ".");
+    if($validation != null) {
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $files = $request->getUploadedFiles();
-    $fileValidation = $this->validate($_FILES, [
-      "file" => "required|uploaded_file:0,5M,jpeg,png,webp"
-    ]);
-    if($fileValidation != null) {
-      throw new HttpBadRequestException($request, reset($fileValidation) . ".");
-    }
-
-    $title = trim($inputs["title"]);
-    $subtitle = trim($inputs["subtitle"]);
-    $sectionID = (int) trim($inputs["section-id"]);
-    $description = trim($inputs["description"]);
+    $title = $inputs["title"];
+    $subtitle = $inputs["subtitle"];
+    $sectionID = (int) $inputs["section-id"];
+    $description = $inputs["description"];
     $file = $files["file"];
 
     $section = Section::where("id", $sectionID)->first();
@@ -79,11 +77,15 @@ class Images extends Controller
       throw new HttpBadRequestException($request, "There is no section found.");
     }
 
-    $fileExtension = pathinfo($file->getClientFilename(), PATHINFO_EXTENSION);
-    $fileName = uniqid(bin2hex(random_bytes(8))) . "." . $fileExtension;
-    $file->moveTo(__DIR__ . "/../../../uploads/images/" . $fileName);
+    $fileError = $file->getError();
+    if($fileError != UPLOAD_ERR_OK) {
+      throw new HttpInternalServerErrorException($request, "Something went wrong while uploading file.");
+    }
 
-    $carbon = $this->container->get("carbon");
+    $clientName = $file->getClientFilename();
+    $fileExtension = pathinfo($clientName, PATHINFO_EXTENSION);
+    $fileName = Crypto::uniqueID(64) . "." . $fileExtension;
+    $file->moveTo(__DIR__ . "/../../../uploads/images/" . $fileName);
 
     Image::insert([
       "section_id"  => $sectionID,
@@ -91,8 +93,8 @@ class Images extends Controller
       "subtitle"    => $subtitle != "" ? $subtitle : "N/A",
       "description" => $description != "" ? $description : "N/A",
       "file"        => $fileName,
-      "created_at"  => $carbon::now(),
-      "updated_at"  => $carbon::now()
+      "created_at"  => Date::now(),
+      "updated_at"  => Date::now()
     ]);
 
     return $response->withHeader("Location", "/admin/images");
@@ -105,10 +107,10 @@ class Images extends Controller
       "id" => "required|integer"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $id = (int) trim($inputs["id"]);
+    $id = (int) $inputs["id"];
 
     $image = Image::where("id", $id)->first();
     if($image == null) {

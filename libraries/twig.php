@@ -4,6 +4,7 @@ use System\Twig\Filters;
 use System\Twig\Functions;
 use System\Twig\Globals;
 use Twig\Environment;
+use Twig\Extra\Intl\IntlExtension;
 use Twig\Loader\FilesystemLoader;
 
 $container->set("twig", function() use ($container): Environment {
@@ -26,10 +27,12 @@ $container->set("twig", function() use ($container): Environment {
     "optimizations"       => $_ENV["twig"]["optimizations"]
   ]);
   
+  $intlExtensions = new IntlExtension();
   $globals = new Globals($container);
   $functions = new Functions($container);
   $filters = new Filters($container);
   
+  $environment->addExtension($intlExtensions);
   $environment->addExtension($globals);
   $environment->addExtension($functions);
   $environment->addExtension($filters);

@@ -8,6 +8,8 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
+use System\Slender\Date;
+use System\Slender\Text;
 
 class Roles extends Controller
 {
@@ -52,22 +54,20 @@ class Roles extends Controller
       "title" => "required|max:191"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $title = trim($inputs["title"]);
+    $title = $inputs["title"];
 
     $role = Role::where("title", $title)->first();
     if($role != null) {
       throw new HttpBadRequestException($request, "There is a role already using that title.");
     }
 
-    $carbon = $this->container->get("carbon");
-
     Role::insert([
       "title"      => $title,
-      "created_at" => $carbon::now(),
-      "updated_at" => $carbon::now()
+      "created_at" => Date::now(),
+      "updated_at" => Date::now()
     ]);
 
     return $response->withHeader("Location", "/admin/roles");
@@ -80,10 +80,10 @@ class Roles extends Controller
       "id" => "required|integer"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $id = (int) trim($inputs["id"]);
+    $id = (int) $inputs["id"];
 
     $role = Role::where("id", $id)->first();
     if($role == null) {

@@ -9,6 +9,10 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
+use System\Slender\Crypto;
+use System\Slender\Date;
+use System\Slender\Password;
+use System\Slender\Text;
 
 class Users extends Controller
 {
@@ -57,18 +61,18 @@ class Users extends Controller
       "email"            => "required|email|max:191",
       "phone"            => "required|min:10|max:10",
       "password"         => "required|min:6|max:32",
-      "confirm-password" => "required|same:password"
+      "confirm-password" => "same:password"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $firstName = trim($inputs["first-name"]);
-    $lastName = trim($inputs["last-name"]);
-    $roleID = (int) trim($inputs["role-id"]);
-    $email = trim($inputs["email"]);
-    $phone = trim($inputs["phone"]);
-    $password = trim($inputs["password"]) . $_ENV["app"]["key"];
+    $firstName = $inputs["first-name"];
+    $lastName = $inputs["last-name"];
+    $roleID = (int) $inputs["role-id"];
+    $email = $inputs["email"];
+    $phone = $inputs["phone"];
+    $password = $inputs["password"];
 
     $role = Role::where("id", $roleID)->first();
     if($role == null) {
@@ -80,18 +84,16 @@ class Users extends Controller
       throw new HttpBadRequestException($request, "There is an account already using that email or phone.");
     }
 
-    $carbon = $this->container->get("carbon");
-
     User::insert([
       "role_id"    => $roleID,
-      "unique_id"  => md5(uniqid(bin2hex(random_bytes(32)))),
+      "unique_id"  => Crypto::uniqueID(),
       "first_name" => $firstName,
       "last_name"  => $lastName,
       "email"      => $email,
       "phone"      => $phone,
-      "password"   => password_hash($password, PASSWORD_BCRYPT),
-      "created_at" => $carbon::now(),
-      "updated_at" => $carbon::now()
+      "password"   => Password::create($password),
+      "created_at" => Date::now(),
+      "updated_at" => Date::now()
     ]);
 
     return $response->withHeader("Location", "/admin/users");
@@ -104,10 +106,10 @@ class Users extends Controller
       "id" => "required|integer"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $id = (int) trim($inputs["id"]);
+    $id = (int) $inputs["id"];
 
     $user = User::where("id", $id)->first();
     if($user == null) {
@@ -127,10 +129,10 @@ class Users extends Controller
       "id" => "required|integer"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $id = (int) trim($inputs["id"]);
+    $id = (int) $inputs["id"];
 
     $user = User::where("id", $id)->first();
     if($user == null) {
@@ -150,10 +152,10 @@ class Users extends Controller
       "id" => "required|integer"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $id = (int) trim($inputs["id"]);
+    $id = (int) $inputs["id"];
 
     $user = User::where("id", $id)->first();
     if($user == null) {

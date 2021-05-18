@@ -9,7 +9,8 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
-use System\Slender\StringHelper;
+use System\Slender\Date;
+use System\Slender\Text;
 
 class Categories extends Controller
 {
@@ -57,29 +58,27 @@ class Categories extends Controller
       "section-id" => "required|integer"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $title = trim($inputs["title"]);
-    $subtitle = trim($inputs["subtitle"]);
-    $sectionID = (int) trim($inputs["section-id"]);
-    $description = trim($inputs["description"]);
+    $title = $inputs["title"];
+    $subtitle = $inputs["subtitle"];
+    $sectionID = (int) $inputs["section-id"];
+    $description = $inputs["description"];
 
     $section = Section::where("id", $sectionID)->first();
     if($section == null) {
       throw new HttpBadRequestException($request, "There is no section found.");
     }
 
-    $carbon = $this->container->get("carbon");
-
     Category::insert([
       "section_id"  => $sectionID,
-      "slug"        => StringHelper::createSlug($title),
+      "slug"        => Text::slug($title),
       "title"       => $title,
       "subtitle"    => $subtitle != "" ? $subtitle : "N/A",
       "description" => $description != "" ? $description : "N/A",
-      "created_at"  => $carbon::now(),
-      "updated_at"  => $carbon::now()
+      "created_at"  => Date::now(),
+      "updated_at"  => Date::now()
     ]);
 
     return $response->withHeader("Location", "/admin/categories");
@@ -95,14 +94,14 @@ class Categories extends Controller
       "section-id" => "required|integer"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $id = (int) trim($inputs["id"]);
-    $title = trim($inputs["title"]);
-    $subtitle = trim($inputs["subtitle"]);
-    $sectionID = (int) trim($inputs["section-id"]);
-    $description = trim($inputs["description"]);
+    $id = (int) $inputs["id"];
+    $title = $inputs["title"];
+    $subtitle = $inputs["subtitle"];
+    $sectionID = (int) $inputs["section-id"];
+    $description = $inputs["description"];
 
     $category = Category::where("id", $id)->first();
     if($category == null) {
@@ -115,7 +114,7 @@ class Categories extends Controller
     }
 
     $category->section_id = $sectionID;
-    $category->slug = StringHelper::createSlug($title);
+    $category->slug = Text::slug($title);
     $category->title = $title;
     $category->subtitle = $subtitle != "" ? $subtitle : "N/A";
     $category->description = $description != "" ? $description : "N/A";
@@ -131,10 +130,10 @@ class Categories extends Controller
       "id" => "required|integer"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $id = (int) trim($inputs["id"]);
+    $id = (int) $inputs["id"];
 
     $category = Category::where("id", $id)->first();
     if($category == null) {

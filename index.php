@@ -12,7 +12,6 @@ require_once __DIR__ . "/settings/app.php";
 require_once __DIR__ . "/settings/system.php";
 
 $container = new Container();
-require_once __DIR__ . "/libraries/carbon.php";
 require_once __DIR__ . "/libraries/filesystem.php";
 require_once __DIR__ . "/libraries/image.php";
 require_once __DIR__ . "/libraries/parsedown.php";
@@ -33,8 +32,4 @@ require_once __DIR__ . "/app/routes.php";
 $app->run();
 
 // $ubench->end();
-// file_put_contents(
-//   __DIR__ . "/logs/performance.log",
-//   "[" . date(DATE_ATOM) . "] " . $_ENV["app"]["name"] . ".DEBUG " . $ubench->getTime() . " | " . $ubench->getMemoryUsage() . "\n",
-//   FILE_APPEND
-// );
+// file_put_contents(__DIR__ . "/logs/performance.log", "[" . date(DATE_ATOM) . "] Slender.DEBUG " . $ubench->getTime() . " | " . $ubench->getMemoryUsage() . "\n", FILE_APPEND);

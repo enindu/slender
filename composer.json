@@ -13,7 +13,7 @@
         "framework",
         "cms"
     ],
-    "version": "0.3.5-dev",
+    "version": "0.4.0-dev",
     "license": "MIT",
     "homepage": "https://github.com/enindu/slender",
     "readme": "https://github.com/enindu/slender#readme",
@@ -35,6 +35,7 @@
         "illuminate/database": "^8.41",
         "illuminate/events": "^8.41",
         "twig/twig": "^3.3",
+        "twig/intl-extra": "^3.3",
         "swiftmailer/swiftmailer": "^6.2",
         "erusev/parsedown": "^1.7",
         "intervention/image": "^2.5",

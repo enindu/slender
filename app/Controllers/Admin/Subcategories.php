@@ -9,7 +9,8 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
-use System\Slender\StringHelper;
+use System\Slender\Date;
+use System\Slender\Text;
 
 class Subcategories extends Controller
 {
@@ -57,29 +58,27 @@ class Subcategories extends Controller
       "category-id" => "required|integer"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $title = trim($inputs["title"]);
-    $subtitle = trim($inputs["subtitle"]);
-    $categoryID = (int) trim($inputs["category-id"]);
-    $description = trim($inputs["description"]);
+    $title = $inputs["title"];
+    $subtitle = $inputs["subtitle"];
+    $categoryID = (int) $inputs["category-id"];
+    $description = $inputs["description"];
 
     $category = Category::where("id", $categoryID)->first();
     if($category == null) {
       throw new HttpBadRequestException($request, "There is no category found.");
     }
 
-    $carbon = $this->container->get("carbon");
-
     Subcategory::insert([
       "category_id" => $categoryID,
-      "slug"        => StringHelper::createSlug($title),
+      "slug"        => Text::slug($title),
       "title"       => $title,
       "subtitle"    => $subtitle != "" ? $subtitle : "N/A",
       "description" => $description != "" ? $description : "N/A",
-      "created_at"  => $carbon::now(),
-      "updated_at"  => $carbon::now()
+      "created_at"  => Date::now(),
+      "updated_at"  => Date::now()
     ]);
 
     return $response->withHeader("Location", "/admin/subcategories");
@@ -95,14 +94,14 @@ class Subcategories extends Controller
       "category-id" => "required|integer"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $id = (int) trim($inputs["id"]);
-    $title = trim($inputs["title"]);
-    $subtitle = trim($inputs["subtitle"]);
-    $categoryID = (int) trim($inputs["category-id"]);
-    $description = trim($inputs["description"]);
+    $id = (int) $inputs["id"];
+    $title = $inputs["title"];
+    $subtitle = $inputs["subtitle"];
+    $categoryID = (int) $inputs["category-id"];
+    $description = $inputs["description"];
 
     $subcategory = Subcategory::where("id", $id)->first();
     if($subcategory == null) {
@@ -115,7 +114,7 @@ class Subcategories extends Controller
     }
 
     $subcategory->category_id = $categoryID;
-    $subcategory->slug = StringHelper::createSlug($title);
+    $subcategory->slug = Text::slug($title);
     $subcategory->title = $title;
     $subcategory->subtitle = $subtitle != "" ? $subtitle : "N/A";
     $subcategory->description = $description != "" ? $description : "N/A";
@@ -131,10 +130,10 @@ class Subcategories extends Controller
       "id" => "required|integer"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $id = (int) trim($inputs["id"]);
+    $id = (int) $inputs["id"];
 
     $subcategory = Subcategory::where("id", $id)->first();
     if($subcategory == null) {

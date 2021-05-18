@@ -8,6 +8,10 @@ use App\Models\Role;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
+use System\Slender\Crypto;
+use System\Slender\Date;
+use System\Slender\Password;
+use System\Slender\Text;
 
 class Accounts extends Controller
 {
@@ -20,28 +24,27 @@ class Accounts extends Controller
     if($method == "POST") {
       $inputs = $request->getParsedBody();
       $validation = $this->validate($inputs, [
-        "username" => "required|max:6",
+        "username" => "required|alpha_num|max:6",
         "password" => "required|min:6|max:32"
       ]);
       if($validation != null) {
-        throw new HttpBadRequestException($request, reset($validation) . ".");
+        throw new HttpBadRequestException($request, Text::validationMessage($validation));
       }
 
-      $username = trim($inputs["username"]);
-      $password = trim($inputs["password"]) . $_ENV["app"]["key"];
+      $username = $inputs["username"];
+      $password = $inputs["password"];
 
       $admin = Admin::where("status", true)->where("username", $username)->first();
       if($admin == null) {
         throw new HttpBadRequestException($request, "There is no account found.");
       }
 
-      $passwordMatches = password_verify($password, $admin->password);
+      $passwordMatches = Password::verify($password, $admin->password);
       if(!$passwordMatches) {
         throw new HttpBadRequestException($request, "Password is invalid.");
       }
 
       setcookie($_ENV["app"]["cookie"]["admin"], $admin->unique_id, 0, "/admin", $_ENV["app"]["domain"], false, true);
-
       return $response->withHeader("Location", "/admin");
     }
   }
@@ -57,18 +60,18 @@ class Accounts extends Controller
     if($method == "POST") {
       $inputs = $request->getParsedBody();
       $validation = $this->validate($inputs, [
-        "username"         => "required|max:6",
+        "username"         => "required|alpha_num|max:6",
         "role-id"          => "required|integer",
         "password"         => "required|min:6|max:32",
         "confirm-password" => "same:password"
       ]);
       if($validation != null) {
-        throw new HttpBadRequestException($request, reset($validation) . ".");
+        throw new HttpBadRequestException($request, Text::validationMessage($validation));
       }
 
-      $username = trim($inputs["username"]);
-      $roleID = (int) trim($inputs["role-id"]);
-      $password = trim($inputs["password"]) . $_ENV["app"]["key"];
+      $username = $inputs["username"];
+      $roleID = (int) $inputs["role-id"];
+      $password = $inputs["password"];
 
       $role = Role::where("id", $roleID)->first();
       if($role == null) {
@@ -80,15 +83,13 @@ class Accounts extends Controller
         throw new HttpBadRequestException($request, "There is an account already using that username.");
       }
 
-      $carbon = $this->container->get("carbon");
-
       Admin::insert([
         "role_id"    => $roleID,
-        "unique_id"  => md5(uniqid(bin2hex(random_bytes(32)))),
+        "unique_id"  => Crypto::uniqueID(),
         "username"   => $username,
-        "password"   => password_hash($password, PASSWORD_BCRYPT),
-        "created_at" => $carbon::now(),
-        "updated_at" => $carbon::now()
+        "password"   => Password::create($password),
+        "created_at" => Date::now(),
+        "updated_at" => Date::now()
       ]);
 
       return $response->withHeader("Location", "/admin/accounts/login");
@@ -103,7 +104,6 @@ class Accounts extends Controller
     }
     if($method == "POST") {
       setcookie($_ENV["app"]["cookie"]["admin"], "expired", strtotime("now") - 1, "/admin", $_ENV["app"]["domain"], false, true);
-
       return $response->withHeader("Location", "/admin/accounts/login");
     }
   }
@@ -112,18 +112,18 @@ class Accounts extends Controller
   {
     $inputs = $request->getParsedBody();
     $validation = $this->validate($inputs, [
-      "username"         => "required|max:6",
+      "username"         => "required|alpha_num|max:6",
       "current-password" => "required|min:6|max:32"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $username = trim($inputs["username"]);
-    $currentPassword = trim($inputs["current-password"]) . $_ENV["app"]["key"];
+    $username = $inputs["username"];
+    $currentPassword = $inputs["current-password"];
 
     $adminWithID = Admin::where("id", $this->auth("id", "admin"))->first();
-    $currentPasswordMatches = password_verify($currentPassword, $adminWithID->password);
+    $currentPasswordMatches = Password::verify($currentPassword, $adminWithID->password);
     if(!$currentPasswordMatches) {
       throw new HttpBadRequestException($request, "Current password is invalid.");
     }
@@ -148,24 +148,23 @@ class Accounts extends Controller
       "confirm-new-password" => "same:new-password"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, reset($validation) . ".");
+      throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $currentPassword = trim($inputs["current-password"]) . $_ENV["app"]["key"];
-    $newPassword = trim($inputs["new-password"]) . $_ENV["app"]["key"];
+    $currentPassword = $inputs["current-password"];
+    $newPassword = $inputs["new-password"];
 
     $admin = Admin::where("id", $this->auth("id", "admin"))->first();
-    $currentPasswordMatches = password_verify($currentPassword, $admin->password);
+    $currentPasswordMatches = Password::verify($currentPassword, $admin->password);
     if(!$currentPasswordMatches) {
       throw new HttpBadRequestException($request, "Current password is invalid.");
     }
 
-    setcookie($_ENV["app"]["cookie"]["admin"], "expired", strtotime("now") - 1, "/admin", $_ENV["app"]["domain"], false, true);
-
-    $admin->unique_id = md5(uniqid(bin2hex(random_bytes(32))));
-    $admin->password = password_hash($newPassword, PASSWORD_BCRYPT);
+    $admin->unique_id = Crypto::uniqueID();
+    $admin->password = Password::create($newPassword);
     $admin->save();
 
+    setcookie($_ENV["app"]["cookie"]["admin"], "expired", strtotime("now") - 1, "/admin", $_ENV["app"]["domain"], false, true);
     return $response->withHeader("Location", "/admin/accounts/login");
   }
 
