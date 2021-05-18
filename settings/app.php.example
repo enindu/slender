@@ -16,7 +16,8 @@ $_ENV = [
     "key"         => "",
     "cookie"      => [
       "admin" => "",
-      "user"  => ""
+      "user"  => "",
+      "cart"  => ""
     ]
   ],
   "eloquent" => [
