@@ -16,8 +16,7 @@ class AdminAuth
     $response = $handler->handle($request);
     $path = $request->getUri()->getPath();
     $sessionExists = isset($_SESSION["auth"]["admin"]);
-    $cookieExists = isset($request->getCookieParams()[$_ENV["app"]["cookie"]["admin"]]);
-    if(!$cookieExists) {
+    if(!isset($request->getCookieParams()[$_ENV["app"]["cookie"]["admin"]])) {
       if($sessionExists) {
         unset($_SESSION["auth"]["admin"]);
       }
