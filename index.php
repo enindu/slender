@@ -32,4 +32,4 @@ require_once __DIR__ . "/app/routes.php";
 $app->run();
 
 // $ubench->end();
-// file_put_contents(__DIR__ . "/logs/performance.log", "[" . date(DATE_ATOM) . "] Slender.DEBUG " . $ubench->getTime() . " | " . $ubench->getMemoryUsage() . "\n", FILE_APPEND);
+// file_put_contents(__DIR__ . "/logs/performance.log", "[" . date(DATE_ATOM) . "] app.DEBUG " . $ubench->getTime() . " | " . $ubench->getMemoryUsage() . "\n", FILE_APPEND);

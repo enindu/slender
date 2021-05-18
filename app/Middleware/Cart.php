@@ -10,7 +10,8 @@ class Cart
   public function __invoke(Request $request, RequestHandlerInterface $handler): Response
   {
     $response = $handler->handle($request);
-    if(isset($request->getCookieParams()[$_ENV["app"]["cookie"]["cart"]])) {
+    $cookieExists = isset($request->getCookieParams()[$_ENV["app"]["cookie"]["cart"]]);
+    if($cookieExists) {
       return $response;
     }
 

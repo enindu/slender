@@ -32,7 +32,8 @@ class Filters extends AbstractExtension
 
   public function limit(string $text, int $length = 100): string
   {
-    if(strlen($text) < $length) {
+    $textLength = strlen($text);
+    if($textLength < $length) {
       return $text;
     }
 

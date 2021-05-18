@@ -15,8 +15,10 @@ class UserAuth
   {
     $response = $handler->handle($request);
     $path = $request->getUri()->getPath();
+
     $sessionExists = isset($_SESSION["auth"]["user"]);
-    if(!isset($request->getCookieParams()[$_ENV["app"]["cookie"]["user"]])) {
+    $cookieExists = isset($request->getCookieParams()[$_ENV["app"]["cookie"]["user"]]);
+    if(!$cookieExists) {
       if($sessionExists) {
         unset($_SESSION["auth"]["user"]);
       }

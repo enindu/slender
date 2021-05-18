@@ -45,7 +45,8 @@ class Controller
     $validation = $this->container->get("validation");
 
     $validate = $validation->validate($data, $rules);
-    if($validate->fails()) {
+    $validationFails = $validate->fails();
+    if($validationFails) {
       return $validate->errors()->all();
     }
 
@@ -54,7 +55,8 @@ class Controller
 
   protected function auth(string $key, string $type): string|null
   {
-    if(!isset($_SESSION["auth"][$type][$key])) {
+    $valueExists = isset($_SESSION["auth"][$type][$key]);
+    if(!$valueExists) {
       return null;
     }
 
