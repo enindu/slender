@@ -44,6 +44,9 @@ class Accounts extends Controller
         throw new HttpBadRequestException($request, "Password is invalid.");
       }
 
+      $admin->unique_id = Crypto::uniqueID();
+      $admin->save();
+
       setcookie($_ENV["app"]["cookie"]["admin"], $admin->unique_id, 0, "/admin", $_ENV["app"]["domain"], false, true);
       return $response->withHeader("Location", "/admin");
     }
