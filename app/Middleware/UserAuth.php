@@ -49,6 +49,22 @@ class UserAuth
       return $response;
     }
 
+    $sessionID = session_id();
+    if($sessionID != $account->session_id) {
+      if($sessionExists) {
+        unset($_SESSION["auth"]["user"]);
+      }
+
+      setcookie($_ENV["app"]["cookie"]["user"], "expired", strtotime("now") - 1, "/", $_ENV["app"]["domain"], false, true);
+
+      if($path != "/accounts/login" && $path != "/accounts/register") {
+        $response = new Response();
+        return $response->withHeader("Location", "/accounts/login");
+      }
+
+      return $response;
+    }
+
     if($path == "/accounts/login" || $path == "/accounts/register") {
       $response = new Response();
       return $response->withHeader("Location", "/");

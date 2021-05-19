@@ -39,12 +39,13 @@ class Accounts extends Controller
         throw new HttpBadRequestException($request, "There is no account found.");
       }
 
-      $passwordMatches = Password::verify($password, $admin->password);
+      $passwordMatches = Password::verify($password, $admin->salt, $admin->password);
       if(!$passwordMatches) {
         throw new HttpBadRequestException($request, "Password is invalid.");
       }
 
       $admin->unique_id = Crypto::uniqueID();
+      $admin->session_id = session_id();
       $admin->save();
 
       setcookie($_ENV["app"]["cookie"]["admin"], $admin->unique_id, 0, "/admin", $_ENV["app"]["domain"], false, true);
@@ -86,11 +87,13 @@ class Accounts extends Controller
         throw new HttpBadRequestException($request, "There is an account already using that username.");
       }
 
+      $salt = Crypto::token();
       Admin::insert([
         "role_id"    => $roleID,
         "unique_id"  => Crypto::uniqueID(),
         "username"   => $username,
-        "password"   => Password::create($password),
+        "password"   => Password::create($password, $salt),
+        "salt"       => $salt,
         "created_at" => Date::now(),
         "updated_at" => Date::now()
       ]);
@@ -106,6 +109,14 @@ class Accounts extends Controller
       return $this->view($response, "@admin/accounts.logout.twig");
     }
     if($method == "POST") {
+      $admin = Admin::where("id", $this->auth("id", "admin"))->first();
+      if($admin == null) {
+        throw new HttpBadRequestException($request, "You are not logged in.");
+      }
+      
+      $admin->session_id = null;
+      $admin->save();
+
       setcookie($_ENV["app"]["cookie"]["admin"], "expired", strtotime("now") - 1, "/admin", $_ENV["app"]["domain"], false, true);
       return $response->withHeader("Location", "/admin/accounts/login");
     }
@@ -126,7 +137,7 @@ class Accounts extends Controller
     $currentPassword = $inputs["current-password"];
 
     $adminWithID = Admin::where("id", $this->auth("id", "admin"))->first();
-    $currentPasswordMatches = Password::verify($currentPassword, $adminWithID->password);
+    $currentPasswordMatches = Password::verify($currentPassword, $adminWithID->salt, $adminWithID->password);
     if(!$currentPasswordMatches) {
       throw new HttpBadRequestException($request, "Current password is invalid.");
     }
@@ -158,13 +169,15 @@ class Accounts extends Controller
     $newPassword = $inputs["new-password"];
 
     $admin = Admin::where("id", $this->auth("id", "admin"))->first();
-    $currentPasswordMatches = Password::verify($currentPassword, $admin->password);
+    $currentPasswordMatches = Password::verify($currentPassword, $admin->salt, $admin->password);
     if(!$currentPasswordMatches) {
       throw new HttpBadRequestException($request, "Current password is invalid.");
     }
 
+    $newSalt = Crypto::token();
     $admin->unique_id = Crypto::uniqueID();
-    $admin->password = Password::create($newPassword);
+    $admin->password = Password::create($newPassword, $newSalt);
+    $admin->salt = $newSalt;
     $admin->save();
 
     setcookie($_ENV["app"]["cookie"]["admin"], "expired", strtotime("now") - 1, "/admin", $_ENV["app"]["domain"], false, true);

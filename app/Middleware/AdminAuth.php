@@ -49,6 +49,22 @@ class AdminAuth
       return $response;
     }
 
+    $sessionID = session_id();
+    if($sessionID != $account->session_id) {
+      if($sessionExists) {
+        unset($_SESSION["auth"]["admin"]);
+      }
+
+      setcookie($_ENV["app"]["cookie"]["admin"], "expired", strtotime("now") - 1, "/admin", $_ENV["app"]["domain"], false, true);
+
+      if($path != "/admin/accounts/login" && $path != "/admin/accounts/register") {
+        $response = new Response();
+        return $response->withHeader("Location", "/admin/accounts/login");
+      }
+
+      return $response;
+    }
+
     if($path == "/admin/accounts/login" || $path == "/admin/accounts/register") {
       $response = new Response();
       return $response->withHeader("Location", "/admin");
