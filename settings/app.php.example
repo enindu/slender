@@ -27,6 +27,7 @@ $_ENV = [
     "domain"     => "",
     "secure"     => true,
     "http-only"  => true,
+    "same-site"  => "Strict",
     "sid-length" => 32
   ],
   "eloquent" => [

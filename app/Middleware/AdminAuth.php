@@ -39,7 +39,14 @@ class AdminAuth
         unset($_SESSION["auth"]["admin"]);
       }
 
-      setcookie($_ENV["app"]["cookie"]["admin"], "expired", strtotime("now") - 1, "/admin", $_ENV["app"]["domain"], false, true);
+      setcookie($_ENV["app"]["cookie"]["admin"], "expired", [
+        "expires"  => strtotime("now") - 1,
+        "path"     => "/admin",
+        "domain"   => $_ENV["app"]["domain"],
+        "secure"   => true,
+        "httponly" => true,
+        "samesite" => "Strict"
+      ]);
 
       if($path != "/admin/accounts/login" && $path != "/admin/accounts/register") {
         $response = new Response();
@@ -55,7 +62,14 @@ class AdminAuth
         unset($_SESSION["auth"]["admin"]);
       }
 
-      setcookie($_ENV["app"]["cookie"]["admin"], "expired", strtotime("now") - 1, "/admin", $_ENV["app"]["domain"], false, true);
+      setcookie($_ENV["app"]["cookie"]["admin"], "expired", [
+        "expires"  => strtotime("now") - 1,
+        "path"     => "/admin",
+        "domain"   => $_ENV["app"]["domain"],
+        "secure"   => true,
+        "httponly" => true,
+        "samesite" => "Strict"
+      ]);
 
       if($path != "/admin/accounts/login" && $path != "/admin/accounts/register") {
         $response = new Response();

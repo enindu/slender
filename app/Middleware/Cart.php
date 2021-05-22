@@ -15,7 +15,15 @@ class Cart
       return $response;
     }
 
-    setcookie($_ENV["app"]["cookie"]["cart"], Crypto::token(), strtotime("1 day"), "/", $_ENV["app"]["domain"], false, true);
+    setcookie($_ENV["app"]["cookie"]["cart"], Crypto::token(), [
+      "expires"  => strtotime("1 day"),
+      "path"     => "/",
+      "domain"   => $_ENV["app"]["domain"],
+      "secure"   => true,
+      "httponly" => true,
+      "samesite" => "Strict"
+    ]);
+
     return $response;
   }
 }

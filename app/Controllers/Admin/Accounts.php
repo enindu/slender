@@ -48,7 +48,15 @@ class Accounts extends Controller
       $admin->session_id = session_id();
       $admin->save();
 
-      setcookie($_ENV["app"]["cookie"]["admin"], $admin->unique_id, 0, "/admin", $_ENV["app"]["domain"], false, true);
+      setcookie($_ENV["app"]["cookie"]["admin"], $admin->unique_id, [
+        "expires"  => 0,
+        "path"     => "/admin",
+        "domain"   => $_ENV["app"]["domain"],
+        "secure"   => true,
+        "httponly" => true,
+        "samesite" => "Strict"
+      ]);
+
       return $response->withHeader("Location", "/admin");
     }
   }
@@ -117,7 +125,15 @@ class Accounts extends Controller
       $admin->session_id = null;
       $admin->save();
 
-      setcookie($_ENV["app"]["cookie"]["admin"], "expired", strtotime("now") - 1, "/admin", $_ENV["app"]["domain"], false, true);
+      setcookie($_ENV["app"]["cookie"]["admin"], "expired", [
+        "expires"  => strtotime("now") - 1,
+        "path"     => "/admin",
+        "domain"   => $_ENV["app"]["domain"],
+        "secure"   => true,
+        "httponly" => true,
+        "samesite" => "Strict"
+      ]);
+
       return $response->withHeader("Location", "/admin/accounts/login");
     }
   }
@@ -180,7 +196,15 @@ class Accounts extends Controller
     $admin->salt = $newSalt;
     $admin->save();
 
-    setcookie($_ENV["app"]["cookie"]["admin"], "expired", strtotime("now") - 1, "/admin", $_ENV["app"]["domain"], false, true);
+    setcookie($_ENV["app"]["cookie"]["admin"], "expired", [
+      "expires"  => strtotime("now") - 1,
+      "path"     => "/admin",
+      "domain"   => $_ENV["app"]["domain"],
+      "secure"   => true,
+      "httponly" => true,
+      "samesite" => "Strict"
+    ]);
+
     return $response->withHeader("Location", "/admin/accounts/login");
   }
 

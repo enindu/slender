@@ -39,7 +39,14 @@ class UserAuth
         unset($_SESSION["auth"]["user"]);
       }
 
-      setcookie($_ENV["app"]["cookie"]["user"], "expired", strtotime("now") - 1, "/", $_ENV["app"]["domain"], false, true);
+      setcookie($_ENV["app"]["cookie"]["user"], "expired", [
+        "expires"  => strtotime("now") - 1,
+        "path"     => "/",
+        "domain"   => $_ENV["app"]["domain"],
+        "secure"   => true,
+        "httponly" => true,
+        "samesite" => "Strict"
+      ]);
 
       if($path != "/accounts/login" && $path != "/accounts/register") {
         $response = new Response();
@@ -55,7 +62,14 @@ class UserAuth
         unset($_SESSION["auth"]["user"]);
       }
 
-      setcookie($_ENV["app"]["cookie"]["user"], "expired", strtotime("now") - 1, "/", $_ENV["app"]["domain"], false, true);
+      setcookie($_ENV["app"]["cookie"]["user"], "expired", [
+        "expires"  => strtotime("now") - 1,
+        "path"     => "/",
+        "domain"   => $_ENV["app"]["domain"],
+        "secure"   => true,
+        "httponly" => true,
+        "samesite" => "Strict"
+      ]);
 
       if($path != "/accounts/login" && $path != "/accounts/register") {
         $response = new Response();
