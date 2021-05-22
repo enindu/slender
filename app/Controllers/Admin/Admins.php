@@ -78,11 +78,13 @@ class Admins extends Controller
       throw new HttpBadRequestException($request, "There is an account already using that username.");
     }
 
+    $salt = Crypto::token();
     Admin::insert([
       "role_id"    => $roleID,
       "unique_id"  => Crypto::uniqueID(),
       "username"   => $username,
-      "password"   => Password::create($password),
+      "password"   => Password::create($password, $salt),
+      "salt"       => $salt,
       "created_at" => Date::now(),
       "updated_at" => Date::now()
     ]);

@@ -84,6 +84,7 @@ class Users extends Controller
       throw new HttpBadRequestException($request, "There is an account already using that email or phone.");
     }
 
+    $salt = Crypto::token();
     User::insert([
       "role_id"    => $roleID,
       "unique_id"  => Crypto::uniqueID(),
@@ -91,7 +92,8 @@ class Users extends Controller
       "last_name"  => $lastName,
       "email"      => $email,
       "phone"      => $phone,
-      "password"   => Password::create($password),
+      "password"   => Password::create($password, $salt),
+      "salt"       => $salt,
       "created_at" => Date::now(),
       "updated_at" => Date::now()
     ]);
