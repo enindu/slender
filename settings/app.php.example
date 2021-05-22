@@ -20,6 +20,15 @@ $_ENV = [
       "cart"  => ""
     ]
   ],
+  "session" => [
+    "name"       => "",
+    "lifetime"   => 0,
+    "path"       => "/",
+    "domain"     => "",
+    "secure"     => true,
+    "http-only"  => true,
+    "sid-length" => 32
+  ],
   "eloquent" => [
     "driver"    => "mysql",
     "host"      => "localhost",
@@ -51,16 +60,5 @@ $_ENV = [
   ],
   "image" => [
     "driver" => "gd"
-  ],
-  "middleware" => [
-    "session" => [
-      "name"       => "",
-      "lifetime"   => 0,
-      "path"       => "/",
-      "domain"     => "",
-      "secure"     => false,
-      "http-only"  => true,
-      "sid-length" => 32
-    ]
   ]
 ];
