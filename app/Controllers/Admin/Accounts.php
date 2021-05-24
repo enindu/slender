@@ -173,16 +173,16 @@ class Accounts extends Controller
   {
     $inputs = $request->getParsedBody();
     $validation = $this->validate($inputs, [
-      "current-password"     => "required|min:6|max:32",
       "new-password"         => "required|different:current-password|min:6|max:32",
-      "confirm-new-password" => "same:new-password"
+      "confirm-new-password" => "same:new-password",
+      "current-password"     => "required|min:6|max:32",
     ]);
     if($validation != null) {
       throw new HttpBadRequestException($request, Text::validationMessage($validation));
     }
 
-    $currentPassword = $inputs["current-password"];
     $newPassword = $inputs["new-password"];
+    $currentPassword = $inputs["current-password"];
 
     $admin = Admin::where("status", true)->where("id", $this->auth("id", "admin"))->first();
     $currentPasswordMatches = Password::verify($currentPassword, $admin->salt, $admin->password);
