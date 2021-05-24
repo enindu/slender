@@ -175,7 +175,7 @@ class Accounts extends Controller
     $validation = $this->validate($inputs, [
       "new-password"         => "required|different:current-password|min:6|max:32",
       "confirm-new-password" => "same:new-password",
-      "current-password"     => "required|min:6|max:32",
+      "current-password"     => "required|min:6|max:32"
     ]);
     if($validation != null) {
       throw new HttpBadRequestException($request, Text::validationMessage($validation));
