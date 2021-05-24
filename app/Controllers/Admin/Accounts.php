@@ -117,7 +117,7 @@ class Accounts extends Controller
       return $this->view($response, "@admin/accounts.logout.twig");
     }
     if($method == "POST") {
-      $admin = Admin::where("id", $this->auth("id", "admin"))->first();
+      $admin = Admin::where("status", true)->where("id", $this->auth("id", "admin"))->first();
       if($admin == null) {
         throw new HttpBadRequestException($request, "You are not logged in.");
       }
@@ -152,13 +152,13 @@ class Accounts extends Controller
     $username = $inputs["username"];
     $currentPassword = $inputs["current-password"];
 
-    $adminWithID = Admin::where("id", $this->auth("id", "admin"))->first();
+    $adminWithID = Admin::where("status", true)->where("id", $this->auth("id", "admin"))->first();
     $currentPasswordMatches = Password::verify($currentPassword, $adminWithID->salt, $adminWithID->password);
     if(!$currentPasswordMatches) {
       throw new HttpBadRequestException($request, "Current password is invalid.");
     }
 
-    $adminWithUsername = Admin::where("username", $username)->first();
+    $adminWithUsername = Admin::where("status", true)->where("username", $username)->first();
     if($adminWithUsername != null && $adminWithUsername->id != $adminWithID->id) {
       throw new HttpBadRequestException($request, "There is an account already using that username.");
     }
@@ -184,7 +184,7 @@ class Accounts extends Controller
     $currentPassword = $inputs["current-password"];
     $newPassword = $inputs["new-password"];
 
-    $admin = Admin::where("id", $this->auth("id", "admin"))->first();
+    $admin = Admin::where("status", true)->where("id", $this->auth("id", "admin"))->first();
     $currentPasswordMatches = Password::verify($currentPassword, $admin->salt, $admin->password);
     if(!$currentPasswordMatches) {
       throw new HttpBadRequestException($request, "Current password is invalid.");
@@ -211,7 +211,7 @@ class Accounts extends Controller
   public function profile(Request $request, Response $response, array $data): Response
   {
     return $this->view($response, "@admin/accounts.profile.twig", [
-      "admin" => Admin::where("id", $this->auth("id", "admin"))->first()
+      "admin" => Admin::where("status", true)->where("id", $this->auth("id", "admin"))->first()
     ]);
   }
 }
