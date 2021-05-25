@@ -13,9 +13,7 @@ class UserAuth
 
   public function __invoke(Request $request, RequestHandlerInterface $handler): Response
   {
-    $response = $handler->handle($request);
     $path = $request->getUri()->getPath();
-
     $sessionExists = isset($_SESSION["auth"]["user"]);
     $cookieExists = isset($request->getCookieParams()[$_ENV["app"]["cookie"]["user"]]);
     if(!$cookieExists) {
@@ -28,7 +26,7 @@ class UserAuth
         return $response->withHeader("Location", "/accounts/login");
       }
 
-      return $response;
+      return $handler->handle($request);
     }
 
     $eloquent = $this->container->get("eloquent");
@@ -53,7 +51,7 @@ class UserAuth
         return $response->withHeader("Location", "/accounts/login");
       }
 
-      return $response;
+      return $handler->handle($request);
     }
 
     $sessionID = session_id();
@@ -76,7 +74,7 @@ class UserAuth
         return $response->withHeader("Location", "/accounts/login");
       }
 
-      return $response;
+      return $handler->handle($request);
     }
 
     if($path == "/accounts/login" || $path == "/accounts/register") {
@@ -94,6 +92,6 @@ class UserAuth
       "phone"      => $account->phone
     ];
 
-    return $response;
+    return $handler->handle($request);
   }
 }
