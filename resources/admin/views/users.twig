@@ -93,8 +93,7 @@
                   <td>
                     {% if item.status %}
                       <span class="badge badge-primary">Active</span>
-                    {% endif %}
-                    {% if not item.status %}
+                    {% else %}
                       <span class="badge badge-danger">Inactive</span>
                     {% endif %}
                   </td>
@@ -122,8 +121,7 @@
                             <i class="fa fa-times"></i>
                           </button>
                         </form>
-                      {% endif %}
-                      {% if not item.status %}
+                      {% else %}
                         <form action="/admin/users/activate" method="post" class="mr-5">
                           <input type="hidden" name="id" value="{{ item.id }}">
                           <button class="btn btn-square">
