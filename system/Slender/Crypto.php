@@ -23,14 +23,8 @@ class Crypto
     return $token;
   }
 
-  public static function uniqueID(int $length = 32): string
+  public static function uniqueID(): string
   {
-    $uniqueID = Text::randomCase(uniqid());
-    $uniqueIDLength = strlen($uniqueID);
-    if($length <= $uniqueIDLength) {
-      return $uniqueID;
-    }
-
-    return self::token($length - $uniqueIDLength) . $uniqueID;
+    return str_replace(".", "-", Text::randomCase(uniqid(self::token(6) . "-", true)));
   }
 }

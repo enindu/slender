@@ -84,7 +84,7 @@ class Images extends Controller
 
     $clientName = $file->getClientFilename();
     $fileExtension = pathinfo($clientName, PATHINFO_EXTENSION);
-    $fileName = Crypto::uniqueID(64) . "." . $fileExtension;
+    $fileName = Crypto::uniqueID() . "." . $fileExtension;
     $file->moveTo(__DIR__ . "/../../../uploads/images/" . $fileName);
 
     Image::insert([
