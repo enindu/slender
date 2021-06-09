@@ -18,6 +18,17 @@ $_ENV = [
       "admin" => "",
       "user"  => "",
       "cart"  => ""
+    ],
+    "meta" => [
+      "email" => [
+        "base" => "noreply@example.com"
+      ],
+      "phone" => [
+        "base" => "000 0 000 000"
+      ],
+      "address" => [
+        "base" => "No 0, Dummy Road, Dummy City"
+      ]
     ]
   ],
   "session" => [
