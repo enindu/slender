@@ -21,13 +21,13 @@ $_ENV = [
     ],
     "meta" => [
       "email" => [
-        "base" => "noreply@example.com"
+        "base" => ""
       ],
       "phone" => [
-        "base" => "000 0 000 000"
+        "base" => ""
       ],
       "address" => [
-        "base" => "No 0, Dummy Road, Dummy City"
+        "base" => ""
       ]
     ]
   ],
