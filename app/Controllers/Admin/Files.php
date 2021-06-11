@@ -82,8 +82,7 @@ class Files extends Controller
       throw new HttpInternalServerErrorException($request, "Something went wrong while uploading file.");
     }
 
-    $clientName = $file->getClientFilename();
-    $fileExtension = pathinfo($clientName, PATHINFO_EXTENSION);
+    $fileExtension = pathinfo($file->getClientFilename(), PATHINFO_EXTENSION);
     $fileName = Crypto::uniqueID() . "." . $fileExtension;
     $file->moveTo(__DIR__ . "/../../../uploads/files/" . $fileName);
 
