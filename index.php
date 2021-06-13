@@ -14,7 +14,7 @@ require_once __DIR__ . "/settings/system.php";
 $container = new Container();
 require_once __DIR__ . "/libraries/filesystem.php";
 require_once __DIR__ . "/libraries/image.php";
-require_once __DIR__ . "/libraries/parsedown.php";
+require_once __DIR__ . "/libraries/parsedown-extra.php";
 require_once __DIR__ . "/libraries/eloquent.php";
 require_once __DIR__ . "/libraries/twig.php";
 require_once __DIR__ . "/libraries/swift-mailer.php";

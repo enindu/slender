@@ -67,7 +67,7 @@ $_ENV = [
     "username" => "",
     "password" => ""
   ],
-  "parsedown" => [
+  "parsedown-extra" => [
     "safe-mode" => true
   ],
   "image" => [
