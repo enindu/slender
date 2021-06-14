@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 14, 2021 at 01:58 PM
+-- Generation Time: Jun 14, 2021 at 05:49 PM
 -- Server version: 10.5.10-MariaDB
 -- PHP Version: 8.0.7
 
@@ -49,9 +49,9 @@ CREATE TABLE `admins` (
 
 CREATE TABLE `apis` (
   `id` int(11) NOT NULL,
-  `unique_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 1,
   `username` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
@@ -213,7 +213,7 @@ ALTER TABLE `admins`
 --
 ALTER TABLE `apis`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_id` (`unique_id`);
+  ADD UNIQUE KEY `token` (`token`);
 
 --
 -- Indexes for table `categories`

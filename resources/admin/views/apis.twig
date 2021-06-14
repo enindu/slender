@@ -47,8 +47,8 @@
               <tr>
                 <th class="w-25">ID</th>
                 <th>Status</th>
-                <th>Unique ID</th>
                 <th>Username</th>
+                <th>Token</th>
                 <th class="w-25"></th>
               </tr>
             </thead>
@@ -66,10 +66,10 @@
                     {% endif %}
                   </td>
                   <td>
-                    <div class="text-wrap">{{ item.unique_id }}</div>
+                    <div class="text-wrap">{{ item.username }}</div>
                   </td>
                   <td>
-                    <div class="text-wrap">{{ item.username }}</div>
+                    <div class="text-wrap">{{ item.token }}</div>
                   </td>
                   <td>
                     <div class="d-flex">
