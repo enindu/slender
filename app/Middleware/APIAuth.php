@@ -22,9 +22,9 @@ class APIAuth
     if($exitingMethod != $requestedMethod) {
       $response = new Response();
       $response->getBody()->write(json_encode([
-        "status"  => false,
-        "code"    => 405,
-        "message" => "Method not allowed."
+        "status"   => false,
+        "code"     => 405,
+        "response" => "Method not allowed."
       ]));
       return $response->withStatus(405)->withHeader("Content-Type", $this->contentType);
     }
@@ -34,9 +34,9 @@ class APIAuth
     if($exitingContentType != $requestedContentType) {
       $response = new Response();
       $response->getBody()->write(json_encode([
-        "status"  => false,
-        "code"    => 406,
-        "message" => "Not acceptable."
+        "status"   => false,
+        "code"     => 406,
+        "response" => "Not acceptable."
       ]));
       return $response->withStatus(406)->withHeader("Content-Type", $this->contentType);
     }
@@ -47,9 +47,9 @@ class APIAuth
     if(!$usernameExists && !$tokenExists) {
       $response = new Response();
       $response->getBody()->write(json_encode([
-        "status"  => false,
-        "code"    => 403,
-        "message" => "Forbidden."
+        "status"   => false,
+        "code"     => 403,
+        "response" => "Forbidden."
       ]));
       return $response->withStatus(403)->withHeader("Content-Type", $this->contentType);
     }
@@ -63,9 +63,9 @@ class APIAuth
     if($api == null) {
       $response = new Response();
       $response->getBody()->write(json_encode([
-        "status"  => false,
-        "code"    => 403,
-        "message" => "Forbidden."
+        "status"   => false,
+        "code"     => 403,
+        "response" => "Forbidden."
       ]));
       return $response->withStatus(403)->withHeader("Content-Type", $this->contentType);
     }
