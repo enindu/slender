@@ -2,6 +2,7 @@
 
 use App\Controllers\Admin\Accounts as AdminAccounts;
 use App\Controllers\Admin\Admins as AdminAdmins;
+use App\Controllers\Admin\APIs as AdminAPIs;
 use App\Controllers\Admin\Base as AdminBase;
 use App\Controllers\Admin\Categories as AdminCategories;
 use App\Controllers\Admin\Contents as AdminContents;
@@ -36,6 +37,14 @@ $app->group("/admin", function(RouteCollectorProxy $admin) {
     $sections->get("/all", AdminSections::class . ":all");
     $sections->post("/add", AdminSections::class . ":add");
     $sections->post("/remove", AdminSections::class . ":remove");
+  });
+  $admin->group("/apis", function(RouteCollectorProxy $apis) {
+    $apis->get("", AdminAPIs::class . ":base");
+    $apis->get("/all", AdminAPIs::class . ":all");
+    $apis->post("/add", AdminAPIs::class . ":add");
+    $apis->post("/activate", AdminAPIs::class . ":activate");
+    $apis->post("/deactivate", AdminAPIs::class . ":deactivate");
+    $apis->post("/remove", AdminAPIs::class . ":remove");
   });
   $admin->group("/admins", function(RouteCollectorProxy $admins) {
     $admins->get("", AdminAdmins::class . ":base");

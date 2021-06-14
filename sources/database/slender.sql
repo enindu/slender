@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 02, 2021 at 03:08 AM
+-- Generation Time: Jun 14, 2021 at 01:58 PM
 -- Server version: 10.5.10-MariaDB
--- PHP Version: 8.0.6
+-- PHP Version: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,6 +36,22 @@ CREATE TABLE `admins` (
   `username` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `salt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `apis`
+--
+
+CREATE TABLE `apis` (
+  `id` int(11) NOT NULL,
+  `unique_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `username` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
@@ -193,6 +209,13 @@ ALTER TABLE `admins`
   ADD UNIQUE KEY `unique_id` (`unique_id`);
 
 --
+-- Indexes for table `apis`
+--
+ALTER TABLE `apis`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_id` (`unique_id`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
@@ -251,6 +274,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `apis`
+--
+ALTER TABLE `apis`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
