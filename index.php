@@ -26,8 +26,12 @@ $app = AppFactory::createFromContainer($container);
 $routeCollector = $app->getRouteCollector();
 $routeCollector->setCacheFile(__DIR__ . "/cache/routes/cache.php");
 
-require_once __DIR__ . "/app/middleware.php";
-require_once __DIR__ . "/app/routes.php";
+require_once __DIR__ . "/middleware/app.php";
+require_once __DIR__ . "/middleware/system.php";
+
+require_once __DIR__ . "/routes/api.php";
+require_once __DIR__ . "/routes/admin.php";
+require_once __DIR__ . "/routes/user.php";
 
 $app->run();
 
