@@ -39,11 +39,11 @@
 </IfModule>
 
 <IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'self'"
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+  Header always set Vary "User-Agent"
+
   <FilesMatch "\.(html|ico|pdf|jpg|jpeg|png|gif|js|css|webp|svg|ttf|woff|woff2|eot)$">
     Header set Cache-Control "public, max-age=63072000"
   </FilesMatch>
-
-  Header set Content-Security-Policy "default-src 'self'"
-  Header set Strict-Transport-Security "max-age=63072000;includeSubDomains;preload"
-  Header set Vary "User-Agent"
 </IfModule>
