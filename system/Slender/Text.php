@@ -51,7 +51,7 @@ class Text
       }
     }
 
-    return $slug . Crypto::uniqueID(16);
+    return $slug . Crypto::token(8);
   }
 
   public static function validationMessage(array $messages): string
