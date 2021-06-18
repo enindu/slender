@@ -51,7 +51,7 @@ class Text
       }
     }
 
-    return $slug . Crypto::token(8);
+    return strtolower($slug) . Crypto::token(8);
   }
 
   public static function validationMessage(array $messages): string
