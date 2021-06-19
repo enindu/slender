@@ -95,7 +95,7 @@ class Accounts extends Controller
         throw new HttpBadRequestException($request, "There is an account already using that username.");
       }
 
-      $salt = Crypto::token();
+      $salt = Crypto::token(64, true);
       Admin::insert([
         "role_id"    => $roleID,
         "unique_id"  => Crypto::uniqueID(),
@@ -190,7 +190,7 @@ class Accounts extends Controller
       throw new HttpBadRequestException($request, "Current password is invalid.");
     }
 
-    $newSalt = Crypto::token();
+    $newSalt = Crypto::token(64, true);
     $admin->unique_id = Crypto::uniqueID();
     $admin->password = Password::create($newPassword, $newSalt);
     $admin->salt = $newSalt;

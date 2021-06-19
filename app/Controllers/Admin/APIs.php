@@ -67,7 +67,7 @@ class APIs extends Controller
 
     API::insert([
       "username"   => $username,
-      "token"      => Crypto::uniqueID(),
+      "token"      => Crypto::apiKey(),
       "created_at" => Date::now(),
       "updated_at" => Date::now()
     ]);

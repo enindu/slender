@@ -2,60 +2,78 @@
 
 namespace System\Slender;
 
-class Text
+class Text extends Characters
 {
-  private static $special = ["`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", "|", ";", ":", "'", "\"", ",", "<", ".", ">", "\\", "/", "?"];
-
   public static function clean(string $text): string
   {
-    return str_replace(self::$special, "", trim($text));
+    $characters = str_split(self::$specialCharacters);
+    $text = trim($text);
+    $cleanText = str_replace($characters, "", $text);
+
+    return $cleanText;
   }
 
-  public static function randomCase(string $text): string
+  public static function shuffle(string $text): string
   {
-    $randomCase = "";
-    $characters = str_split(trim($text));
-    foreach($characters as $item) {
-      $randomNumber = random_int(0, PHP_INT_MAX);
-      if($randomNumber % 2 == 0) {
-        $randomCase .= strtoupper($item);
+    $text = trim($text);
+    $characters = str_split($text);
+    shuffle($characters);
+
+    $shuffleText = implode($characters);
+    return $shuffleText;
+  }
+
+  public static function sentencecase(string $text): string
+  {
+    $text = trim($text);
+    $text = strtolower($text);
+    $sentences = explode(". ", $text);
+
+    $sentencecaseText = "";
+    foreach($sentences as $sentence) {
+      if($sentence == "") {
         continue;
       }
 
-      $randomCase .= $item;
+      $sentence = trim($sentence);
+      $sentence = rtrim($sentence, ".");
+      $sentence = ucfirst($sentence);
+      $sentencecaseText .= $sentence . ". ";
     }
 
-    return $randomCase;
-  }
-
-  public static function sentenceCase(string $text): string
-  {
-    $sentenceCase = "";
-    $sentences = explode(".", strtolower(trim($text)));
-    foreach($sentences as $item) {
-      if($item != "") {
-        $sentenceCase .= ucfirst(trim($item)) . ". ";
-      }
-    }
-
-    return trim($sentenceCase);
+    $sentencecaseText = trim($sentencecaseText);
+    return $sentencecaseText;
   }
 
   public static function slug(string $text): string
   {
-    $slug = "";
-    $words = explode(" ", self::clean($text));
-    foreach($words as $item) {
-      if($item != "") {
-        $slug .= $item . "-";
+    $text = trim($text);
+    $text = self::clean($text);
+    $words = explode(" ", $text);
+
+    $slugText = "";
+    foreach($words as $word) {
+      if($word == "") {
+        continue;
       }
+
+      $slugText .= $word . "-";
     }
 
-    return strtolower($slug) . Crypto::token(8);
+    $slugText = strtolower($slugText);
+    $token = Crypto::token(8);
+    $slugText = $slugText . $token;
+
+    return $slugText;
   }
 
   public static function validationMessage(array $messages): string
   {
-    return str_replace("-", " ", self::sentenceCase(reset($messages)));
+    $message = reset($messages);
+    $message = trim($message);
+    $message = self::sentencecase($message);
+    $message = str_replace("-", " ", $message);
+
+    return $message;
   }
 }
