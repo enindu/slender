@@ -18,9 +18,12 @@ class Admins extends Controller
 {
   public function base(Request $request, Response $response, array $data): Response
   {
+    $roles = Role::get();
+    $admins = Admin::orderBy("id", "desc")->take(10)->get();
+
     return $this->view($response, "@admin/admins.twig", [
-      "roles"  => Role::get(),
-      "admins" => Admin::orderBy("id", "desc")->take(10)->get()
+      "roles"  => $roles,
+      "admins" => $admins
     ]);
   }
 
@@ -36,18 +39,21 @@ class Admins extends Controller
 
     $page = (int) $parameters["page"];
 
-    $results = count(Admin::get());
-    $resultsPerPage = 10;
-    $pageResults = ($page - 1) * $resultsPerPage;
-    $pages = ceil($results / $resultsPerPage);
+    $admins = Admin::get();
+    $adminsLength = count($admins);
+    $resultsLength = 10;
+    $previousResultsLength = ($page - 1) * $resultsLength;
+    $pages = ceil($adminsLength / $resultsLength);
     if($page < 1 || $page > $pages) {
       throw new HttpNotFoundException($request);
     }
 
+    $admins = Admin::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get();
+
     return $this->view($response, "@admin/admins.all.twig", [
       "page"   => $page,
       "pages"  => $pages,
-      "admins" => Admin::orderBy("id", "desc")->skip($pageResults)->take($resultsPerPage)->get()
+      "admins" => $admins
     ]);
   }
 
@@ -61,7 +67,8 @@ class Admins extends Controller
       "confirm-password" => "same:password"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, Text::validationMessage($validation));
+      $validationMessage = Text::validationMessage($validation);
+      throw new HttpBadRequestException($request, $validationMessage);
     }
 
     $username = $inputs["username"];
@@ -78,15 +85,17 @@ class Admins extends Controller
       throw new HttpBadRequestException($request, "There is an account already using that username.");
     }
 
-    $salt = Crypto::token(64, true);
+    $uniqueID = Crypto::uniqueID();
+    $password = Password::create($password);
+    $createdAt = Date::now();
+
     Admin::insert([
       "role_id"    => $roleID,
-      "unique_id"  => Crypto::uniqueID(),
+      "unique_id"  => $uniqueID,
       "username"   => $username,
-      "password"   => Password::create($password, $salt),
-      "salt"       => $salt,
-      "created_at" => Date::now(),
-      "updated_at" => Date::now()
+      "hash"       => $password["hash"],
+      "salt"       => $password["salt"],
+      "created_at" => $createdAt
     ]);
 
     return $response->withHeader("Location", "/admin/admins");
@@ -99,7 +108,8 @@ class Admins extends Controller
       "id" => "required|integer"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, Text::validationMessage($validation));
+      $validationMessage = Text::validationMessage($validation);
+      throw new HttpBadRequestException($request, $validationMessage);
     }
 
     $id = (int) $inputs["id"];
@@ -109,7 +119,8 @@ class Admins extends Controller
       throw new HttpBadRequestException($request, "There is no account found.");
     }
 
-    if($id == $this->auth("id", "admin")) {
+    $adminID = $this->auth("id", "admin");
+    if($id == $adminID) {
       throw new HttpBadRequestException($request, "You cannot activate your own account.");
     }
 
@@ -126,7 +137,8 @@ class Admins extends Controller
       "id" => "required|integer"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, Text::validationMessage($validation));
+      $validationMessage = Text::validationMessage($validation);
+      throw new HttpBadRequestException($request, $validationMessage);
     }
 
     $id = (int) $inputs["id"];
@@ -136,7 +148,8 @@ class Admins extends Controller
       throw new HttpBadRequestException($request, "There is no account found.");
     }
 
-    if($id == $this->auth("id", "admin")) {
+    $adminID = $this->auth("id", "admin");
+    if($id == $adminID) {
       throw new HttpBadRequestException($request, "You cannot deactivate your own account.");
     }
 
@@ -153,7 +166,8 @@ class Admins extends Controller
       "id" => "required|integer"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, Text::validationMessage($validation));
+      $validationMessage = Text::validationMessage($validation);
+      throw new HttpBadRequestException($request, $validationMessage);
     }
 
     $id = (int) $inputs["id"];
@@ -163,7 +177,8 @@ class Admins extends Controller
       throw new HttpBadRequestException($request, "There is no account found.");
     }
 
-    if($id == $this->auth("id", "admin")) {
+    $adminID = $this->auth("id", "admin");
+    if($id == $adminID) {
       throw new HttpBadRequestException($request, "You cannot remove your own account.");
     }
 
