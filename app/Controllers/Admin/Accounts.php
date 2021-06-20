@@ -28,7 +28,8 @@ class Accounts extends Controller
         "password" => "required|min:6|max:32"
       ]);
       if($validation != null) {
-        throw new HttpBadRequestException($request, Text::validationMessage($validation));
+        $validationMessage = Text::validationMessage($validation);
+        throw new HttpBadRequestException($request, $validationMessage);
       }
 
       $username = $inputs["username"];
@@ -39,7 +40,7 @@ class Accounts extends Controller
         throw new HttpBadRequestException($request, "There is no account found.");
       }
 
-      $passwordMatches = Password::verify($password, $admin->salt, $admin->password);
+      $passwordMatches = Password::verify($password, $admin->hash, $admin->salt);
       if(!$passwordMatches) {
         throw new HttpBadRequestException($request, "Password is invalid.");
       }
@@ -65,8 +66,10 @@ class Accounts extends Controller
   {
     $method = $request->getMethod();
     if($method == "GET") {
+      $roles = Role::get();
+
       return $this->view($response, "@admin/accounts.register.twig", [
-        "roles" => Role::get()
+        "roles" => $roles
       ]);
     }
     if($method == "POST") {
@@ -78,7 +81,8 @@ class Accounts extends Controller
         "confirm-password" => "same:password"
       ]);
       if($validation != null) {
-        throw new HttpBadRequestException($request, Text::validationMessage($validation));
+        $validationMessage = Text::validationMessage($validation);
+        throw new HttpBadRequestException($request, $validationMessage);
       }
 
       $username = $inputs["username"];
@@ -95,15 +99,17 @@ class Accounts extends Controller
         throw new HttpBadRequestException($request, "There is an account already using that username.");
       }
 
-      $salt = Crypto::token(64, true);
+      $uniqueID = Crypto::uniqueID();
+      $password = Password::create($password);
+      $createdAt = Date::now();
+
       Admin::insert([
         "role_id"    => $roleID,
-        "unique_id"  => Crypto::uniqueID(),
+        "unique_id"  => $uniqueID,
         "username"   => $username,
-        "password"   => Password::create($password, $salt),
-        "salt"       => $salt,
-        "created_at" => Date::now(),
-        "updated_at" => Date::now()
+        "hash"       => $password["hash"],
+        "salt"       => $password["salt"],
+        "created_at" => $createdAt
       ]);
 
       return $response->withHeader("Location", "/admin/accounts/login");
@@ -125,8 +131,9 @@ class Accounts extends Controller
       $admin->session_id = null;
       $admin->save();
 
+      $expires = strtotime("now") - 1;
       setcookie($_ENV["app"]["cookie"]["admin"], "expired", [
-        "expires"  => strtotime("now") - 1,
+        "expires"  => $expires,
         "path"     => "/admin",
         "domain"   => $_ENV["app"]["domain"],
         "secure"   => true,
@@ -146,25 +153,27 @@ class Accounts extends Controller
       "current-password" => "required|min:6|max:32"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, Text::validationMessage($validation));
+      $validationMessage = Text::validationMessage($validation);
+      throw new HttpBadRequestException($request, $validationMessage);
     }
 
     $username = $inputs["username"];
     $currentPassword = $inputs["current-password"];
 
-    $adminWithID = Admin::where("status", true)->where("id", $this->auth("id", "admin"))->first();
-    $currentPasswordMatches = Password::verify($currentPassword, $adminWithID->salt, $adminWithID->password);
+    $adminID = $this->auth("id", "admin");
+    $admin = Admin::where("status", true)->where("id", $adminID)->first();
+    $currentPasswordMatches = Password::verify($currentPassword, $admin->hash, $admin->salt);
     if(!$currentPasswordMatches) {
       throw new HttpBadRequestException($request, "Current password is invalid.");
     }
 
-    $adminWithUsername = Admin::where("status", true)->where("username", $username)->first();
-    if($adminWithUsername != null && $adminWithUsername->id != $adminWithID->id) {
+    $admin = Admin::where("status", true)->where("username", $username)->first();
+    if($admin != null && $admin->id != $adminID) {
       throw new HttpBadRequestException($request, "There is an account already using that username.");
     }
 
-    $adminWithID->username = $username;
-    $adminWithID->save();
+    $admin->username = $username;
+    $admin->save();
 
     return $response->withHeader("Location", "/admin/accounts/profile");
   }
@@ -178,26 +187,31 @@ class Accounts extends Controller
       "current-password"     => "required|min:6|max:32"
     ]);
     if($validation != null) {
-      throw new HttpBadRequestException($request, Text::validationMessage($validation));
+      $validationMessage = Text::validationMessage($validation);
+      throw new HttpBadRequestException($request, $validationMessage);
     }
 
     $newPassword = $inputs["new-password"];
     $currentPassword = $inputs["current-password"];
 
-    $admin = Admin::where("status", true)->where("id", $this->auth("id", "admin"))->first();
-    $currentPasswordMatches = Password::verify($currentPassword, $admin->salt, $admin->password);
+    $adminID = $this->auth("id", "admin");
+    $admin = Admin::where("status", true)->where("id", $adminID)->first();
+    $currentPasswordMatches = Password::verify($currentPassword, $admin->hash, $admin->salt);
     if(!$currentPasswordMatches) {
       throw new HttpBadRequestException($request, "Current password is invalid.");
     }
 
-    $newSalt = Crypto::token(64, true);
+    $newPassword = Password::create($newPassword);
+
     $admin->unique_id = Crypto::uniqueID();
-    $admin->password = Password::create($newPassword, $newSalt);
-    $admin->salt = $newSalt;
+    $admin->session_id = null;
+    $admin->hash = $newPassword["hash"];
+    $admin->salt = $newPassword["salt"];
     $admin->save();
 
+    $expires = strtotime("now") - 1;
     setcookie($_ENV["app"]["cookie"]["admin"], "expired", [
-      "expires"  => strtotime("now") - 1,
+      "expires"  => $expires,
       "path"     => "/admin",
       "domain"   => $_ENV["app"]["domain"],
       "secure"   => true,
@@ -210,8 +224,11 @@ class Accounts extends Controller
 
   public function profile(Request $request, Response $response, array $data): Response
   {
+    $adminID = $this->auth("id", "admin");
+    $admin = Admin::where("status", true)->where("id", $adminID)->first();
+
     return $this->view($response, "@admin/accounts.profile.twig", [
-      "admin" => Admin::where("status", true)->where("id", $this->auth("id", "admin"))->first()
+      "admin" => $admin
     ]);
   }
 }
