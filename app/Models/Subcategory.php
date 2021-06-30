@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subcategory extends Model
 {
-  use SoftDeletes;
+    use SoftDeletes;
 
-  public $timestamps = true;
-  protected $table = "subcategories";
+    public $timestamps = true;
+    protected $table = "subcategories";
 
-  public function category(): HasOne
-  {
-    return $this->hasOne(Category::class, "id", "category_id")->withTrashed();
-  }
+    public function category(): HasOne
+    {
+        return $this->hasOne(Category::class, "id", "category_id")->withTrashed();
+    }
 }

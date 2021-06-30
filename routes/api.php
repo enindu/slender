@@ -1,9 +1,13 @@
 <?php
 
-use App\Controllers\API\Base;
-use App\Middleware\APIAuth;
+use App\Controllers\Api\Base;
+use App\Middleware\Api\Authentication;
 use Slim\Routing\RouteCollectorProxy;
 
-$app->group("/api", function(RouteCollectorProxy $api) {
-  $api->any("", Base::class . ":base");
-})->add(new APIAuth($container));
+$authentication = new Authentication($container);
+
+$routes = function(RouteCollectorProxy $api): void {
+    $api->any("", Base::class . ":base");
+};
+
+$app->group("/api", $routes)->add($authentication);

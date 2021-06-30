@@ -1,5 +1,7 @@
 <?php
 
-$container->set("swift-message", function(): Swift_Message {
-  return new Swift_Message();
-});
+$library = function(): Swift_Message {
+    return new Swift_Message();
+};
+
+$container->set("swift-message", $library);

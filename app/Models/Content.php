@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Content extends Model
 {
-  use SoftDeletes;
-  
-  public $timestamps = true;
-  protected $table = "contents";
+    use SoftDeletes;
 
-  public function section(): HasOne
-  {
-    return $this->hasOne(Section::class, "id", "section_id")->withTrashed();
-  }
+    public $timestamps = true;
+    protected $table = "contents";
+
+    public function section(): HasOne
+    {
+        return $this->hasOne(Section::class, "id", "section_id")->withTrashed();
+    }
 }

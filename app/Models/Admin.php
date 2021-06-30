@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Admin extends Model
 {
-  use SoftDeletes;
+    use SoftDeletes;
 
-  public $timestamps = true;
-  protected $table = "admins";
+    public $timestamps = true;
+    protected $table = "admins";
 
-  public function role(): HasOne
-  {
-    return $this->hasOne(Role::class, "id", "role_id")->withTrashed();
-  }
+    public function role(): HasOne
+    {
+        return $this->hasOne(Role::class, "id", "role_id")->withTrashed();
+    }
 }

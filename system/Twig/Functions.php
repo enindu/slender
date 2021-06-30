@@ -7,10 +7,10 @@ use Twig\Extension\AbstractExtension;
 
 class Functions extends AbstractExtension
 {
-  public function __construct(private Container $container) {}
+    public function __construct(private Container $container) {}
 
-  public function getFunctions(): array
-  {
-    return [];
-  }
+    public function getFunctions(): array
+    {
+        return [];
+    }
 }

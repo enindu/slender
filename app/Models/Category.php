@@ -9,18 +9,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-  use SoftDeletes;
-  
-  public $timestamps = true;
-  protected $table = "categories";
+    use SoftDeletes;
 
-  public function section(): HasOne
-  {
-    return $this->hasOne(Section::class, "id", "section_id")->withTrashed();
-  }
+    public $timestamps = true;
+    protected $table = "categories";
 
-  public function subcategories(): HasMany
-  {
-    return $this->hasMany(Subcategory::class, "category_id", "id");
-  }
+    public function section(): HasOne
+    {
+        return $this->hasOne(Section::class, "id", "section_id")->withTrashed();
+    }
+
+    public function subcategories(): HasMany
+    {
+        return $this->hasMany(Subcategory::class, "category_id", "id");
+    }
 }

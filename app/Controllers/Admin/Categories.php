@@ -2,159 +2,172 @@
 
 namespace App\Controllers\Admin;
 
-use App\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Section;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
-use System\Slender\Date;
-use System\Slender\Text;
+use System\Slender\Controller;
 
 class Categories extends Controller
 {
-  public function base(Request $request, Response $response, array $data): Response
-  {
-    return $this->view($response, "@admin/categories.twig", [
-      "sections"   => Section::get(),
-      "categories" => Category::orderBy("id", "desc")->take(10)->get()
-    ]);
-  }
+    public function base(Request $request, Response $response, array $data): Response
+    {
+        $sections = Section::get();
+        $categories = Category::orderBy("id", "desc")->take(10)->get();
 
-  public function all(Request $request, Response $response, array $data): Response
-  {
-    $parameters = $request->getQueryParams();
-    $validation = $this->validate($parameters, [
-      "page" => "required|integer"
-    ]);
-    if($validation != null) {
-      throw new HttpNotFoundException($request);
+        return $this->viewResponse($response, "@admin/categories.twig", [
+            "sections"   => $sections,
+            "categories" => $categories
+        ]);
     }
 
-    $page = (int) $parameters["page"];
+    public function all(Request $request, Response $response, array $data): Response
+    {
+        $parameters = $request->getQueryParams();
+        $validationError = $this->validateData($parameters, [
+            "page" => "required|integer"
+        ]);
+        if($validationError != null) {
+            throw new HttpNotFoundException($request);
+        }
 
-    $results = count(Category::get());
-    $resultsPerPage = 10;
-    $pageResults = ($page - 1) * $resultsPerPage;
-    $pages = ceil($results / $resultsPerPage);
-    if($page < 1 || $page > $pages) {
-      throw new HttpNotFoundException($request);
-    }
-    
-    return $this->view($response, "@admin/categories.all.twig", [
-      "page"       => $page,
-      "pages"      => $pages,
-      "categories" => Category::orderBy("id", "desc")->skip($pageResults)->take($resultsPerPage)->get()
-    ]);
-  }
+        $page = (int) $parameters["page"];
 
-  public function add(Request $request, Response $response, array $data): Response
-  {
-    $inputs = $request->getParsedBody();
-    $validation = $this->validate($inputs, [
-      "title"      => "required|max:191",
-      "subtitle"   => "max:191",
-      "section-id" => "required|integer"
-    ]);
-    if($validation != null) {
-      throw new HttpBadRequestException($request, Text::validationMessage($validation));
-    }
+        $categories = Category::get();
+        $categoriesLength = count($categories);
+        $resultsLength = 10;
+        $previousResultsLength = ($page - 1) * $resultsLength;
 
-    $title = $inputs["title"];
-    $subtitle = $inputs["subtitle"];
-    $sectionID = (int) $inputs["section-id"];
-    $description = $inputs["description"];
+        $pages = ceil($categoriesLength / $resultsLength);
+        if($page < 1 || $page > $pages) {
+            throw new HttpNotFoundException($request);
+        }
 
-    $section = Section::where("id", $sectionID)->first();
-    if($section == null) {
-      throw new HttpBadRequestException($request, "There is no section found.");
+        $categories = Category::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get();
+        return $this->viewResponse($response, "@admin/categories.all.twig", [
+            "page"       => $page,
+            "pages"      => $pages,
+            "categories" => $categories
+        ]);
     }
 
-    Category::insert([
-      "section_id"  => $sectionID,
-      "slug"        => Text::slug($title),
-      "title"       => $title,
-      "subtitle"    => $subtitle != "" ? $subtitle : "N/A",
-      "description" => $description != "" ? $description : "N/A",
-      "created_at"  => Date::now(),
-      "updated_at"  => Date::now()
-    ]);
+    public function add(Request $request, Response $response, array $data): Response
+    {
+        $inputs = $request->getParsedBody();
+        $validationError = $this->validateData($inputs, [
+            "title"      => "required|max:191",
+            "subtitle"   => "max:191",
+            "section-id" => "required|integer"
+        ]);
+        if($validationError != null) {
+            throw new HttpBadRequestException($request, $validationError);
+        }
 
-    return $response->withHeader("Location", "/admin/categories");
-  }
+        $title = $inputs["title"];
+        $subtitle = $inputs["subtitle"];
+        $sectionId = (int) $inputs["section-id"];
+        $description = $inputs["description"];
 
-  public function update(Request $request, Response $response, array $data): Response
-  {
-    $inputs = $request->getParsedBody();
-    $validation = $this->validate($inputs, [
-      "id"         => "required|integer",
-      "title"      => "required|max:191",
-      "subtitle"   => "max:191",
-      "section-id" => "required|integer"
-    ]);
-    if($validation != null) {
-      throw new HttpBadRequestException($request, Text::validationMessage($validation));
+        $section = Section::where("id", $sectionId)->first();
+        if($section == null) {
+            throw new HttpBadRequestException($request, "There is no section found.");
+        }
+
+        $slug = $this->createSlug($title);
+        $subtitle = empty($subtitle) ? "N/A" : $subtitle;
+        $description = empty($description) ? "N/A" : $description;
+        $date = date("Y-m-d H:i:s");
+
+        Category::insert([
+            "section_id"  => $sectionId,
+            "slug"        => $slug,
+            "title"       => $title,
+            "subtitle"    => $subtitle,
+            "description" => $description,
+            "created_at"  => $date
+        ]);
+
+        return $this->redirectResponse($response, "/admin/categories");
     }
 
-    $id = (int) $inputs["id"];
-    $title = $inputs["title"];
-    $subtitle = $inputs["subtitle"];
-    $sectionID = (int) $inputs["section-id"];
-    $description = $inputs["description"];
+    public function update(Request $request, Response $response, array $data): Response
+    {
+        $inputs = $request->getParsedBody();
+        $validationError = $this->validateData($inputs, [
+            "id"         => "required|integer",
+            "title"      => "required|max:191",
+            "subtitle"   => "max:191",
+            "section-id" => "required|integer"
+        ]);
+        if($validationError != null) {
+            throw new HttpBadRequestException($request, $validationError);
+        }
 
-    $category = Category::where("id", $id)->first();
-    if($category == null) {
-      throw new HttpBadRequestException($request, "There is no category found.");
+        $id = (int) $inputs["id"];
+        $title = $inputs["title"];
+        $subtitle = $inputs["subtitle"];
+        $sectionId = (int) $inputs["section-id"];
+        $description = $inputs["description"];
+
+        $category = Category::where("id", $id)->first();
+        if($category == null) {
+            throw new HttpBadRequestException($request, "There is no category found.");
+        }
+
+        $section = Section::where("id", $sectionId)->first();
+        if($section == null) {
+            throw new HttpBadRequestException($request, "There is no section found.");
+        }
+
+        $slug = $this->createSlug($title);
+        $subtitle = empty($subtitle) ? "N/A" : $subtitle;
+        $description = empty($description) ? "N/A" : $description;
+
+        $category->section_id = $sectionId;
+        $category->slug = $slug;
+        $category->title = $title;
+        $category->subtitle = $subtitle;
+        $category->description = $description;
+        $category->save();
+
+        $path = "/admin/categories/" . $id;
+        return $this->redirectResponse($response, $path);
     }
 
-    $section = Section::where("id", $sectionID)->first();
-    if($section == null) {
-      throw new HttpBadRequestException($request, "There is no section found.");
+    public function remove(Request $request, Response $response, array $data): Response
+    {
+        $inputs = $request->getParsedBody();
+        $validationError = $this->validateData($inputs, [
+            "id" => "required|integer"
+        ]);
+        if($validationError != null) {
+            throw new HttpBadRequestException($request, $validationError);
+        }
+
+        $id = (int) $inputs["id"];
+
+        $category = Category::where("id", $id)->first();
+        if($category == null) {
+            throw new HttpBadRequestException($request, "There is no category found.");
+        }
+
+        $category->delete();
+        return $response->withHeader("Location", "/admin/categories");
     }
 
-    $category->section_id = $sectionID;
-    $category->slug = Text::slug($title);
-    $category->title = $title;
-    $category->subtitle = $subtitle != "" ? $subtitle : "N/A";
-    $category->description = $description != "" ? $description : "N/A";
-    $category->save();
+    public function single(Request $request, Response $response, array $data): Response
+    {
+        $category = Category::where("id", $data["id"])->first();
+        if($category == null) {
+            throw new HttpNotFoundException($request);
+        }
 
-    return $response->withHeader("Location", "/admin/categories/" . $id);
-  }
-
-  public function remove(Request $request, Response $response, array $data): Response
-  {
-    $inputs = $request->getParsedBody();
-    $validation = $this->validate($inputs, [
-      "id" => "required|integer"
-    ]);
-    if($validation != null) {
-      throw new HttpBadRequestException($request, Text::validationMessage($validation));
+        $sections = Section::get();
+        return $this->viewResponse($response, "@admin/categories.single.twig", [
+            "category" => $category,
+            "sections" => $sections
+        ]);
     }
-
-    $id = (int) $inputs["id"];
-
-    $category = Category::where("id", $id)->first();
-    if($category == null) {
-      throw new HttpBadRequestException($request, "There is no category found.");
-    }
-
-    $category->delete();
-
-    return $response->withHeader("Location", "/admin/categories");
-  }
-
-  public function single(Request $request, Response $response, array $data): Response
-  {
-    $category = Category::where("id", $data["id"])->first();
-    if($category == null) {
-      throw new HttpNotFoundException($request);
-    }
-
-    return $this->view($response, "@admin/categories.single.twig", [
-      "category" => $category,
-      "sections" => Section::get()
-    ]);
-  }
 }

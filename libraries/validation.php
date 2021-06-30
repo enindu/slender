@@ -2,6 +2,8 @@
 
 use Rakit\Validation\Validator;
 
-$container->set("validation", function(): Validator {
-  return new Validator();
-});
+$library = function(): Validator {
+    return new Validator();
+};
+
+$container->set("validation", $library);

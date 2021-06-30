@@ -2,11 +2,9 @@
 
 use DI\Container;
 use Slim\Factory\AppFactory;
+use System\Slim\ErrorRenderer;
 
 require_once __DIR__ . "/vendor/autoload.php";
-
-// $ubench = new Ubench();
-// $ubench->start();
 
 require_once __DIR__ . "/settings/app.php";
 require_once __DIR__ . "/settings/system.php";
@@ -23,17 +21,20 @@ require_once __DIR__ . "/libraries/validation.php";
 
 $app = AppFactory::createFromContainer($container);
 
+$routeCachePath = __DIR__ . "/cache/routes/cache.php";
 $routeCollector = $app->getRouteCollector();
-$routeCollector->setCacheFile(__DIR__ . "/cache/routes/cache.php");
+$routeCollector->setCacheFile($routeCachePath);
 
-require_once __DIR__ . "/middleware/app.php";
-require_once __DIR__ . "/middleware/system.php";
+$app->addBodyParsingMiddleware();
+$app->addRoutingMiddleware();
+
+$errorMiddleware = $app->addErrorMiddleware(true, true, true);
+$errorHandler = (object) $errorMiddleware->getDefaultErrorHandler();
+$errorRenderer = new ErrorRenderer($container);
+$errorHandler->registerErrorRenderer("text/html", $errorRenderer);
 
 require_once __DIR__ . "/routes/api.php";
 require_once __DIR__ . "/routes/admin.php";
 require_once __DIR__ . "/routes/user.php";
 
 $app->run();
-
-// $ubench->end();
-// file_put_contents(__DIR__ . "/logs/performance.log", "[" . date(DATE_ATOM) . "] app.DEBUG " . $ubench->getTime() . " | " . $ubench->getMemoryUsage() . "\n", FILE_APPEND);

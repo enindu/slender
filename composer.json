@@ -41,12 +41,10 @@
         "erusev/parsedown-extra": "^0.8",
         "intervention/image": "^2.5",
         "rakit/validation": "^1.4",
-        "nesbot/carbon": "^2.49",
         "symfony/filesystem": "^5.3"
     },
     "require-dev": {
-        "symfony/var-dumper": "^5.3",
-        "devster/ubench": "^2.1"
+        "symfony/var-dumper": "^5.3"
     },
     "autoload": {
         "psr-4": {
