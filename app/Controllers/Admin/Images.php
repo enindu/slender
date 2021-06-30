@@ -15,12 +15,9 @@ class Images extends Controller
 {
     public function base(Request $request, Response $response, array $data): Response
     {
-        $sections = Section::get();
-        $images = Image::orderBy("id", "desc")->take(10)->get();
-
         return $this->viewResponse($response, "@admin/images.twig", [
-            "sections" => $sections,
-            "images"   => $images
+            "sections" => Section::get(),
+            "images"   => Image::orderBy("id", "desc")->take(10)->get()
         ]);
     }
 
@@ -46,11 +43,10 @@ class Images extends Controller
             throw new HttpNotFoundException($request);
         }
 
-        $images = Image::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get();
         return $this->viewResponse($response, "@admin/images.all.twig", [
             "page"   => $page,
             "pages"  => $pages,
-            "images" => $images
+            "images" => Image::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get()
         ]);
     }
 
@@ -93,18 +89,13 @@ class Images extends Controller
         $filePath = __DIR__ . "/../../../uploads/images/" . $fileName;
         $file->moveTo($filePath);
 
-        $title = empty($title) ? "N/A" : $title;
-        $subtitle = empty($subtitle) ? "N/A" : $subtitle;
-        $description = empty($description) ? "N/A" : $description;
-        $date = date("Y-m-d H:i:s");
-
         Image::insert([
             "section_id"  => $sectionId,
-            "title"       => $title,
-            "subtitle"    => $subtitle,
-            "description" => $description,
+            "title"       => empty($title) ? "N/A" : $title,
+            "subtitle"    => empty($subtitle) ? "N/A" : $subtitle,
+            "description" => empty($description) ? "N/A" : $description,
             "file"        => $fileName,
-            "created_at"  => $date
+            "created_at"  => date("Y-m-d H:i:s")
         ]);
 
         return $this->redirectResponse($response, "/admin/images");

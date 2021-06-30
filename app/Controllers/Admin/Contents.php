@@ -14,12 +14,9 @@ class Contents extends Controller
 {
     public function base(Request $request, Response $response, array $data): Response
     {
-        $sections = Section::get();
-        $contents = Content::orderBy("id", "desc")->take(10)->get();
-
         return $this->viewResponse($response, "@admin/contents.twig", [
-            "sections" => $sections,
-            "contents" => $contents
+            "sections" => Section::get(),
+            "contents" => Content::orderBy("id", "desc")->take(10)->get()
         ]);
     }
 
@@ -45,11 +42,10 @@ class Contents extends Controller
             throw new HttpNotFoundException($request);
         }
 
-        $contents = Content::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get();
         return $this->viewResponse($response, "@admin/contents.all.twig", [
             "page"     => $page,
             "pages"    => $pages,
-            "contents" => $contents
+            "contents" => Content::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get()
         ]);
     }
 
@@ -76,15 +72,12 @@ class Contents extends Controller
             throw new HttpBadRequestException($request, "There is no section found.");
         }
 
-        $subtitle = empty($subtitle) ? "N/A" : $subtitle;
-        $date = date("Y-m-d H:i:s");
-
         Content::insert([
             "section_id"  => $sectionId,
             "title"       => $title,
-            "subtitle"    => $subtitle,
+            "subtitle"    => empty($subtitle) ? "N/A" : $subtitle,
             "description" => $description,
-            "created_at"  => $date
+            "created_at"  => date("Y-m-d H:i:s")
         ]);
 
         return $this->redirectResponse($response, "/admin/contents");
@@ -120,11 +113,9 @@ class Contents extends Controller
             throw new HttpBadRequestException($request, "There is no section found.");
         }
 
-        $subtitle = empty($subtitle) ? "N/A" : $subtitle;
-
         $content->section_id = $sectionId;
         $content->title = $title;
-        $content->subtitle = $subtitle;
+        $content->subtitle = empty($subtitle) ? "N/A" : $subtitle;
         $content->description = $description;
         $content->save();
 
@@ -160,10 +151,9 @@ class Contents extends Controller
             throw new HttpNotFoundException($request);
         }
 
-        $sections = Section::get();
         return $this->viewResponse($response, "@admin/contents.single.twig", [
             "content"  => $content,
-            "sections" => $sections
+            "sections" => Section::get()
         ]);
     }
 }

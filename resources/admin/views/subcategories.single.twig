@@ -76,7 +76,7 @@
                     <i class="fa fa-cubes mr-5"></i> {{ subcategory.title }}
                 </h1>
                 {% if subcategory.description != "N/A" %}
-                    {{ subcategory.description|markdown|raw }}
+                    <div>{{ subcategory.description|markdown|raw }}</div>
                 {% else %}
                     <i class="fa fa-frown mr-5"></i> No description found!
                 {% endif %}

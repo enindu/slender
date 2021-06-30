@@ -13,9 +13,8 @@ class Apis extends Controller
 {
     public function base(Request $request, Response $response, array $data): Response
     {
-        $apis = Api::orderBy("id", "desc")->take(10)->get();
         return $this->viewResponse($response, "@admin/apis.twig", [
-            "apis" => $apis
+            "apis" => Api::orderBy("id", "desc")->take(10)->get()
         ]);
     }
 
@@ -41,11 +40,10 @@ class Apis extends Controller
             throw new HttpNotFoundException($request);
         }
 
-        $apis = Api::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get();
         return $this->viewResponse($response, "@admin/apis.all.twig", [
             "page"  => $page,
             "pages" => $pages,
-            "apis"  => $apis
+            "apis"  => Api::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get()
         ]);
     }
 
@@ -66,13 +64,10 @@ class Apis extends Controller
             throw new HttpBadRequestException($request, "There is an API already using that username.");
         }
 
-        $token = $this->createToken();
-        $date = date("Y-m-d H:i:s");
-
         Api::insert([
             "username"   => $username,
-            "token"      => $token,
-            "created_at" => $date
+            "token"      => $this->createToken(),
+            "created_at" => date("Y-m-d H:i:s")
         ]);
 
         return $this->redirectResponse($response, "/admin/apis");

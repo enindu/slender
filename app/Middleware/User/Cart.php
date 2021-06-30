@@ -20,10 +20,8 @@ class Cart extends Middleware
         }
 
         $cartId = $this->createToken();
-        $expires = strtotime("tomorrow");
-
         setcookie($_ENV["app"]["cookie"]["cart"], $cartId, [
-            "expires"  => $expires,
+            "expires"  => strtotime("tomorrow"),
             "path"     => "/",
             "domain"   => $_ENV["app"]["domain"],
             "secure"   => true,

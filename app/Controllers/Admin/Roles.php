@@ -15,9 +15,8 @@ class Roles extends Controller
 {
     public function base(Request $request, Response $response, array $data): Response
     {
-        $roles = Role::orderBy("id", "desc")->take(10)->get();
         return $this->viewResponse($response, "@admin/roles.twig", [
-            "roles" => $roles
+            "roles" => Role::orderBy("id", "desc")->take(10)->get()
         ]);
     }
 
@@ -43,11 +42,10 @@ class Roles extends Controller
             throw new HttpNotFoundException($request);
         }
 
-        $roles = Role::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get();
         return $this->viewResponse($response, "@admin/roles.all.twig", [
             "page"  => $page,
             "pages" => $pages,
-            "roles" => $roles
+            "roles" => Role::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get()
         ]);
     }
 
@@ -68,10 +66,9 @@ class Roles extends Controller
             throw new HttpBadRequestException($request, "There is a role already using that title.");
         }
 
-        $date = date("Y-m-d H:i:s");
         Role::insert([
             "title"      => $title,
-            "created_at" => $date
+            "created_at" => date("Y-m-d H:i:s")
         ]);
 
         return $this->redirectResponse($response, "/admin/roles");

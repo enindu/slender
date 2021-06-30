@@ -14,12 +14,9 @@ class Subcategories extends Controller
 {
     public function base(Request $request, Response $response, array $data): Response
     {
-        $categories = Category::get();
-        $subcategories = Subcategory::orderBy("id", "desc")->take(10)->get();
-
         return $this->viewResponse($response, "@admin/subcategories.twig", [
-            "categories"    => $categories,
-            "subcategories" => $subcategories
+            "categories"    => Category::get(),
+            "subcategories" => Subcategory::orderBy("id", "desc")->take(10)->get()
         ]);
     }
 
@@ -45,11 +42,10 @@ class Subcategories extends Controller
             throw new HttpNotFoundException($request);
         }
 
-        $subcategories = Subcategory::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get();
         return $this->viewResponse($response, "@admin/subcategories.all.twig", [
             "page"          => $page,
             "pages"         => $pages,
-            "subcategories" => $subcategories
+            "subcategories" => Subcategory::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get()
         ]);
     }
 
@@ -75,18 +71,13 @@ class Subcategories extends Controller
             throw new HttpBadRequestException($request, "There is no category found.");
         }
 
-        $slug = $this->createSlug($title);
-        $subtitle = empty($subtitle) ? "N/A" : $subtitle;
-        $description = empty($description) ? "N/A" : $description;
-        $date = date("Y-m-d H:i:s");
-
         Subcategory::insert([
             "category_id" => $categoryId,
-            "slug"        => $slug,
+            "slug"        => $this->createSlug($title),
             "title"       => $title,
-            "subtitle"    => $subtitle,
-            "description" => $description,
-            "created_at"  => $date
+            "subtitle"    => empty($subtitle) ? "N/A" : $subtitle,
+            "description" => empty($description) ? "N/A" : $description,
+            "created_at"  => date("Y-m-d H:i:s")
         ]);
 
         return $this->redirectResponse($response, "/admin/subcategories");
@@ -121,15 +112,11 @@ class Subcategories extends Controller
             throw new HttpBadRequestException($request, "There is no category found.");
         }
 
-        $slug = $this->createSlug($title);
-        $subtitle = empty($subtitle) ? "N/A" : $subtitle;
-        $description = empty($description) ? "N/A" : $description;
-
         $subcategory->category_id = $categoryId;
-        $subcategory->slug = $slug;
+        $subcategory->slug = $this->createSlug($title);
         $subcategory->title = $title;
-        $subcategory->subtitle = $subtitle;
-        $subcategory->description = $description;
+        $subcategory->subtitle = empty($subtitle) ? "N/A" : $subtitle;
+        $subcategory->description = empty($description) ? "N/A" : $description;
         $subcategory->save();
 
         $path = "/admin/subcategories/" . $id;
@@ -164,10 +151,9 @@ class Subcategories extends Controller
             throw new HttpNotFoundException($request);
         }
 
-        $categories = Category::get();
         return $this->viewResponse($response, "@admin/subcategories.single.twig", [
             "subcategory" => $subcategory,
-            "categories"  => $categories
+            "categories"  => Category::get()
         ]);
     }
 }

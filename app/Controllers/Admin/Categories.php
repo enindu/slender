@@ -14,12 +14,9 @@ class Categories extends Controller
 {
     public function base(Request $request, Response $response, array $data): Response
     {
-        $sections = Section::get();
-        $categories = Category::orderBy("id", "desc")->take(10)->get();
-
         return $this->viewResponse($response, "@admin/categories.twig", [
-            "sections"   => $sections,
-            "categories" => $categories
+            "sections"   => Section::get(),
+            "categories" => Category::orderBy("id", "desc")->take(10)->get()
         ]);
     }
 
@@ -45,11 +42,10 @@ class Categories extends Controller
             throw new HttpNotFoundException($request);
         }
 
-        $categories = Category::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get();
         return $this->viewResponse($response, "@admin/categories.all.twig", [
             "page"       => $page,
             "pages"      => $pages,
-            "categories" => $categories
+            "categories" => Category::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get()
         ]);
     }
 
@@ -75,18 +71,13 @@ class Categories extends Controller
             throw new HttpBadRequestException($request, "There is no section found.");
         }
 
-        $slug = $this->createSlug($title);
-        $subtitle = empty($subtitle) ? "N/A" : $subtitle;
-        $description = empty($description) ? "N/A" : $description;
-        $date = date("Y-m-d H:i:s");
-
         Category::insert([
             "section_id"  => $sectionId,
-            "slug"        => $slug,
+            "slug"        => $this->createSlug($title),
             "title"       => $title,
-            "subtitle"    => $subtitle,
-            "description" => $description,
-            "created_at"  => $date
+            "subtitle"    => empty($subtitle) ? "N/A" : $subtitle,
+            "description" => empty($description) ? "N/A" : $description,
+            "created_at"  => date("Y-m-d H:i:s")
         ]);
 
         return $this->redirectResponse($response, "/admin/categories");
@@ -121,15 +112,11 @@ class Categories extends Controller
             throw new HttpBadRequestException($request, "There is no section found.");
         }
 
-        $slug = $this->createSlug($title);
-        $subtitle = empty($subtitle) ? "N/A" : $subtitle;
-        $description = empty($description) ? "N/A" : $description;
-
         $category->section_id = $sectionId;
-        $category->slug = $slug;
+        $category->slug = $this->createSlug($title);
         $category->title = $title;
-        $category->subtitle = $subtitle;
-        $category->description = $description;
+        $category->subtitle = empty($subtitle) ? "N/A" : $subtitle;
+        $category->description = empty($description) ? "N/A" : $description;
         $category->save();
 
         $path = "/admin/categories/" . $id;
@@ -164,10 +151,9 @@ class Categories extends Controller
             throw new HttpNotFoundException($request);
         }
 
-        $sections = Section::get();
         return $this->viewResponse($response, "@admin/categories.single.twig", [
             "category" => $category,
-            "sections" => $sections
+            "sections" => Section::get()
         ]);
     }
 }

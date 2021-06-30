@@ -14,12 +14,9 @@ class Admins extends Controller
 {
     public function base(Request $request, Response $response, array $data): Response
     {
-        $roles = Role::get();
-        $admins = Admin::orderBy("id", "desc")->take(10)->get();
-
         return $this->viewResponse($response, "@admin/admins.twig", [
-            "roles"  => $roles,
-            "admins" => $admins
+            "roles"  => Role::get(),
+            "admins" => Admin::orderBy("id", "desc")->take(10)->get()
         ]);
     }
 
@@ -45,11 +42,10 @@ class Admins extends Controller
             throw new HttpNotFoundException($request);
         }
 
-        $admins = Admin::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get();
         return $this->viewResponse($response, "@admin/admins.all.twig", [
             "page"   => $page,
             "pages"  => $pages,
-            "admins" => $admins
+            "admins" => Admin::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get()
         ]);
     }
 
@@ -80,18 +76,15 @@ class Admins extends Controller
             throw new HttpBadRequestException($request, "There is an account already using that username.");
         }
 
-        $uniqueId = $this->createToken();
         $password = $this->createPassword($password);
-        $date = date("Y-m-d H:i:s");
-
         Admin::insert([
             "role_id"    => $roleId,
-            "unique_id"  => $uniqueId,
+            "unique_id"  => $this->createToken(),
             "username"   => $username,
             "hash"       => $password["hash"],
             "salt"       => $password["salt"],
             "pattern"    => $password["pattern"],
-            "created_at" => $date
+            "created_at" => date("Y-m-d H:i:s")
         ]);
 
         return $this->redirectResponse($response, "/admin/admins");

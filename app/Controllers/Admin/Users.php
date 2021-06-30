@@ -14,12 +14,9 @@ class Users extends Controller
 {
     public function base(Request $request, Response $response, array $data): Response
     {
-        $roles = Role::get();
-        $users = User::orderBy("id", "desc")->take(10)->get();
-
         return $this->viewResponse($response, "@admin/users.twig", [
-            "roles" => $roles,
-            "users" => $users
+            "roles" => Role::get(),
+            "users" => User::orderBy("id", "desc")->take(10)->get()
         ]);
     }
 
@@ -45,11 +42,10 @@ class Users extends Controller
             throw new HttpNotFoundException($request);
         }
 
-        $users = User::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get();
         return $this->viewResponse($response, "@admin/users.all.twig", [
             "page"  => $page,
             "pages" => $pages,
-            "users" => $users
+            "users" => User::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get()
         ]);
     }
 
@@ -86,13 +82,10 @@ class Users extends Controller
             throw new HttpBadRequestException($request, "There is an account already using that email or phone.");
         }
 
-        $uniqueId = $this->createToken();
         $password = $this->createPassword($password);
-        $date = date("Y-m-d H:i:s");
-
         User::insert([
             "role_id"    => $roleId,
-            "unique_id"  => $uniqueId,
+            "unique_id"  => $this->createToken(),
             "first_name" => $firstName,
             "last_name"  => $lastName,
             "email"      => $email,
@@ -100,7 +93,7 @@ class Users extends Controller
             "hash"       => $password["hash"],
             "salt"       => $password["salt"],
             "pattern"    => $password["pattern"],
-            "created_at" => $date
+            "created_at" => date("Y-m-d H:i:s")
         ]);
 
         return $this->redirectResponse($response, "/admin/users");

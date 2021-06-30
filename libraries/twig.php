@@ -10,9 +10,13 @@ use Twig\Loader\FilesystemLoader;
 $library = function() use ($container): Environment {
     $filesystemLoader = new FilesystemLoader();
 
-    $filesystemLoader->addPath(__DIR__ . "/../resources/admin/views", "admin");
-    $filesystemLoader->addPath(__DIR__ . "/../resources/user/views", "user");
-    $filesystemLoader->addPath(__DIR__ . "/../resources/common/views", "common");
+    $adminViewsPath = __DIR__ . "/../resources/admin/views";
+    $userViewsPath = __DIR__ . "/../resources/user/views";
+    $commonViewsPath = __DIR__ . "/../resources/common/views";
+
+    $filesystemLoader->addPath($adminViewsPath, "admin");
+    $filesystemLoader->addPath($userViewsPath, "user");
+    $filesystemLoader->addPath($commonViewsPath, "common");
 
     $environment = new Environment($filesystemLoader, [
         "debug"               => $_ENV["twig"]["debug"],

@@ -13,9 +13,8 @@ class Sections extends Controller
 {
     public function base(Request $request, Response $response, array $data): Response
     {
-        $sections = Section::orderBy("id", "desc")->take(10)->get();
         return $this->viewResponse($response, "@admin/sections.twig", [
-            "sections" => $sections
+            "sections" => Section::orderBy("id", "desc")->take(10)->get()
         ]);
     }
 
@@ -41,11 +40,10 @@ class Sections extends Controller
             throw new HttpNotFoundException($request);
         }
 
-        $sections = Section::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get();
         return $this->viewResponse($response, "@admin/sections.all.twig", [
             "page"     => $page,
             "pages"    => $pages,
-            "sections" => $sections
+            "sections" => Section::orderBy("id", "desc")->skip($previousResultsLength)->take($resultsLength)->get()
         ]);
     }
 
@@ -66,10 +64,9 @@ class Sections extends Controller
             throw new HttpBadRequestException($request, "There is a section already using that name.");
         }
 
-        $date = date("Y-m-d H:i:s");
         Section::insert([
             "title"      => $title,
-            "created_at" => $date
+            "created_at" => date("Y-m-d H:i:s")
         ]);
 
         return $this->redirectResponse($response, "/admin/sections");

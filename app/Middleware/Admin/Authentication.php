@@ -27,6 +27,7 @@ class Authentication extends Middleware
         $cookieExists = isset($cookies[$_ENV["app"]["cookie"]["admin"]]);
         if(!$cookieExists) {
             unset($_SESSION["admin"]);
+
             if($pathExists === false) {
                 return $this->resetRequest("/admin/accounts/login");
             }
@@ -62,10 +63,8 @@ class Authentication extends Middleware
     private function resetRequest(string $path): Response
     {
         unset($_SESSION["admin"]);
-
-        $expires = strtotime("yesterday");
         setcookie($_ENV["app"]["cookie"]["admin"], "expired", [
-            "expires"  => $expires,
+            "expires"  => strtotime("yesterday"),
             "path"     => "/admin",
             "domain"   => $_ENV["app"]["domain"],
             "secure"   => true,

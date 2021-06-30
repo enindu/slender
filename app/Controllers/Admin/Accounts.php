@@ -60,9 +60,8 @@ class Accounts extends Controller
     {
         $method = $request->getMethod();
         if($method == "GET") {
-            $roles = Role::get();
             return $this->viewResponse($response, "@admin/accounts.register.twig", [
-                "roles" => $roles
+                "roles" => Role::get()
             ]);
         }
 
@@ -91,18 +90,15 @@ class Accounts extends Controller
             throw new HttpBadRequestException($request, "There is an account already using that username.");
         }
 
-        $uniqueId = $this->createToken();
         $password = $this->createPassword($password);
-        $date = date("Y-m-d H:i:s");
-
         Admin::insert([
             "role_id"    => $roleId,
-            "unique_id"  => $uniqueId,
+            "unique_id"  => $this->createToken(),
             "username"   => $username,
             "hash"       => $password["hash"],
             "salt"       => $password["salt"],
             "pattern"    => $password["pattern"],
-            "created_at" => $date
+            "created_at" => date("Y-m-d H:i:s")
         ]);
 
         return $this->redirectResponse($response, "/admin/accounts/login");
@@ -120,9 +116,8 @@ class Accounts extends Controller
         $admin->session_id = null;
         $admin->save();
 
-        $expires = strtotime("yesterday");
         setcookie($_ENV["app"]["cookie"]["admin"], "expired", [
-            "expires"  => $expires,
+            "expires"  => strtotime("yesterday"),
             "path"     => "/admin",
             "domain"   => $_ENV["app"]["domain"],
             "secure"   => true,
@@ -194,9 +189,8 @@ class Accounts extends Controller
         $admin->pattern = $newPassword["pattern"];
         $admin->save();
 
-        $expires = strtotime("yesterday");
         setcookie($_ENV["app"]["cookie"]["admin"], "expired", [
-            "expires"  => $expires,
+            "expires"  => strtotime("yesterday"),
             "path"     => "/admin",
             "domain"   => $_ENV["app"]["domain"],
             "secure"   => true,
@@ -209,9 +203,8 @@ class Accounts extends Controller
 
     public function profile(Request $request, Response $response, array $data): Response
     {
-        $admin = Admin::where("status", true)->where("id", $_SESSION["admin"]["id"])->first();
         return $this->viewResponse($response, "@admin/accounts.profile.twig", [
-            "admin" => $admin
+            "admin" => Admin::where("status", true)->where("id", $_SESSION["admin"]["id"])->first()
         ]);
     }
 }
