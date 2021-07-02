@@ -62,11 +62,13 @@
                 <h1 class="card-title">
                     <i class="fa fa-cube mr-5"></i> {{ category.title }}
                 </h1>
-                {% if category.description != "N/A" %}
-                    <div>{{ category.description|markdown|raw }}</div>
-                {% else %}
-                    <i class="fa fa-frown mr-5"></i> No description found!
-                {% endif %}
+                <div class="mb-20">
+                    {% if category.description != "N/A" %}
+                        <div>{{ category.description|markdown|raw }}</div>
+                    {% else %}
+                        <i class="fa fa-frown mr-5"></i> No description found!
+                    {% endif %}
+                </div>
                 <div class="text-right">
                     <form action="/admin/categories/remove" method="post">
                         <input type="hidden" name="id" value="{{ category.id }}">

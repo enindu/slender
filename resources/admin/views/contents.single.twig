@@ -62,7 +62,9 @@
                 <h1 class="card-title">
                     <i class="fa fa-pen mr-5"></i> {{ content.title }}
                 </h1>
-                <div>{{ content.description|markdown|raw }}</div>
+                <div class="mb-20">
+                    {{ content.description|markdown|raw }}
+                </div>
                 <div class="text-right">
                     <form action="/admin/contents/remove" method="post">
                         <input type="hidden" name="id" value="{{ content.id }}">
