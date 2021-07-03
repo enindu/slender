@@ -65,10 +65,14 @@ class Base
 
     protected function createSlug(string $text): string
     {
-        $characters = str_split("`~!@#$%^&*()-_=+[{]}\|;:'\",<.>/?");
         $text = trim($text);
         $text = strtolower($text);
+
+        $characters = str_split("`~!@#$%^*()=+[{]}|;:'\",<>?");
         $text = str_replace($characters, "", $text);
+
+        $characters = str_split("&-_\./");
+        $text = str_replace($characters, " ", $text);
         $text = str_replace(" ", "-", $text);
 
         $timestamp = time();
