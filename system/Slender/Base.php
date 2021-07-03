@@ -67,11 +67,12 @@ class Base
     {
         $text = trim($text);
         $text = strtolower($text);
+        $text = str_replace("&", "and", $text);
 
         $characters = str_split("`~!@#$%^*()=+[{]}|;:'\",<>?");
         $text = str_replace($characters, "", $text);
 
-        $characters = str_split("&-_\./");
+        $characters = str_split("-_\./");
         $text = str_replace($characters, " ", $text);
         $text = str_replace(" ", "-", $text);
 
