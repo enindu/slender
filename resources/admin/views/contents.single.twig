@@ -65,6 +65,42 @@
                 <div class="mb-20">
                     {{ content.description|markdown|raw }}
                 </div>
+                <div class="table-responsive mb-20">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th class="w-25">ID</th>
+                                <td>
+                                    <div class="text-wrap">{{ content.id }}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">Title</th>
+                                <td>
+                                    <div class="text-wrap">{{ content.title }}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">Subtitle</th>
+                                <td>
+                                    <div class="text-wrap">{{ content.subtitle }}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">Section</th>
+                                <td>
+                                    <div class="text-wrap">{{ content.section.title }}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">Created Date</th>
+                                <td>
+                                    <div class="text-wrap">{{ content.created_at|date("Y-m-d g:i a") }}</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="text-right">
                     <form action="/admin/contents/remove" method="post">
                         <input type="hidden" name="id" value="{{ content.id }}">
