@@ -142,7 +142,7 @@ class Users extends Controller
         $user->status = false;
         $user->save();
 
-        return $response->withHeader("Location", "/admin/users");
+        return $this->redirectResponse($response, "/admin/users");
     }
 
     public function remove(Request $request, Response $response, array $data): Response

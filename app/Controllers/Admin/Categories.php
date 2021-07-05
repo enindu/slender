@@ -141,7 +141,7 @@ class Categories extends Controller
         }
 
         $category->delete();
-        return $response->withHeader("Location", "/admin/categories");
+        return $this->redirectResponse($response, "/admin/categories");
     }
 
     public function single(Request $request, Response $response, array $data): Response
