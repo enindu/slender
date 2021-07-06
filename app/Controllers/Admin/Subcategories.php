@@ -142,7 +142,7 @@ class Subcategories extends Controller
 
         $subcategory->delete();
         return $this->redirectResponse($response, "/admin/subcategories");
-  }
+    }
 
     public function single(Request $request, Response $response, array $data): Response
     {
