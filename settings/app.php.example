@@ -56,10 +56,11 @@ $_ENV = [
         "optimizations"       => -1
     ],
     "swift-mailer" => [
-        "host"     => "",
-        "port"     => "",
-        "username" => "",
-        "password" => ""
+        "host"       => "",
+        "port"       => "",
+        "username"   => "",
+        "password"   => "",
+        "encryption" => "tls"
     ],
     "parsedown-extra" => [
         "safe-mode" => true
