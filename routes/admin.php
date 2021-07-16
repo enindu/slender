@@ -20,7 +20,7 @@ $authentication = new Authentication($container, [
     "/admin/accounts/register"
 ]);
 
-$routes = function(RouteCollectorProxy $admin): void {
+$app->group("/admin", function(RouteCollectorProxy $admin): void {
     $admin->get("", Base::class . ":base");
     $admin->group("/accounts", function(RouteCollectorProxy $accounts) {
         $accounts->map(["GET", "POST"], "/login", Accounts::class . ":login");
@@ -102,6 +102,4 @@ $routes = function(RouteCollectorProxy $admin): void {
         $subcategories->post("/remove", Subcategories::class . ":remove");
         $subcategories->get("/{id}", Subcategories::class . ":single");
     });
-};
-
-$app->group("/admin", $routes)->add($authentication);
+})->add($authentication);

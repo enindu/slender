@@ -6,8 +6,6 @@ use Slim\Routing\RouteCollectorProxy;
 
 $authentication = new Authentication($container);
 
-$routes = function(RouteCollectorProxy $api): void {
+$app->group("/api", function(RouteCollectorProxy $api): void {
     $api->any("", Base::class . ":base");
-};
-
-$app->group("/api", $routes)->add($authentication);
+})->add($authentication);
