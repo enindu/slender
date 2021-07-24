@@ -65,19 +65,16 @@ class Base
 
     protected function createSlug(string $text): string
     {
+        $timestamp = time();
+
+        $text = $text . " " . $timestamp;
         $text = trim($text);
         $text = strtolower($text);
-        $text = str_replace("&", "and", $text);
+        $text = str_replace("&", " and ", $text);
+        $text = preg_replace("/\W|\s+/", "-", $text);
+        $text = preg_replace("/-+/", "-", $text);
 
-        $characters = str_split("`~!@#$%^*()=+[{]}|;:'\",<>?");
-        $text = str_replace($characters, "", $text);
-
-        $characters = str_split("-_\./");
-        $text = str_replace($characters, " ", $text);
-        $text = str_replace(" ", "-", $text);
-
-        $timestamp = time();
-        return $text . "-" . $timestamp;
+        return $text;
     }
 
     protected function createToken(): string
