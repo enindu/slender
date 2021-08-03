@@ -6,4 +6,5 @@ settings/app.php
 uploads/files/*
 uploads/images/*
 vendor/
+.gitignore
 .htaccess
