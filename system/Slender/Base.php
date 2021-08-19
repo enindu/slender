@@ -4,6 +4,7 @@ namespace System\Slender;
 
 use DI\Container;
 use Slim\Psr7\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class Base
 {
@@ -175,17 +176,22 @@ class Base
     protected function sendEmail(string $template, array $data): null|string
     {
         $view = $this->createView($template, $data["body"]);
-        $swiftMessage = $this->container->get("swift-message");
+        $email = $this->container->get("email");
 
-        $swiftMessage->setSubject($data["subject"]);
-        $swiftMessage->setFrom($data["from"]);
-        $swiftMessage->setTo($data["to"]);
-        $swiftMessage->setBody($view, "text/html");
+        $email->subject($data["subject"]);
+        $email->from($data["from"]);
+        $email->to($data["to"]);
+        $email->html($view);
 
-        $swiftMailer = $this->container->get("swift-mailer");
-        $emailRecipients = $swiftMailer->send($swiftMessage);
-        if($emailRecipients == 0) {
-            return "Somthing went wrong while sending email.";
+        $mailer = $this->container->get("mailer");
+        
+        try {
+            $mailer->send($email);
+        } catch(TransportExceptionInterface $transportException) {
+            $error = preg_replace("/(\n)(.*)/", "$1", $transportException->getMessage());
+            $error = preg_replace("/\n/", "", $error);
+            
+            return $error;
         }
 
         return null;

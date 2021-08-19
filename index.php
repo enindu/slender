@@ -15,8 +15,8 @@ require_once __DIR__ . "/libraries/image.php";
 require_once __DIR__ . "/libraries/parsedown-extra.php";
 require_once __DIR__ . "/libraries/eloquent.php";
 require_once __DIR__ . "/libraries/twig.php";
-require_once __DIR__ . "/libraries/swift-mailer.php";
-require_once __DIR__ . "/libraries/swift-message.php";
+require_once __DIR__ . "/libraries/mailer.php";
+require_once __DIR__ . "/libraries/email.php";
 require_once __DIR__ . "/libraries/validation.php";
 
 $app = AppFactory::createFromContainer($container);

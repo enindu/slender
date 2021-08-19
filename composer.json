@@ -3,15 +3,14 @@
     "description": "Developer-friendly, low-level, rapid web development environment, based on Slim framework",
     "keywords": [
         "php",
+        "framework",
+        "cms",
         "slender",
         "slim",
         "php-di",
         "eloquent",
         "twig",
-        "swift-mailer",
-        "parsedown",
-        "framework",
-        "cms"
+        "parsedown"
     ],
     "version": "0.6.0-dev",
     "license": "MIT",
@@ -36,12 +35,12 @@
         "illuminate/events": "^8.55",
         "twig/twig": "^3.3",
         "twig/intl-extra": "^3.3",
-        "swiftmailer/swiftmailer": "^6.2",
         "erusev/parsedown": "^1.7",
         "erusev/parsedown-extra": "^0.8",
         "intervention/image": "^2.6",
         "rakit/validation": "^1.4",
-        "symfony/filesystem": "^5.3"
+        "symfony/filesystem": "^5.3",
+        "symfony/mailer": "^5.3"
     },
     "require-dev": {
         "symfony/var-dumper": "^5.3"

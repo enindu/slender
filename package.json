@@ -3,15 +3,14 @@
     "description": "Developer-friendly, low-level, rapid web development environment, based on Slim framework",
     "keywords": [
         "php",
+        "framework",
+        "cms",
         "slender",
         "slim",
         "php-di",
         "eloquent",
         "twig",
-        "swift-mailer",
-        "parsedown",
-        "framework",
-        "cms"
+        "parsedown"
     ],
     "version": "0.6.0-dev",
     "license": "MIT",

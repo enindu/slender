@@ -142,7 +142,7 @@ class Contents extends Controller
 
         $content->delete();
         return $this->redirectResponse($response, "/admin/contents");
-  }
+    }
 
     public function single(Request $request, Response $response, array $data): Response
     {
