@@ -13,7 +13,7 @@
         "framework",
         "cms"
     ],
-    "version": "0.5.1",
+    "version": "0.6.0-dev",
     "license": "MIT",
     "homepage": "https://github.com/enindu/slender",
     "repository": {
@@ -39,7 +39,7 @@
         "bundle-common-js": "parcel build \"sources/assets/common/js/*.js\" --dist-dir \"resources/common/assets/js\" --public-url \"./\""
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.2",
+        "@fortawesome/fontawesome-free": "^5.15.4",
         "halfmoon": "^1.1.1"
     },
     "devDependencies": {
