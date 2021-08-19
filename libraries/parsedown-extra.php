@@ -1,10 +1,10 @@
 <?php
 
-$library = function(): ParsedownExtra {
+$parsedownExtra = function(): ParsedownExtra {
     $parsedownExtra = new ParsedownExtra();
 
     $parsedownExtra->setSafeMode($_ENV["parsedown-extra"]["safe-mode"]);
     return $parsedownExtra;
 };
 
-$container->set("parsedown-extra", $library);
+$container->set("parsedown-extra", $parsedownExtra);

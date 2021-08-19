@@ -7,7 +7,7 @@ use Twig\Environment;
 use Twig\Extra\Intl\IntlExtension;
 use Twig\Loader\FilesystemLoader;
 
-$library = function() use ($container): Environment {
+$twig = function() use ($container): Environment {
     $filesystemLoader = new FilesystemLoader();
 
     $adminViewsPath = __DIR__ . "/../resources/admin/views";
@@ -42,4 +42,4 @@ $library = function() use ($container): Environment {
     return $environment;
 };
 
-$container->set("twig", $library);
+$container->set("twig", $twig);

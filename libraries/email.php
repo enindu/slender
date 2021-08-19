@@ -2,8 +2,8 @@
 
 use Symfony\Component\Mime\Email;
 
-$library = function(): Email {
+$email = function(): Email {
     return new Email();
 };
 
-$container->set("email", $library);
+$container->set("email", $email);

@@ -2,10 +2,10 @@
 
 use Intervention\Image\ImageManager;
 
-$library = function(): ImageManager {
+$image = function(): ImageManager {
     return new ImageManager([
         "driver" => $_ENV["image"]["driver"]
     ]);
 };
 
-$container->set("image", $library);
+$container->set("image", $image);

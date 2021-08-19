@@ -4,7 +4,7 @@ use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Events\Dispatcher;
 
-$library = function(): Manager {
+$eloquent = function(): Manager {
     $manager = new Manager();
     $manager->addConnection([
         "driver"    => $_ENV["eloquent"]["driver"],
@@ -27,4 +27,4 @@ $library = function(): Manager {
     return $manager;
 };
 
-$container->set("eloquent", $library);
+$container->set("eloquent", $eloquent);

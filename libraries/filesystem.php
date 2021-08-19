@@ -2,8 +2,8 @@
 
 use Symfony\Component\Filesystem\Filesystem;
 
-$library = function(): Filesystem {
+$filesystem = function(): Filesystem {
     return new Filesystem();
 };
 
-$container->set("filesystem", $library);
+$container->set("filesystem", $filesystem);
