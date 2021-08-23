@@ -4,15 +4,14 @@ use Twig\Template;
 
 $_ENV = [
     "app" => [
-        "name"        => "Slender",
-        "description" => "Developer-friendly, low-level, rapid web development environment, based on Slim framework",
-        "keywords"    => "php, framework, cms, slender, slim, php-di, eloquent, twig, parsedown",
-        "version"     => "v0.6.0-dev",
-        "author"      => "Enindu Alahapperuma (enindu@gmail.com)",
+        "name"        => "",
+        "description" => "",
+        "keywords"    => "",
+        "version"     => "",
+        "author"      => "",
         "domain"      => "",
         "url"         => "",
-        "timezone"    => "Asia/Colombo",
-        "charset"     => "UTF-8",
+        "timezone"    => "",
         "key"         => "",
         "cookie"      => [
             "admin" => "",
@@ -25,6 +24,23 @@ $_ENV = [
             "address" => ""
         ]
     ],
+    "eloquent" => [
+        "driver"    => "",
+        "host"      => "",
+        "database"  => "",
+        "username"  => "",
+        "password"  => "",
+        "charset"   => "",
+        "collation" => "",
+        "prefix"    => ""
+    ],
+    "mailer" => [
+        "protocol" => "",
+        "host"     => "",
+        "port"     => "",
+        "username" => "",
+        "password" => ""
+    ],
     "session" => [
         "name"       => "",
         "lifetime"   => 0,
@@ -35,16 +51,6 @@ $_ENV = [
         "same-site"  => "Strict",
         "sid-length" => 67
     ],
-    "eloquent" => [
-        "driver"    => "mysql",
-        "host"      => "",
-        "database"  => "",
-        "username"  => "",
-        "password"  => "",
-        "charset"   => "utf8",
-        "collation" => "utf8_unicode_ci",
-        "prefix"    => ""
-    ],
     "twig" => [
         "debug"               => true,
         "charset"             => "UTF-8",
@@ -54,13 +60,6 @@ $_ENV = [
         "strict-variables"    => true,
         "auto-escape"         => "html",
         "optimizations"       => -1
-    ],
-    "mailer" => [
-        "protocol" => "smtp",
-        "host"     => "",
-        "port"     => "",
-        "username" => "",
-        "password" => ""
     ],
     "parsedown-extra" => [
         "safe-mode" => true
