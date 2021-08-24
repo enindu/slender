@@ -30,12 +30,12 @@
     "private": true,
     "scripts": {
         "slender": "echo \"Slender - Developer-friendly, low-level, rapid web development environment based on Slim framework\"",
-        "bundle-admin-css": "parcel build \"sources/assets/admin/css/*.css\" --dist-dir \"resources/admin/assets/css\" --public-url \"./\"",
-        "bundle-admin-js": "parcel build \"sources/assets/admin/js/*.js\" --dist-dir \"resources/admin/assets/js\" --public-url \"./\"",
-        "bundle-user-css": "parcel build \"sources/assets/user/css/*.css\" --dist-dir \"resources/user/assets/css\" --public-url \"./\"",
-        "bundle-user-js": "parcel build \"sources/assets/user/js/*.js\" --dist-dir \"resources/user/assets/js\" --public-url \"./\"",
-        "bundle-common-css": "parcel build \"sources/assets/common/css/*.css\" --dist-dir \"resources/common/assets/css\" --public-url \"./\"",
-        "bundle-common-js": "parcel build \"sources/assets/common/js/*.js\" --dist-dir \"resources/common/assets/js\" --public-url \"./\""
+        "bundle-admin-css": "parcel build \"sources/assets/admin/css/*.css\" --dist-dir \"resources/admin/assets/css\"",
+        "bundle-admin-js": "parcel build \"sources/assets/admin/js/*.js\" --dist-dir \"resources/admin/assets/js\"",
+        "bundle-user-css": "parcel build \"sources/assets/user/css/*.css\" --dist-dir \"resources/user/assets/css\"",
+        "bundle-user-js": "parcel build \"sources/assets/user/js/*.js\" --dist-dir \"resources/user/assets/js\"",
+        "bundle-common-css": "parcel build \"sources/assets/common/css/*.css\" --dist-dir \"resources/common/assets/css\"",
+        "bundle-common-js": "parcel build \"sources/assets/common/js/*.js\" --dist-dir \"resources/common/assets/js\""
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.4",
