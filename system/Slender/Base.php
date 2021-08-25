@@ -189,9 +189,11 @@ class Base
             $mailer->send($email);
         } catch(TransportExceptionInterface $transportException) {
             $error = preg_replace("/(\n)(.*)/", "$1", $transportException->getMessage());
+            $error = preg_replace("/(\.)(.*)/", "$1", $error);
             $error = preg_replace("/\n/", "", $error);
+            $error = strtolower($error);
             
-            return $error;
+            return ucfirst($error);
         }
 
         return null;
