@@ -14,20 +14,24 @@
     </div>
     <div class="row row-eq-spacing">
         <div class="col-12">
+            <div>Type: {{ type }}</div>
             <div>Message: {{ message }}</div>
             <div>Code: {{ code }}</div>
-            <div>File: {{ file }} in line {{ line }}</div>
+            <div>File: {{ file }}</div>
+            <div>Line: {{ line }}</div>
         </div>
     </div>
-    <div class="row row-eq-spacing">
-        <div class="col-12">
-            <div class="card text-monospace text-wrap p-15">
-                {% for item in traces %}
-                    <div>#{{ loop.index }}: {{ item.file }} in line {{ item.line }}</div>
-                {% endfor %}
+    {% if type == "HTTP" %}
+        <div class="row row-eq-spacing">
+            <div class="col-12">
+                <div class="card text-monospace text-wrap p-20">
+                    {% for item in traces %}
+                        <div>#{{ loop.index }}: {{ item.file }} in line {{ item.line }}</div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
     <div class="row row-eq-spacing">
         <div class="col-12">
             <button id="back" class="btn">

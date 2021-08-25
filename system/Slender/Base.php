@@ -71,17 +71,16 @@ class Base
         $text = $text . " " . $timestamp;
         $text = trim($text);
         $text = strtolower($text);
-        $text = str_replace("&", " and ", $text);
+        $text = preg_replace("/&/", " and ", $text);
         $text = preg_replace("/\W|\s+/", "-", $text);
-        $text = preg_replace("/-+/", "-", $text);
 
-        return $text;
+        return preg_replace("/-+/", "-", $text);
     }
 
     protected function createToken(): string
     {
         $uniqueId = uniqid(more_entropy:true);
-        $uniqueId = str_replace(".", "", $uniqueId);
+        $uniqueId = preg_replace("/\./", "", $uniqueId);
         $uniqueIdLength = strlen($uniqueId);
 
         $randomTextLength = 67 - $uniqueIdLength;
@@ -103,13 +102,10 @@ class Base
             $password .= $characters[$key];
         }
 
-        $hash = password_hash($password, $algorithm);
-        $pattern = implode(".", $keys);
-
         return [
-            "hash"    => $hash,
+            "hash"    => password_hash($password, $algorithm),
             "salt"    => $salt,
-            "pattern" => $pattern
+            "pattern" => implode(".", $keys)
         ];
     }
 
@@ -136,7 +132,7 @@ class Base
         return null;
     }
 
-    protected function validateData(array|null $data, array $rules): null|string
+    protected function validateData(array|null $data, array $rules, array $aliases = []): null|string
     {
         $dataExists = isset($data);
         $dataEmpty = empty($data);
@@ -145,29 +141,18 @@ class Base
         }
 
         $validation = $this->container->get("validation");
-        $validation = $validation->validate($data, $rules);
+        $validation = $validation->make($data, $rules);
+
+        $validation->setAliases($aliases);
+        $validation->validate();
+
         $validationFails = $validation->fails();
         if($validationFails) {
             $errors = $validation->errors()->all();
             $error = reset($errors);
             $error = trim($error);
-            $error = strtolower($error);
-            $sentences = explode(". ", $error);
 
-            $error = "";
-            foreach($sentences as $sentence) {
-                $sentenceEmpty = empty($sentence);
-                if($sentenceEmpty) {
-                    continue;
-                }
-
-                $sentence = trim($sentence);
-                $sentence = trim($sentence, ".");
-                $sentence = ucfirst($sentence);
-                $error .= $sentence . ".";
-            }
-
-            return str_replace("-", " ", $error);
+            return $error . ".";
         }
 
         return null;
@@ -184,16 +169,12 @@ class Base
         $email->html($view);
 
         $mailer = $this->container->get("mailer");
-        
+
         try {
             $mailer->send($email);
         } catch(TransportExceptionInterface $transportException) {
             $error = preg_replace("/(\n)(.*)/", "$1", $transportException->getMessage());
-            $error = preg_replace("/(\.)(.*)/", "$1", $error);
-            $error = preg_replace("/\n/", "", $error);
-            $error = strtolower($error);
-            
-            return ucfirst($error);
+            return preg_replace("/\n/", "", $error);
         }
 
         return null;

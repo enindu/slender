@@ -29,7 +29,7 @@ $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
-$errorHandler = (object) $errorMiddleware->getDefaultErrorHandler();
+$errorHandler = $errorMiddleware->getDefaultErrorHandler();
 $errorRenderer = new ErrorRenderer($container);
 $errorHandler->registerErrorRenderer("text/html", $errorRenderer);
 
