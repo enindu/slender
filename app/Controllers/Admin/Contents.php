@@ -57,6 +57,11 @@ class Contents extends Controller
             "subtitle"    => "max:191",
             "section-id"  => "required|integer",
             "description" => "required"
+        ], [
+            "title"       => "title",
+            "subtitle"    => "subtitle",
+            "section-id"  => "section ID",
+            "description" => "description"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -92,6 +97,12 @@ class Contents extends Controller
             "subtitle"    => "max:191",
             "section-id"  => "required|integer",
             "description" => "required"
+        ], [
+            "id"          => "ID",
+            "title"       => "title",
+            "subtitle"    => "subtitle",
+            "section-id"  => "section ID",
+            "description" => "description"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -128,6 +139,8 @@ class Contents extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "id" => "required|integer"
+        ], [
+            "id" => "ID"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);

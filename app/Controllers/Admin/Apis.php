@@ -52,6 +52,8 @@ class Apis extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "username" => "required|alpha_num|max:6"
+        ], [
+            "username" => "username"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -78,6 +80,8 @@ class Apis extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "id" => "required|integer"
+        ], [
+            "id" => "ID"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -101,6 +105,8 @@ class Apis extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "id" => "required|integer"
+        ], [
+            "id" => "ID"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -124,6 +130,8 @@ class Apis extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "id" => "required|integer"
+        ], [
+            "id" => "ID"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);

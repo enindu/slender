@@ -56,6 +56,10 @@ class Categories extends Controller
             "title"      => "required|max:191",
             "subtitle"   => "max:191",
             "section-id" => "required|integer"
+        ], [
+            "title"      => "title",
+            "subtitle"   => "subtitle",
+            "section-id" => "section ID"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -91,6 +95,11 @@ class Categories extends Controller
             "title"      => "required|max:191",
             "subtitle"   => "max:191",
             "section-id" => "required|integer"
+        ], [
+            "id"         => "ID",
+            "title"      => "title",
+            "subtitle"   => "subtitle",
+            "section-id" => "section ID"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -128,6 +137,8 @@ class Categories extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "id" => "required|integer"
+        ], [
+            "id" => "ID"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);

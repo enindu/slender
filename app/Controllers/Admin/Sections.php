@@ -52,6 +52,8 @@ class Sections extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "title" => "required|max:191"
+        ], [
+            "title" => "title"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -77,6 +79,8 @@ class Sections extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "id" => "required|integer"
+        ], [
+            "id" => "ID"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);

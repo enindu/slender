@@ -60,6 +60,12 @@ class Images extends Controller
             "section-id"  => "required|integer",
             "description" => "max:500",
             "file"        => "required|uploaded_file:0,5M,jpeg,png,webp"
+        ], [
+            "title"       => "title",
+            "subtitle"    => "subtitle",
+            "section-id"  => "section ID",
+            "description" => "description",
+            "file"        => "file"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -106,6 +112,8 @@ class Images extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "id" => "required|integer"
+        ], [
+            "id" => "id"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);

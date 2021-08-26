@@ -22,6 +22,9 @@ class Accounts extends Controller
         $validationError = $this->validateData($inputs, [
             "username" => "required|alpha_num|max:6",
             "password" => "required|min:6|max:32"
+        ], [
+            "username" => "username",
+            "password" => "password"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -71,6 +74,11 @@ class Accounts extends Controller
             "role-id"          => "required|integer",
             "password"         => "required|min:6|max:32",
             "confirm-password" => "same:password"
+        ], [
+            "username"         => "username",
+            "role-id"          => "role ID",
+            "password"         => "password",
+            "confirm-password" => "confirm password"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -134,6 +142,9 @@ class Accounts extends Controller
         $validationError = $this->validateData($inputs, [
             "username"         => "required|alpha_num|max:6",
             "current-password" => "required|min:6|max:32"
+        ], [
+            "username"         => "username",
+            "current-password" => "current password"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -166,6 +177,10 @@ class Accounts extends Controller
             "new-password"         => "required|different:current-password|min:6|max:32",
             "confirm-new-password" => "same:new-password",
             "current-password"     => "required|min:6|max:32"
+        ], [
+            "new-password"         => "new password",
+            "confirm-new-password" => "confirm new password",
+            "current-password"     => "current password"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);

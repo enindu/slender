@@ -60,6 +60,14 @@ class Users extends Controller
             "phone"            => "required|min:10|max:15",
             "password"         => "required|min:6|max:32",
             "confirm-password" => "same:password"
+        ], [
+            "first-name"       => "first name",
+            "last-name"        => "last name",
+            "role-id"          => "role ID",
+            "email"            => "email",
+            "phone"            => "phone",
+            "password"         => "password",
+            "confirm-password" => "confirm password"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -104,6 +112,8 @@ class Users extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "id" => "required|integer"
+        ], [
+            "id" => "ID"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -127,6 +137,8 @@ class Users extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "id" => "required|integer"
+        ], [
+            "id" => "ID"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -150,6 +162,8 @@ class Users extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "id" => "required|integer"
+        ], [
+            "id" => "ID"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);

@@ -57,6 +57,11 @@ class Admins extends Controller
             "role-id"          => "required|integer",
             "password"         => "required|min:6|max:32",
             "confirm-password" => "same:password"
+        ], [
+            "username"         => "username",
+            "role-id"          => "role ID",
+            "password"         => "password",
+            "confirm-password" => "confirm password"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -95,6 +100,8 @@ class Admins extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "id" => "required|integer"
+        ], [
+            "id" => "ID"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -122,6 +129,8 @@ class Admins extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "id" => "required|integer"
+        ], [
+            "id" => "ID"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
@@ -149,6 +158,8 @@ class Admins extends Controller
         $inputs = $request->getParsedBody();
         $validationError = $this->validateData($inputs, [
             "id" => "required|integer"
+        ], [
+            "id" => "ID"
         ]);
         if($validationError != null) {
             throw new HttpBadRequestException($request, $validationError);
