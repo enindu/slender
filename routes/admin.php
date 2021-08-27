@@ -22,7 +22,7 @@ $authentication = new Authentication($container, [
 
 $app->group("/admin", function(RouteCollectorProxy $admin): void {
     $admin->get("", Base::class . ":base");
-    $admin->group("/accounts", function(RouteCollectorProxy $accounts) {
+    $admin->group("/accounts", function(RouteCollectorProxy $accounts): void {
         $accounts->map(["GET", "POST"], "/login", Accounts::class . ":login");
         $accounts->map(["GET", "POST"], "/register", Accounts::class . ":register");
         $accounts->map(["GET", "POST"], "/logout", Accounts::class . ":logout");
@@ -30,19 +30,19 @@ $app->group("/admin", function(RouteCollectorProxy $admin): void {
         $accounts->post("/change-password", Accounts::class . ":changePassword");
         $accounts->get("/profile", Accounts::class . ":profile");
     });
-    $admin->group("/roles", function(RouteCollectorProxy $roles) {
+    $admin->group("/roles", function(RouteCollectorProxy $roles): void {
         $roles->get("", Roles::class . ":base");
         $roles->get("/all", Roles::class . ":all");
         $roles->post("/add", Roles::class . ":add");
         $roles->post("/remove", Roles::class . ":remove");
     });
-    $admin->group("/sections", function(RouteCollectorProxy $sections) {
+    $admin->group("/sections", function(RouteCollectorProxy $sections): void {
         $sections->get("", Sections::class . ":base");
         $sections->get("/all", Sections::class . ":all");
         $sections->post("/add", Sections::class . ":add");
         $sections->post("/remove", Sections::class . ":remove");
     });
-    $admin->group("/apis", function(RouteCollectorProxy $apis) {
+    $admin->group("/apis", function(RouteCollectorProxy $apis): void {
         $apis->get("", Apis::class . ":base");
         $apis->get("/all", Apis::class . ":all");
         $apis->post("/add", Apis::class . ":add");
@@ -50,7 +50,7 @@ $app->group("/admin", function(RouteCollectorProxy $admin): void {
         $apis->post("/deactivate", Apis::class . ":deactivate");
         $apis->post("/remove", Apis::class . ":remove");
     });
-    $admin->group("/admins", function(RouteCollectorProxy $admins) {
+    $admin->group("/admins", function(RouteCollectorProxy $admins): void {
         $admins->get("", Admins::class . ":base");
         $admins->get("/all", Admins::class . ":all");
         $admins->post("/add", Admins::class . ":add");
@@ -58,7 +58,7 @@ $app->group("/admin", function(RouteCollectorProxy $admin): void {
         $admins->post("/deactivate", Admins::class . ":deactivate");
         $admins->post("/remove", Admins::class . ":remove");
     });
-    $admin->group("/users", function(RouteCollectorProxy $users) {
+    $admin->group("/users", function(RouteCollectorProxy $users): void {
         $users->get("", Users::class . ":base");
         $users->get("/all", Users::class . ":all");
         $users->post("/add", Users::class . ":add");
@@ -66,7 +66,7 @@ $app->group("/admin", function(RouteCollectorProxy $admin): void {
         $users->post("/deactivate", Users::class . ":deactivate");
         $users->post("/remove", Users::class . ":remove");
     });
-    $admin->group("/contents", function(RouteCollectorProxy $contents) {
+    $admin->group("/contents", function(RouteCollectorProxy $contents): void {
         $contents->get("", Contents::class . ":base");
         $contents->get("/all", Contents::class . ":all");
         $contents->post("/add", Contents::class . ":add");
@@ -74,19 +74,19 @@ $app->group("/admin", function(RouteCollectorProxy $admin): void {
         $contents->post("/remove", Contents::class . ":remove");
         $contents->get("/{id}", Contents::class . ":single");
     });
-    $admin->group("/images", function(RouteCollectorProxy $images) {
+    $admin->group("/images", function(RouteCollectorProxy $images): void {
         $images->get("", Images::class . ":base");
         $images->get("/all", Images::class . ":all");
         $images->post("/add", Images::class . ":add");
         $images->post("/remove", Images::class . ":remove");
     });
-    $admin->group("/files", function(RouteCollectorProxy $files) {
+    $admin->group("/files", function(RouteCollectorProxy $files): void {
         $files->get("", Files::class . ":base");
         $files->get("/all", Files::class . ":all");
         $files->post("/add", Files::class . ":add");
         $files->post("/remove", Files::class . ":remove");
     });
-    $admin->group("/categories", function(RouteCollectorProxy $categories) {
+    $admin->group("/categories", function(RouteCollectorProxy $categories): void {
         $categories->get("", Categories::class . ":base");
         $categories->get("/all", Categories::class . ":all");
         $categories->post("/add", Categories::class . ":add");
@@ -94,7 +94,7 @@ $app->group("/admin", function(RouteCollectorProxy $admin): void {
         $categories->post("/remove", Categories::class . ":remove");
         $categories->get("/{id}", Categories::class . ":single");
     });
-    $admin->group("/subcategories", function(RouteCollectorProxy $subcategories) {
+    $admin->group("/subcategories", function(RouteCollectorProxy $subcategories): void {
         $subcategories->get("", Subcategories::class . ":base");
         $subcategories->get("/all", Subcategories::class . ":all");
         $subcategories->post("/add", Subcategories::class . ":add");
