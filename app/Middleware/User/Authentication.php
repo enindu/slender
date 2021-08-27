@@ -46,10 +46,6 @@ class Authentication extends Middleware
             return $this->resetRequest("/accounts/login");
         }
 
-        if($pathExists !== false) {
-            return $this->newRedirectResponse("/");
-        }
-
         $_SESSION["user"] = [
             "id"         => $user->id,
             "status"     => $user->status,
@@ -59,6 +55,10 @@ class Authentication extends Middleware
             "phone"      => $user->phone,
             "role"       => $user->role->title
         ];
+
+        if($pathExists !== false) {
+            return $this->newRedirectResponse("/");
+        }
 
         return $response;
     }

@@ -46,16 +46,16 @@ class Authentication extends Middleware
             return $this->resetRequest("/admin/accounts/login");
         }
 
-        if($pathExists !== false) {
-            return $this->newRedirectResponse("/admin");
-        }
-
         $_SESSION["admin"] = [
             "id"       => $admin->id,
             "status"   => $admin->status,
             "username" => $admin->username,
             "role"     => $admin->role->title
         ];
+
+        if($pathExists !== false) {
+            return $this->newRedirectResponse("/admin");
+        }
 
         return $response;
     }
