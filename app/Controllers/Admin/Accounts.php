@@ -119,7 +119,15 @@ class Accounts extends Controller
             return $this->viewResponse($response, "@admin/accounts.logout.twig");
         }
 
+        $sessionExists = isset($_SESSION["admin"]["id"]);
+        if(!$sessionExists) {
+            return $this->redirectResponse($response, "/admin/accounts/login");
+        }
+
         $admin = Admin::where("status", true)->where("id", $_SESSION["admin"]["id"])->first();
+        if($admin == null) {
+            return $this->redirectResponse($response, "/admin/accounts/login");
+        }
 
         $admin->session_id = null;
         $admin->save();
