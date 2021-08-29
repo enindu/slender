@@ -168,7 +168,7 @@ class Accounts extends Controller
         }
 
         $adminWithUsername = Admin::where("status", true)->where("username", $username)->first();
-        if($adminWithUsername != null && $adminWithUsername->id != $adminWithUsername) {
+        if($adminWithUsername != null && $adminWithUsername->id != $_SESSION["admin"]["id"]) {
             throw new HttpBadRequestException($request, "There is an account already using that username.");
         }
 
