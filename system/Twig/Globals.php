@@ -39,7 +39,7 @@ class Globals extends AbstractExtension implements GlobalsInterface
                     "last_name"  => $_SESSION["user"]["last-name"] ?? false,
                     "email"      => $_SESSION["user"]["email"] ?? false,
                     "phone"      => $_SESSION["user"]["phone"] ?? false,
-                    "role_id"    => $_SESSION["user"]["role-id"] ?? false
+                    "role"       => $_SESSION["user"]["role"] ?? false
                 ]
             ]
         ];
