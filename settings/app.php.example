@@ -21,7 +21,8 @@ $_ENV = [
         "meta" => [
             "email"   => "",
             "phone"   => "",
-            "address" => ""
+            "address" => "",
+            "social"  => ""
         ]
     ],
     "eloquent" => [
