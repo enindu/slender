@@ -1,6 +1,6 @@
 /.parcel-cache/
-/cache/routes/
-/cache/views/
+/cache/routes/*
+/cache/views/*
 /node_modules/
 /public/css/
 /public/img/
