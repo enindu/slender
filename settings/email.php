@@ -2,9 +2,9 @@
 
 $_ENV["email"] = [
     "debug"          => $_ENV["settings"]["debug"],
-    "debug_level"    => 2,
+    "debug_level"    => 0,
     "authentication" => true,
-    "encryption"     => "ssl",
+    "encryption"     => "",
     "host"           => "",
     "port"           => "",
     "username"       => "",

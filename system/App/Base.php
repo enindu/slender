@@ -47,6 +47,49 @@ class Base
         return $response->withStatus($statusCode)->withHeader("Content-Type", $contentType);
     }
 
+    protected function createPassword(string $password, string $algorithm = PASSWORD_ARGON2ID): array
+    {
+        $salt = $this->createToken();
+        $characters = str_split($password . $salt . $_ENV["settings"]["key"]);
+        $keys = array_keys($characters);
+
+        shuffle($keys);
+
+        $password = "";
+        foreach($keys as $key) {
+            $password .= $characters[$key];
+        }
+
+        return [
+            "hash"    => password_hash($password, $algorithm),
+            "salt"    => $salt,
+            "pattern" => implode(".", $keys)
+        ];
+    }
+
+    protected function verifyPassword(string $password, string $hash, string $salt, string $pattern): null|string
+    {
+        $characters = str_split($password . $salt . $_ENV["settings"]["key"]);
+        $charactersLength = count($characters);
+        $keys = explode(".", $pattern);
+        $keysLength = count($keys);
+        if($charactersLength != $keysLength) {
+            return "Password is invalid.";
+        }
+
+        $password = "";
+        foreach($keys as $key) {
+            $password .= $characters[$key];
+        }
+
+        $passwordVerifies = password_verify($password, $hash);
+        if(!$passwordVerifies) {
+            return "Password is invalid.";
+        }
+
+        return null;
+    }
+
     protected function createToken(): string
     {
         $uniqueId = uniqid(more_entropy:true);
@@ -58,6 +101,19 @@ class Base
 
         $token = $uniqueId . $randomText;
         return str_shuffle($token);
+    }
+
+    protected function createSlug(string $text): string
+    {
+        $timestamp = time();
+
+        $text = $text . " " . $timestamp;
+        $text = trim($text);
+        $text = strtolower($text);
+        $text = preg_replace("/&/", " and ", $text);
+        $text = preg_replace("/\W|\s+/", "-", $text);
+
+        return preg_replace("/-+/", "-", $text);
     }
 
     protected function createRandomText(int $length): string
@@ -74,6 +130,25 @@ class Base
         }
 
         return $randomText;
+    }
+
+    protected function sendEmail(string $template, array $data): null|string
+    {
+        $view = $this->createView($template, $data["body"]);
+        $email = $this->container->get("email");
+
+        $email->setFrom($data["from"]);
+        $email->addAddress($data["to"]);
+
+        $email->Subject = $data["subject"];
+        $email->Body = $view;
+
+        $emailSends = $email->send();
+        if(!$emailSends) {
+            return "Something went wrong while sending email.";
+        }
+
+        return null;
     }
 
     protected function validateData(array|null $data, array $rules, array $aliases = []): null|string
