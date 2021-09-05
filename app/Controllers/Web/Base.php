@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Api;
+namespace App\Controllers\Web;
 
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -10,9 +10,6 @@ class Base extends Controller
 {
     public function base(Request $request, Response $response, array $data): Response
     {
-        return $this->jsonResponse($response, [
-            "status"  => true,
-            "message" => $_ENV["app"]["name"] . " - " . $_ENV["app"]["description"]
-        ]);
+        return $this->viewResponse($response, "web/home.twig");
     }
 }

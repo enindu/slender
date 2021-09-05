@@ -1,71 +1,41 @@
 <?php
 
-use Twig\Template;
-
 $_ENV = [
     "app" => [
-        "name"        => "",
-        "description" => "",
-        "keywords"    => "",
-        "version"     => "",
-        "author"      => "",
-        "domain"      => "",
-        "url"         => "",
-        "timezone"    => "",
-        "key"         => "",
-        "cookie"      => [
-            "admin" => "",
-            "user"  => "",
-            "cart"  => ""
-        ],
-        "meta" => [
-            "email"   => "",
-            "phone"   => "",
-            "address" => "",
-            "social"  => ""
+        "name"         => "",
+        "description"  => "",
+        "keywords"     => "",
+        "author"       => "",
+        "email"        => "",
+        "phone"        => "",
+        "address"      => "",
+        "social_media" => [
+            "twitter"   => "",
+            "facebook"  => "",
+            "instagram" => "",
+            "linkedin"  => "",
+            "youtube"   => ""
         ]
     ],
-    "eloquent" => [
-        "driver"    => "",
-        "host"      => "",
-        "database"  => "",
-        "username"  => "",
-        "password"  => "",
-        "charset"   => "",
-        "collation" => "",
-        "prefix"    => ""
-    ],
-    "mailer" => [
-        "protocol" => "",
-        "host"     => "",
-        "port"     => "",
-        "username" => "",
-        "password" => ""
-    ],
-    "session" => [
-        "name"       => "",
-        "lifetime"   => 0,
-        "path"       => "/",
-        "domain"     => "",
-        "secure"     => true,
-        "http-only"  => true,
-        "same-site"  => "Strict",
-        "sid-length" => 67
-    ],
-    "twig" => [
-        "debug"               => true,
-        "charset"             => "UTF-8",
-        "base-template-class" => Template::class,
-        "cache"               => __DIR__ . "/../cache/views",
-        "auto-reload"         => true,
-        "strict-variables"    => true,
-        "auto-escape"         => "html",
-        "optimizations"       => -1
-    ],
-    "parsedown-extra" => [
-        "safe-mode" => true
-    ],
-    "image" => [
-        "driver" => "gd"
+    "settings" => [
+        "debug"    => true,
+        "log"      => true,
+        "charset"  => "",
+        "version"  => "",
+        "domain"   => "",
+        "url"      => "",
+        "timezone" => "",
+        "key"      => "",
+        "cookie"   => [
+            "secure"    => true,
+            "http_only" => true,
+            "same_site" => "",
+            "name"      => [
+                "session"       => "",
+                "admin"         => "",
+                "user"          => "",
+                "shopping_cart" => ""
+            ]
+        ]
     ]
 ];

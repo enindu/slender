@@ -1,17 +1,7 @@
 {
     "name": "enindu/slender",
-    "description": "Developer-friendly, low-level, rapid web development environment, based on Slim framework",
-    "keywords": [
-        "php",
-        "framework",
-        "cms",
-        "slender",
-        "slim",
-        "php-di",
-        "eloquent",
-        "twig",
-        "parsedown"
-    ],
+    "description": "Low-level rapid web development environment based on Slim framework",
+    "keywords": ["php", "framework", "slender", "slim"],
     "version": "0.6.0-dev",
     "license": "MIT",
     "homepage": "https://github.com/enindu/slender",
@@ -30,17 +20,12 @@
         "php": "^8.0",
         "slim/slim": "^4.8",
         "slim/psr7": "^1.4",
+        "illuminate/database": "^8.58",
+        "illuminate/events": "^8.58",
         "php-di/php-di": "^6.3",
-        "illuminate/database": "^8.55",
-        "illuminate/events": "^8.55",
         "twig/twig": "^3.3",
-        "twig/intl-extra": "^3.3",
-        "erusev/parsedown": "^1.7",
-        "erusev/parsedown-extra": "^0.8",
-        "intervention/image": "^2.6",
-        "rakit/validation": "^1.4",
-        "symfony/filesystem": "^5.3",
-        "symfony/mailer": "^5.3"
+        "phpmailer/phpmailer": "^6.5",
+        "rakit/validation": "^1.4"
     },
     "require-dev": {
         "symfony/var-dumper": "^5.3"
