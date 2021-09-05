@@ -1,5 +1,9 @@
 @import url(../../../node_modules/halfmoon/css/halfmoon.min.css);
 
+html {
+    font-size: 62%;
+}
+
 body {
     font-family: sans-serif !important;
 }
