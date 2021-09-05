@@ -23,7 +23,7 @@
     </div>
     <div class="row row-eq-spacing">
         <div class="col-12">
-            <div class="card font-size-12 text-monospace text-wrap p-20">
+            <div class="card text-monospace text-wrap p-20">
                 {% for item in traces %}
                     <div>#{{ loop.index }}: {{ item.file }} in line {{ item.line }}</div>
                 {% endfor %}
