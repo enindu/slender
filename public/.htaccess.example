@@ -26,7 +26,7 @@
 </IfModule>
 
 <IfModule mod_headers.c>
-    Header always set Content-Security-Policy "default-src 'self' 'unsafe-inline'"
+    Header always set Content-Security-Policy "default-src 'self' 'unsafe-inline' data:"
     Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
     Header always set Vary "User-Agent, Accept-Encoding"
     Header always set X-Framework "Slender"
