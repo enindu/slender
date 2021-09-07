@@ -20,12 +20,24 @@ $_ENV = [
     "settings" => [
         "debug"    => true,
         "log"      => true,
-        "charset"  => "",
         "version"  => "",
         "domain"   => "",
         "url"      => "",
         "timezone" => "",
         "key"      => "",
+        "database" => [
+            "host"     => "",
+            "database" => "",
+            "username" => "",
+            "password" => ""
+        ],
+        "email" => [
+            "encryption" => "",
+            "host"       => "",
+            "port"       => "",
+            "username"   => "",
+            "password"   => ""
+        ],
         "cookie"   => [
             "secure"    => true,
             "http_only" => true,

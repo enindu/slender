@@ -2,11 +2,11 @@
 
 $_ENV["database"] = [
     "driver"    => "mysql",
-    "host"      => "",
-    "database"  => "",
-    "username"  => "",
-    "password"  => "",
-    "charset"   => str_replace("-", "", $_ENV["settings"]["charset"]),
+    "host"      => $_ENV["settings"]["database"]["host"],
+    "database"  => $_ENV["settings"]["database"]["database"],
+    "username"  => $_ENV["settings"]["database"]["username"],
+    "password"  => $_ENV["settings"]["database"]["password"],
+    "charset"   => "utf8",
     "collation" => "utf8_unicode_ci",
     "prefix"    => ""
 ];

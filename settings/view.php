@@ -2,7 +2,7 @@
 
 $_ENV["view"] = [
     "debug"               => $_ENV["settings"]["debug"],
-    "charset"             => $_ENV["settings"]["charset"],
+    "charset"             => "utf-8",
     "base_template_class" => "\Twig\Template",
     "cache"               => __DIR__ . "/../cache/views",
     "auto_reload"         => true,
