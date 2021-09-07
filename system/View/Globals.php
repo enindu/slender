@@ -13,7 +13,13 @@ class Globals extends AbstractExtension implements GlobalsInterface
     public function getGlobals(): array
     {
         return [
-            "app" => array_merge($_ENV["app"], $_ENV["settings"])
+            "app"      => $_ENV["app"],
+            "settings" => $_ENV["settings"],
+            "auth"     => [
+                "logged" => isset($_SESSION["account"]),
+                "id"     => $_SESSION["account"]["id"] ?? false,
+                "role"   => $_SESSION["account"]["role"] ?? false
+            ]
         ];
     }
 }
