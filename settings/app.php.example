@@ -32,8 +32,7 @@ $_ENV = [
             "same_site" => "",
             "name"      => [
                 "session"       => "",
-                "admin"         => "",
-                "user"          => "",
+                "account"       => "",
                 "shopping_cart" => ""
             ]
         ]

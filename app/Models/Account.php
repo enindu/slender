@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Model
+class Account extends Model
 {
     use SoftDeletes;
 
     public $timestamps = true;
-    protected $table = "users";
+    protected $table = "accounts";
 
     public function role(): HasOne
     {
-        return $this->hasOne(Role::class, "id", "role_id")->withTrashed();
+        return $this->hasOne(Role::class, "id", "role_id");
     }
 }

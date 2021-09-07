@@ -2,14 +2,14 @@
 
 namespace App\Middleware\Web;
 
-use App\Models\User;
+use App\Models\Account;
 use DI\Container;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use System\App\Middleware;
 
-class UserAuthentication extends Middleware
+class Authentication extends Middleware
 {
     private Response $response;
     private string $path;
@@ -24,36 +24,33 @@ class UserAuthentication extends Middleware
     public function __invoke(Request $request, RequestHandlerInterface $requestHandler): Response
     {
         $this->response = $requestHandler->handle($request);
-
         $this->path = $request->getUri()->getPath();
+
         $this->privatePathExists = array_search($this->path, $this->privatePaths);
         $this->publicPathExists = array_search($this->path, $this->publicPaths);
 
         $cookies = $request->getCookieParams();
         $validationError = $this->validateData($cookies, [
-            $_ENV["settings"]["cookie"]["name"]["user"] => "required|alpha_num|min:67|max:67"
+            $_ENV["settings"]["cookie"]["name"]["account"] => "required|alpha_num|min:67|max:67"
         ]);
         if($validationError != null) {
             return $this->loggedOutResponse(true, false, false);
         }
 
-        $uniqueId = $cookies[$_ENV["settings"]["cookie"]["name"]["user"]];
-        $user = User::where("status", true)->where("unique_id", $uniqueId)->first();
-        if($user == null) {
+        $uniqueId = $cookies[$_ENV["settings"]["cookie"]["name"]["account"]];
+        $account = Account::where("status", true)->where("unique_id", $uniqueId)->first();
+        if($account == null) {
             return $this->loggedOutResponse(true, true, true);
         }
 
         $sessionId = session_id();
-        if($sessionId != $user->session_id) {
-            return $this->loggedOutResponse(true, true, true);
+        if($sessionId != $account->session_id) {
+            return $this->loggedOutResponse(true, true, false);
         }
 
-        $_SESSION["user"] = [
-            "id"         => $user->id,
-            "first_name" => $user->first_name,
-            "last_name"  => $user->last_name,
-            "email"      => $user->username,
-            "role"       => $user->role->title
+        $_SESSION["account"] = [
+            "id"   => $account->id,
+            "role" => $account->role->title
         ];
 
         return $this->loggedInResponse();
