@@ -3,7 +3,6 @@
 namespace App\Middleware\Api;
 
 use App\Models\Api;
-use DI\Container;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -11,11 +10,6 @@ use System\App\Middleware;
 
 class Authentication extends Middleware
 {
-    public function __construct(private Container $container)
-    {
-        parent::__construct($container);
-    }
-
     public function __invoke(Request $request, RequestHandlerInterface $requestHandler): Response
     {
         $accept = $request->getHeaderLine("Accept");
