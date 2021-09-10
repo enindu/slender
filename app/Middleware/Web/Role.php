@@ -12,7 +12,7 @@ use System\App\Middleware;
 
 class Role extends Middleware
 {
-    public function __construct(private Container $container, private array $roles)
+    public function __construct(public Container $container, private array $roles)
     {
         parent::__construct($container);
     }

@@ -16,7 +16,7 @@ class Authentication extends Middleware
     private int|bool $privatePathExists;
     private int|bool $publicPathExists;
 
-    public function __construct(private Container $container, private array $privatePaths, private array $publicPaths = [])
+    public function __construct(public Container $container, private array $privatePaths, private array $publicPaths = [])
     {
         parent::__construct($container);
     }

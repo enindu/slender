@@ -10,7 +10,7 @@ use System\App\Middleware;
 
 class Method extends Middleware
 {
-    public function __construct(private Container $container, private string $method)
+    public function __construct(public Container $container, private string $method)
     {
         parent::__construct($container);
     }

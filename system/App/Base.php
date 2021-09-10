@@ -7,7 +7,7 @@ use Slim\Psr7\Response;
 
 class Base
 {
-    public function __construct(private Container $container)
+    public function __construct(public Container $container)
     {
         $this->container->get("database");
     }
