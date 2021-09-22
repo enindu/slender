@@ -3,7 +3,7 @@
 /cache/views/*
 /node_modules/
 /public/css/
-/public/img/
+/public/images/
 /public/js/
 /public/.htaccess
 /settings/app.php
