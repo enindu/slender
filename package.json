@@ -4,12 +4,12 @@
         "slender": "echo 'Slender - Low-level rapid web development environment based on Slim framework'",
         "bundle-template-css": "parcel build 'resources/template/css/*' --dist-dir 'public/css/template'",
         "bundle-template-js": "parcel build 'resources/template/js/*' --dist-dir 'public/js/template'",
-        "bundle-template-img": "parcel build 'resources/template/img/*' --dist-dir 'public/img/template'",
+        "bundle-template-images": "parcel build 'resources/template/images/*' --dist-dir 'public/images/template'",
         "bundle-web-css": "parcel build 'resources/web/css/*' --dist-dir 'public/css/web'",
         "bundle-web-js": "parcel build 'resources/web/js/*' --dist-dir 'public/js/web'",
-        "bundle-web-img": "parcel build 'resources/web/img/*' --dist-dir 'public/img/web'",
-        "bundle-template": "npm run bundle-template-css && npm run bundle-template-js && npm run bundle-template-img",
-        "bundle-web": "npm run bundle-web-css && npm run bundle-web-js && npm run bundle-web-img",
+        "bundle-web-images": "parcel build 'resources/web/images/*' --dist-dir 'public/images/web'",
+        "bundle-template": "npm run bundle-template-css && npm run bundle-template-js && npm run bundle-template-images",
+        "bundle-web": "npm run bundle-web-css && npm run bundle-web-js && npm run bundle-web-images",
         "bundle": "npm run bundle-template && npm run bundle-web"
     },
     "devDependencies": {
