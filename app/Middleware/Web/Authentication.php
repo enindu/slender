@@ -59,11 +59,11 @@ class Authentication extends Middleware
     private function loggedOutResponse(bool $clearSession, bool $clearCookie, bool $redirect): Response
     {
         if($clearSession) {
-            unset($_SESSION["user"]);
+            unset($_SESSION["account"]);
         }
 
         if($clearCookie) {
-            setcookie($_ENV["settings"]["cookie"]["name"]["user"], "expired", [
+            setcookie($_ENV["settings"]["cookie"]["name"]["account"], "expired", [
                 "expires"  => strtotime("yesterday"),
                 "path"     => "/",
                 "domain"   => $_ENV["settings"]["domain"],

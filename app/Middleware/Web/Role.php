@@ -27,7 +27,7 @@ class Role extends Middleware
             throw new HttpForbiddenException($request);
         }
 
-        $account = Account::where("status", true)->where("unique_id", $cookies[$_ENV["settings"]["cookie"]["name"]["user"]])->first();
+        $account = Account::where("status", true)->where("unique_id", $cookies[$_ENV["settings"]["cookie"]["name"]["account"]])->first();
         $roleExists = array_search($account->role->title, $this->roles);
         if($roleExists === false) {
             throw new HttpForbiddenException($request);
