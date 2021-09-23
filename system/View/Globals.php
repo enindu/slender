@@ -14,12 +14,7 @@ class Globals extends AbstractExtension implements GlobalsInterface
     {
         return [
             "app"      => $_ENV["app"],
-            "settings" => $_ENV["settings"],
-            "auth"     => [
-                "exists" => isset($_SESSION["account"]),
-                "id"     => $_SESSION["account"]["id"] ?? false,
-                "role"   => $_SESSION["account"]["role"] ?? false
-            ]
+            "settings" => $_ENV["settings"]
         ];
     }
 }
