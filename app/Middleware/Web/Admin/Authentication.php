@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Middleware\Web;
+namespace App\Middleware\Web\Admin;
 
 use App\Models\Account;
+use App\Models\Admin;
 use DI\Container;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Request;
@@ -31,26 +32,26 @@ class Authentication extends Middleware
 
         $cookies = $request->getCookieParams();
         $validationError = $this->validateData($cookies, [
-            $_ENV["settings"]["cookie"]["name"]["account"] => "required|alpha_num|min:67|max:67"
+            $_ENV["settings"]["cookie"]["name"]["admin"] => "required|alpha_num|min:67|max:67"
         ]);
         if($validationError != null) {
             return $this->loggedOutResponse(true, false, false);
         }
 
-        $uniqueId = $cookies[$_ENV["settings"]["cookie"]["name"]["account"]];
-        $account = Account::where("status", true)->where("unique_id", $uniqueId)->first();
-        if($account == null) {
+        $uniqueId = $cookies[$_ENV["settings"]["cookie"]["name"]["admin"]];
+        $admin = Admin::where("status", true)->where("unique_id", $uniqueId)->first();
+        if($admin == null) {
             return $this->loggedOutResponse(true, true, true);
         }
 
         $sessionId = session_id();
-        if($sessionId != $account->session_id) {
+        if($sessionId != $admin->session_id) {
             return $this->loggedOutResponse(true, true, false);
         }
 
-        $_SESSION["account"] = [
-            "id"   => $account->id,
-            "role" => $account->role->title
+        $_SESSION["admin"] = [
+            "id"   => $admin->id,
+            "role" => $admin->role->title
         ];
 
         return $this->loggedInResponse();
@@ -59,11 +60,11 @@ class Authentication extends Middleware
     private function loggedOutResponse(bool $clearSession, bool $clearCookie, bool $redirect): Response
     {
         if($clearSession) {
-            unset($_SESSION["account"]);
+            unset($_SESSION["admin"]);
         }
 
         if($clearCookie) {
-            setcookie($_ENV["settings"]["cookie"]["name"]["account"], "expired", [
+            setcookie($_ENV["settings"]["cookie"]["name"]["admin"], "expired", [
                 "expires"  => strtotime("yesterday"),
                 "path"     => "/",
                 "domain"   => $_ENV["settings"]["domain"],
@@ -78,7 +79,7 @@ class Authentication extends Middleware
         }
 
         if($this->privatePathExists === false && $this->publicPathExists === false) {
-            return $this->newRedirectResponse("/accounts/login");
+            return $this->newRedirectResponse("/admin/accounts/login");
         }
 
         return $this->response;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Middleware\Web;
+namespace App\Middleware\Web\User;
 
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Request;
@@ -22,7 +22,7 @@ class ShoppingCart extends Middleware
         }
 
         $shoppingCartId = $this->createToken();
-        setcookie($_ENV["settings"]["cookie"]["name"]["cart"], $shoppingCartId, [
+        setcookie($_ENV["settings"]["cookie"]["name"]["shopping_cart"], $shoppingCartId, [
             "expires"  => 0,
             "path"     => "/",
             "domain"   => $_ENV["settings"]["domain"],

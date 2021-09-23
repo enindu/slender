@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Middleware\Web;
+namespace App\Middleware\Web\User;
 
-use App\Models\Account;
+use App\Models\Admin;
 use DI\Container;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Exception\HttpForbiddenException;
@@ -21,14 +21,14 @@ class Role extends Middleware
     {
         $cookies = $request->getCookieParams();
         $validationError = $this->validateData($cookies, [
-            $_ENV["settings"]["cookie"]["name"]["account"] => "required|alpha_num|min:67|max:67"
+            $_ENV["settings"]["cookie"]["name"]["admin"] => "required|alpha_num|min:67|max:67"
         ]);
         if($validationError != null) {
             throw new HttpForbiddenException($request);
         }
 
-        $account = Account::where("status", true)->where("unique_id", $cookies[$_ENV["settings"]["cookie"]["name"]["account"]])->first();
-        $roleExists = array_search($account->role->title, $this->roles);
+        $admin = Admin::where("status", true)->where("unique_id", $cookies[$_ENV["settings"]["cookie"]["name"]["admin"]])->first();
+        $roleExists = array_search($admin->role->title, $this->roles);
         if($roleExists === false) {
             throw new HttpForbiddenException($request);
         }
