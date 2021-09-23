@@ -2,7 +2,6 @@
 
 namespace App\Middleware\Web\Admin;
 
-use App\Models\Account;
 use App\Models\Admin;
 use DI\Container;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -88,7 +87,7 @@ class Authentication extends Middleware
     private function loggedInResponse(): Response
     {
         if($this->privatePathExists !== false && $this->publicPathExists === false) {
-            return $this->newRedirectResponse("/");
+            return $this->newRedirectResponse("/admin");
         }
 
         return $this->response;
