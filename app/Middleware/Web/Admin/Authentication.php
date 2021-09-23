@@ -66,7 +66,7 @@ class Authentication extends Middleware
         if($clearCookie) {
             setcookie($_ENV["settings"]["cookie"]["name"]["admin"], "expired", [
                 "expires"  => strtotime("yesterday"),
-                "path"     => "/",
+                "path"     => "/admin",
                 "domain"   => $_ENV["settings"]["domain"],
                 "secure"   => $_ENV["settings"]["cookie"]["secure"],
                 "httponly" => $_ENV["settings"]["cookie"]["http_only"],
