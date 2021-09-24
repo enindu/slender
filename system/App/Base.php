@@ -12,6 +12,12 @@ class Base
         $this->container->get("database");
     }
 
+    protected function writeResponse(Response $response, int $statusCode, string $contentType, string $body): Response
+    {
+        $response->getBody()->write($body);
+        return $response->withStatus($statusCode)->withHeader("Content-Type", $contentType);
+    }
+
     protected function viewResponse(Response $response, string $template, array $data = [], int $statusCode = 200): Response
     {
         $view = $this->createView($template, $data);
@@ -41,10 +47,52 @@ class Base
         return $this->writeResponse($response, $statusCode, "application/json", $json);
     }
 
-    protected function writeResponse(Response $response, int $statusCode, string $contentType, string $body): Response
+    protected function createView(string $template, array $data): string
     {
-        $response->getBody()->write($body);
-        return $response->withStatus($statusCode)->withHeader("Content-Type", $contentType);
+        $view = $this->container->get("view");
+        return $view->render($template, $data);
+    }
+
+    protected function createRandomText(int $length): string
+    {
+        $text = str_shuffle("qwertyuiopasdfghjklzxcvbnm1234567890");
+        $characters = str_split($text);
+        $charactersLength = count($characters);
+        $charactersLength = $charactersLength - 1;
+
+        $randomText = "";
+        for($i = 0; $i < $length; $i++) {
+            $randomNumber = random_int(0, $charactersLength);
+            $randomText .= $characters[$randomNumber];
+        }
+
+        return $randomText;
+    }
+
+    protected function createToken(): string
+    {
+        $uniqueId = uniqid(more_entropy:true);
+        $uniqueId = preg_replace("/\./", "", $uniqueId);
+        $uniqueIdLength = strlen($uniqueId);
+
+        $randomTextLength = 67 - $uniqueIdLength;
+        $randomText = $this->createRandomText($randomTextLength);
+
+        $token = $uniqueId . $randomText;
+        return str_shuffle($token);
+    }
+
+    protected function createSlug(string $text): string
+    {
+        $timestamp = time();
+
+        $text = $text . " " . $timestamp;
+        $text = trim($text);
+        $text = strtolower($text);
+        $text = preg_replace("/&/", " and ", $text);
+        $text = preg_replace("/\W|\s+/", "-", $text);
+
+        return preg_replace("/-+/", "-", $text);
     }
 
     protected function createPassword(string $password, string $algorithm = PASSWORD_ARGON2ID): array
@@ -90,48 +138,6 @@ class Base
         return null;
     }
 
-    protected function createToken(): string
-    {
-        $uniqueId = uniqid(more_entropy:true);
-        $uniqueId = preg_replace("/\./", "", $uniqueId);
-        $uniqueIdLength = strlen($uniqueId);
-
-        $randomTextLength = 67 - $uniqueIdLength;
-        $randomText = $this->createRandomText($randomTextLength);
-
-        $token = $uniqueId . $randomText;
-        return str_shuffle($token);
-    }
-
-    protected function createSlug(string $text): string
-    {
-        $timestamp = time();
-
-        $text = $text . " " . $timestamp;
-        $text = trim($text);
-        $text = strtolower($text);
-        $text = preg_replace("/&/", " and ", $text);
-        $text = preg_replace("/\W|\s+/", "-", $text);
-
-        return preg_replace("/-+/", "-", $text);
-    }
-
-    protected function createRandomText(int $length): string
-    {
-        $text = str_shuffle("qwertyuiopasdfghjklzxcvbnm1234567890");
-        $characters = str_split($text);
-        $charactersLength = count($characters);
-        $charactersLength = $charactersLength - 1;
-
-        $randomText = "";
-        for($i = 0; $i < $length; $i++) {
-            $randomNumber = random_int(0, $charactersLength);
-            $randomText .= $characters[$randomNumber];
-        }
-
-        return $randomText;
-    }
-
     protected function sendEmail(string $template, array $data): null|string
     {
         $view = $this->createView($template, $data["body"]);
@@ -175,11 +181,5 @@ class Base
         }
 
         return null;
-    }
-
-    private function createView(string $template, array $data): string
-    {
-        $view = $this->container->get("view");
-        return $view->render($template, $data);
     }
 }

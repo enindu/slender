@@ -56,6 +56,15 @@ class Authentication extends Middleware
         return $this->loggedInResponse();
     }
 
+    private function loggedInResponse(): Response
+    {
+        if($this->privatePathExists !== false && $this->publicPathExists === false) {
+            return $this->newRedirectResponse("/admin");
+        }
+
+        return $this->response;
+    }
+
     private function loggedOutResponse(bool $clearSession, bool $clearCookie, bool $redirect): Response
     {
         if($clearSession) {
@@ -79,15 +88,6 @@ class Authentication extends Middleware
 
         if($this->privatePathExists === false && $this->publicPathExists === false) {
             return $this->newRedirectResponse("/admin/accounts/login");
-        }
-
-        return $this->response;
-    }
-
-    private function loggedInResponse(): Response
-    {
-        if($this->privatePathExists !== false && $this->publicPathExists === false) {
-            return $this->newRedirectResponse("/admin");
         }
 
         return $this->response;
