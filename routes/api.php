@@ -8,6 +8,6 @@ use Slim\Routing\RouteCollectorProxy;
 $authentication = new Authentication($container);
 $putMethod = new Method($container, "PUT");
 
-$app->group("/api", function(RouteCollectorProxy $api): void {
-    $api->any("", Base::class . ":base");
-})->add($authentication)->add($putMethod);
+$app->group("/api", function(RouteCollectorProxy $api) use($putMethod): void {
+    $api->any("", Base::class . ":base")->add($putMethod);
+})->add($authentication);
