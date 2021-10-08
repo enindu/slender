@@ -141,11 +141,10 @@ class Base
     protected function sendEmail(string $template, array $data): null|string
     {
         $view = $this->createView($template, $data["body"]);
-        $email = $this->container->get("email");
 
+        $email = $this->container->get("email");
         $email->setFrom($data["from"]);
         $email->addAddress($data["to"]);
-
         $email->Subject = $data["subject"];
         $email->Body = $view;
 
@@ -166,7 +165,6 @@ class Base
 
         $validate = $this->container->get("validate");
         $validation = $validate->make($data, $rules);
-
         $validation->setAliases($aliases);
         $validation->validate();
 
@@ -175,7 +173,7 @@ class Base
             $errors = $validation->errors()->all();
             $error = reset($errors);
             $error = trim($error);
-            $error = rtrim($error, ".");
+            $error = preg_replace("/\./", "", $error);
             $error = preg_replace("/\-/", " ", $error);
 
             return $error . ".";

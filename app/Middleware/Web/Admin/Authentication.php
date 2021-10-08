@@ -24,8 +24,8 @@ class Authentication extends Middleware
     public function __invoke(Request $request, RequestHandlerInterface $requestHandler): Response
     {
         $this->response = $requestHandler->handle($request);
-        $this->path = $request->getUri()->getPath();
 
+        $this->path = $request->getUri()->getPath();
         $this->privatePathExists = array_search($this->path, $this->privatePaths);
         $this->publicPathExists = array_search($this->path, $this->publicPaths);
 

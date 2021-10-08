@@ -7,9 +7,8 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 $view = function() use($container): Environment {
-    $filesystemLoader = new FilesystemLoader();
-
     $path = __DIR__ . "/../views";
+    $filesystemLoader = new FilesystemLoader();
     $filesystemLoader->addPath($path);
 
     $environment = new Environment($filesystemLoader, [

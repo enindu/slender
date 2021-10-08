@@ -4,10 +4,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 $email = function(): PHPMailer {
     $phpMailer = new PHPMailer($_ENV["email"]["debug"]);
-
     $phpMailer->isSMTP();
     $phpMailer->isHTML();
-
     $phpMailer->SMTPDebug = $_ENV["email"]["debug_level"];
     $phpMailer->SMTPAuth = $_ENV["email"]["authentication"];
     $phpMailer->SMTPSecure = $_ENV["email"]["encryption"];
