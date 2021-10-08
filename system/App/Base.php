@@ -175,6 +175,7 @@ class Base
             $errors = $validation->errors()->all();
             $error = reset($errors);
             $error = trim($error);
+            $error = rtrim($error, ".");
             $error = preg_replace("/\-/", " ", $error);
 
             return $error . ".";
