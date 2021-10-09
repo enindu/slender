@@ -1,8 +1,13 @@
 {
     "name": "enindu/slender",
     "description": "Low-level rapid web development environment based on Slim framework",
-    "keywords": ["php", "framework", "slender", "slim"],
-    "version": "0.6.0-dev",
+    "keywords": [
+        "php",
+        "framework",
+        "slender",
+        "slim"
+    ],
+    "version": "0.6.0",
     "license": "MIT",
     "homepage": "https://github.com/enindu/slender",
     "readme": "https://github.com/enindu/slender#readme",
@@ -18,10 +23,10 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.0",
-        "slim/slim": "^4.8",
+        "slim/slim": "^4.9",
         "slim/psr7": "^1.4",
-        "illuminate/database": "^8.58",
-        "illuminate/events": "^8.58",
+        "illuminate/database": "^8.63",
+        "illuminate/events": "^8.63",
         "php-di/php-di": "^6.3",
         "twig/twig": "^3.3",
         "phpmailer/phpmailer": "^6.5",
