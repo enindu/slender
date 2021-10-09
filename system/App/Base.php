@@ -140,13 +140,76 @@ class Base
 
     protected function sendEmail(string $template, array $data): null|string
     {
-        $view = $this->createView($template, $data["body"]);
+        $validationError = $this->validateData($data, [
+            "from_address"   => "required|email",
+            "to_addresses.*" => "required|email",
+            "subject"        => "required",
+            "body"           => "required|array"
+        ], [
+            "from_address"   => "from address",
+            "to_addresses.*" => "to addresses",
+            "subject"        => "subject",
+            "body"           => "body"
+        ]);
+        if($validationError != null) {
+            return $validationError;
+        }
+
+        $fromAddress = $data["from_address"];
+        $toAddresses = $data["to_addresses"];
+        $subject = $data["subject"];
+        $body = $data["body"];
 
         $email = $this->container->get("email");
-        $email->setFrom($data["from"]);
-        $email->addAddress($data["to"]);
-        $email->Subject = $data["subject"];
-        $email->Body = $view;
+        $email->setFrom($fromAddress);
+
+        foreach($toAddresses as $toAddress) {
+            $email->addAddress($toAddress);
+        }
+
+        $ccAddressesExists = isset($data["cc_addresses"]);
+        if($ccAddressesExists) {
+            $ccAddresses = $data["cc_addresses"];
+            $ccAddressesArray = is_array($ccAddresses);
+            if(!$ccAddressesArray) {
+                return "CC addresses must be an array.";
+            }
+
+            foreach($ccAddresses as $ccAddress) {
+                $email->addCC($ccAddress);
+            }
+        }
+
+        $bccAddressesExists = isset($data["bcc_addresses"]);
+        if($bccAddressesExists) {
+            $bccAddresses = $data["bcc_addresses"];
+            $bccAddressesArray = is_array($bccAddresses);
+            if(!$bccAddressesArray) {
+                return "BCC addresses must be an array.";
+            }
+
+            foreach($bccAddresses as $bccAddress) {
+                $email->addBCC($bccAddress);
+            }
+        }
+
+        $attachmentsExists = isset($data["attachments"]);
+        if($attachmentsExists) {
+            $attachments = $data["attachments"];
+            $attachmentsArray = is_array($attachments);
+            if(!$attachmentsArray) {
+                return "Attachments must be an array.";
+            }
+
+            foreach($attachments as $attachment) {
+                $email->addAttachment($attachment);
+            }
+        }
+
+        $body = $this->createView($template, $body);
+
+        $email->Subject = $subject;
+        $email->Body = $body;
 
         $emailSends = $email->send();
         if(!$emailSends) {
