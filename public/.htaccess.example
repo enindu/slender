@@ -31,7 +31,7 @@
     Header always set Vary "User-Agent, Accept-Encoding"
     Header always set X-Framework "Slender"
 
-    <FilesMatch "^.+\.(css|eot|gif|html|ico|jpeg|jpg|js|map|pdf|png|svg|ttf|webp|woff|woff2)$">
+    <FilesMatch "^.+\.(css|eot|gif|html|ico|jpeg|jpg|js|map|mp4|pdf|png|svg|ttf|webp|woff|woff2)$">
         Header set Cache-Control "public, max-age=63072000"
     </FilesMatch>
 </IfModule>
